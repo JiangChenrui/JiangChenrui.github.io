@@ -83,27 +83,27 @@
 <meta name="keywords" content="深度学习,轻量级网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ShuffleNetV2">
-<meta property="og:url" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/index.html">
+<meta property="og:url" content="https://JiangChenrui.github.io/2019/01/23/ShuffleNetV2/index.html">
 <meta property="og:site_name" content="姜晨瑞的博客">
 <meta property="og:description" content="论文地址 摘要&amp;emsp;&amp;emsp;近年来，神经网络的结构设计极大地被间接度量计算复杂度（如FLOPs）导向，直接度量速度还会被其它因素诸如内存存取消耗和平台特性所影响。因此，我们的工作打算计算目标平台的直接度量，而不仅仅考虑间接度量FLOPs。基于一系列的限制性实验，我们的工作获得了一些有效的网络设计的实用指南。相应地，我们提出了ShuffleNet V2这种新的网络结构。进行了全面的消融实验">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure1.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure2.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table1.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table2.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table3.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table4.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure3.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table5.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure4.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table6.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table7.png">
-<meta property="og:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table8.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure1.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure2.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table1.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table2.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table3.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_table4.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure3.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table5.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure4.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table6.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table7.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Table8.png">
 <meta property="og:updated_time" content="2019-01-24T02:19:21.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ShuffleNetV2">
 <meta name="twitter:description" content="论文地址 摘要&amp;emsp;&amp;emsp;近年来，神经网络的结构设计极大地被间接度量计算复杂度（如FLOPs）导向，直接度量速度还会被其它因素诸如内存存取消耗和平台特性所影响。因此，我们的工作打算计算目标平台的直接度量，而不仅仅考虑间接度量FLOPs。基于一系列的限制性实验，我们的工作获得了一些有效的网络设计的实用指南。相应地，我们提出了ShuffleNet V2这种新的网络结构。进行了全面的消融实验">
-<meta name="twitter:image" content="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure1.png">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNetV2/ShuffleNetV2_Figure1.png">
 
 
 
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="canonical" href="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/">
+  <link rel="canonical" href="https://JiangChenrui.github.io/2019/01/23/ShuffleNetV2/">
 
 
 
@@ -266,7 +266,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://chenruijiang.github.io/2019/01/23/ShuffleNetV2/">
+    <link itemprop="mainEntityOfPage" href="https://JiangChenrui.github.io/2019/01/23/ShuffleNetV2/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="姜晨瑞">
