@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="编程,深度学习,笔记,计算机视觉,">
+  <meta name="keywords" content="深度学习，计算机视觉，CNN,">
 
 
 
@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="培养专注的习惯，学会独立思考 1 学习AI需要哪些技能 1.编程基础    熟练使用linux，git，vim等环境和工具。   熟练掌握 C/C++、Python等编程语言。   熟练掌握cmake，g++等编译工具。     2.算法基础    熟悉传统图像算法，机器学习算法。   熟练跟踪并阅读行业前沿研究，复现结果。 系统性熟悉深度学习理论。   3.框架基础    熟练掌握 Caffe、">
-<meta name="keywords" content="编程,深度学习,笔记,计算机视觉">
+<meta name="description" content="本文收集了一些神经网络的架构，包含常用的一些模型。   LeNet51.Input&amp;emsp;&amp;emsp;输入图像统一归一化为32*32。2.C1卷积层&amp;emsp;&amp;emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。3.S2池化层&amp;emsp;&amp;emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。4.C3卷积">
+<meta name="keywords" content="深度学习，计算机视觉，CNN">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深度学习笔记">
-<meta property="og:url" content="https://JiangChenrui.github.io/2019/01/23/深度学习笔记/index.html">
+<meta property="og:title" content="神经网络结构汇总">
+<meta property="og:url" content="https://JiangChenrui.github.io/2019/02/27/神经网络结构汇总/index.html">
 <meta property="og:site_name" content="姜晨瑞的博客">
-<meta property="og:description" content="培养专注的习惯，学会独立思考 1 学习AI需要哪些技能 1.编程基础    熟练使用linux，git，vim等环境和工具。   熟练掌握 C/C++、Python等编程语言。   熟练掌握cmake，g++等编译工具。     2.算法基础    熟悉传统图像算法，机器学习算法。   熟练跟踪并阅读行业前沿研究，复现结果。 系统性熟悉深度学习理论。   3.框架基础    熟练掌握 Caffe、">
+<meta property="og:description" content="本文收集了一些神经网络的架构，包含常用的一些模型。   LeNet51.Input&amp;emsp;&amp;emsp;输入图像统一归一化为32*32。2.C1卷积层&amp;emsp;&amp;emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。3.S2池化层&amp;emsp;&amp;emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。4.C3卷积">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-24T06:21:05.037Z">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/LeNet5.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/AlexNet.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/Vgg.png">
+<meta property="og:updated_time" content="2019-02-27T12:57:11.725Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深度学习笔记">
-<meta name="twitter:description" content="培养专注的习惯，学会独立思考 1 学习AI需要哪些技能 1.编程基础    熟练使用linux，git，vim等环境和工具。   熟练掌握 C/C++、Python等编程语言。   熟练掌握cmake，g++等编译工具。     2.算法基础    熟悉传统图像算法，机器学习算法。   熟练跟踪并阅读行业前沿研究，复现结果。 系统性熟悉深度学习理论。   3.框架基础    熟练掌握 Caffe、">
+<meta name="twitter:title" content="神经网络结构汇总">
+<meta name="twitter:description" content="本文收集了一些神经网络的架构，包含常用的一些模型。   LeNet51.Input&amp;emsp;&amp;emsp;输入图像统一归一化为32*32。2.C1卷积层&amp;emsp;&amp;emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。3.S2池化层&amp;emsp;&amp;emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。4.C3卷积">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/LeNet5.png">
 
 
 
@@ -120,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="https://JiangChenrui.github.io/2019/01/23/深度学习笔记/">
+  <link rel="canonical" href="https://JiangChenrui.github.io/2019/02/27/神经网络结构汇总/">
 
 
 
 
 
-  <title>深度学习笔记 | 姜晨瑞的博客</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <title>神经网络结构汇总 | 姜晨瑞的博客</title><!-- hexo-inject:begin --><!-- hexo-inject:end -->
   
 
 
@@ -253,7 +257,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://JiangChenrui.github.io/2019/01/23/深度学习笔记/">
+    <link itemprop="mainEntityOfPage" href="https://JiangChenrui.github.io/2019/02/27/神经网络结构汇总/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="姜晨瑞">
@@ -270,7 +274,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">深度学习笔记</h1>
+          <h1 class="post-title" itemprop="name headline">神经网络结构汇总</h1>
         
 
         <div class="post-meta">
@@ -282,8 +286,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-01-23T10:35:59+08:00">
-                2019-01-23
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-27T19:59:09+08:00">
+                2019-02-27
               </time>
             
 
@@ -305,8 +309,8 @@
               
               
                 <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
-                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">学习笔记</span>
+                  <a href="/categories/论文阅读/" itemprop="url" rel="index">
+                    <span itemprop="name">论文阅读</span>
                   </a>
                 </span>
 
@@ -342,91 +346,16 @@
       
 
       
-        <p>培养专注的习惯，学会独立思考</p>
-<h2 id="1-学习AI需要哪些技能"><a href="#1-学习AI需要哪些技能" class="headerlink" title="1 学习AI需要哪些技能"></a>1 <a href="https://zhuanlan.zhihu.com/p/52814848" target="_blank" rel="noopener">学习AI需要哪些技能</a></h2><ul>
-<li><p>1.编程基础  </p>
-<ul>
-<li>熟练使用linux，git，vim等环境和工具。  </li>
-<li>熟练掌握 C/C++、Python等编程语言。  </li>
-<li>熟练掌握cmake，g++等编译工具。  </li>
-</ul>
-</li>
-<li><p>2.算法基础  </p>
-<ul>
-<li>熟悉传统图像算法，机器学习算法。  </li>
-<li>熟练跟踪并阅读行业前沿研究，复现结果。</li>
-<li>系统性熟悉深度学习理论。</li>
-</ul>
-</li>
-<li><p>3.框架基础  </p>
-<ul>
-<li>熟练掌握 Caffe、TensorFlow、pytorch等以及不断新出的开源平台。  </li>
-</ul>
-</li>
-<li><p>4.其它基础</p>
-<ul>
-<li>掌握爬虫等前后端的基础知识。  </li>
-<li>了解并熟悉Cuda等GPU编程技术，了解一些移动端的硬件知识。  </li>
-<li>了解并熟悉 Android、iOS 等移动端的基础知识，在项目中可能会需要使用。  </li>
-</ul>
-</li>
-</ul>
-<h2 id="2-吴恩达深度学习课后作业"><a href="#2-吴恩达深度学习课后作业" class="headerlink" title="2 吴恩达深度学习课后作业"></a>2 吴恩达深度学习课后作业</h2><p><a href="https://mooc.study.163.com/learn/2001281002?tid=2001392029#/learn/content" target="_blank" rel="noopener">吴恩达深度学习视频</a><br><a href="https://blog.csdn.net/u013733326/article/details/79827273" target="_blank" rel="noopener">作业参考</a></p>
-<h3 id="2-1-神经网络和深度学习"><a href="#2-1-神经网络和深度学习" class="headerlink" title="2.1 神经网络和深度学习"></a>2.1 神经网络和深度学习</h3><h4 id="2-1-1-logistic回归"><a href="#2-1-1-logistic回归" class="headerlink" title="2.1.1 logistic回归"></a>2.1.1 logistic回归</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week2_Logistic" target="_blank" rel="noopener">作业代码</a>  </p>
-<h4 id="2-1-2-浅层神经网络"><a href="#2-1-2-浅层神经网络" class="headerlink" title="2.1.2 浅层神经网络"></a>2.1.2 浅层神经网络</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week3_simple_net" target="_blank" rel="noopener">作业代码</a>  </p>
-<h4 id="2-1-3-深层神经网络"><a href="#2-1-3-深层神经网络" class="headerlink" title="2.1.3 深层神经网络"></a>2.1.3 深层神经网络</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week4_complex_net" target="_blank" rel="noopener">作业代码</a></p>
-<h3 id="2-2-改善深层神经网络"><a href="#2-2-改善深层神经网络" class="headerlink" title="2.2 改善深层神经网络"></a>2.2 改善深层神经网络</h3><h4 id="2-2-1-深度学习的实用层面"><a href="#2-2-1-深度学习的实用层面" class="headerlink" title="2.2.1 深度学习的实用层面"></a>2.2.1 深度学习的实用层面</h4><h2 id="3-cs231n课程笔记"><a href="#3-cs231n课程笔记" class="headerlink" title="3 cs231n课程笔记"></a>3 cs231n课程笔记</h2><h3 id="3-1-图像处理的一些简单方法"><a href="#3-1-图像处理的一些简单方法" class="headerlink" title="3.1 图像处理的一些简单方法"></a>3.1 <a href="https://github.com/JiangChenrui/matching_learning_note/blob/master/image_enhance.py" target="_blank" rel="noopener">图像处理的一些简单方法</a></h3><pre><code class="lang-python">from PIL import Image
-from PIL import ImageEnhance
-import matplotlib.pyplot as plt
+        <p>本文收集了一些神经网络的架构，包含常用的一些模型。  </p>
+<h2 id="LeNet5"><a href="#LeNet5" class="headerlink" title="LeNet5"></a>LeNet5</h2><p><img src="/2019/02/27/神经网络结构汇总/LeNet5.png" alt="LeNet5"><br>1.Input<br>&emsp;&emsp;输入图像统一归一化为32*32。<br>2.C1卷积层<br>&emsp;&emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。<br>3.S2池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。<br>4.C3卷积层<br>&emsp;&emsp;经过(5*5*6)*16卷积核，stride=1，生成featuremap为10*10*16。<br>5.S4池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为5*5*16。<br>6.C5卷积层<br>&emsp;&emsp;经过(5*5*16)*120卷积核，stride=1， 生成featuremap为1*1*120。<br>7.F6全连接层<br>&emsp;&emsp;输入为1*1*120，输出为1*1*84，总参数量为120*84。<br>8.Output全连接层。<br>&emsp;&emsp;输入为1*1*84，输出为1*1*10，总参数量为84*10。10就是分类的类别数。  </p>
+<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p><img src="/2019/02/27/神经网络结构汇总/AlexNet.png" alt="AlexNet"><br>1.Input<br>&emsp;&emsp;输入图像为227*227*3。<br>2.Conv1<br>&emsp;&emsp;经过(11*11*3)*96卷积核，stride=4， (227-11)/4+1=55，生成featuremap为55*55*96。<br>3.Pool1<br>&emsp;&emsp;经过3*3的池化核，stride=2，(55-3)/2+1=27，生成featuremap为27*27*96。<br>4.Norm1<br>&emsp;&emsp;local_size=5，生成featuremap为27*27*96。<br>5.Conv2<br>&emsp;&emsp;经过(5*5*96)*256的卷积核，pad=2，group=2，(27+2*2-5)/1+1=27，生成featuremap为27*27*256。<br>6.Pool2<br>&emsp;&emsp;经过3*3的池化核，stride=2，(27-3)/2+1=13，生成featuremap为13*13*256。<br>7.Norm2<br>&emsp;&emsp;local_size=5, 生成featuremap为13*13*256。<br>8.Conv3<br>&emsp;&emsp;经过(3*3*256)*384卷积核，pad=1， (13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>9.Conv4<br>&emsp;&emsp;经过(3*3*384)*384卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>10.Conv5<br>&emsp;&emsp;经过(3*3*384)*256卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*256。<br>11.Pool5<br>&emsp;&emsp;经过(3*3)的池化核，stride=2，(13-3)/2+1=6，生成featuremap为6*6*256。<br>12.Fc6<br>&emsp;&emsp;输入为(6*6*256)*4096全连接，生成featuremap为1*1*4096。<br>13.Dropout6<br>&emsp;&emsp;在训练的时候以1/2概率使得隐藏层的某些神经元的输出为0，这样就丢掉了一半节点的输出，BP的时候也不更新这些节点，以下Droupout同理。<br>14.Fc7<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>15.Dropout7<br>&emsp;&emsp;生成featuremap为1*1*4096。<br>16.Fc8<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
+<p><strong>总结:</strong></p>
+<p><strong>1.网络比LeNet更深，包括5个卷积层和3个全连接层。</strong><br><strong>2.使用relu激活函数，收敛很快，解决了Sigmoid在网络较深时出现的梯度弥散问题。</strong><br><strong>3.加入了dropout层，防止过拟合。</strong><br><strong>4.使用了LRN归一化层，对局部神经元的活动创建竞争机制，抑制反馈较小的神经元放大反应大的神经元，增强了模型的泛化能力。</strong><br><strong>5.使用裁剪翻转等操作做数据增强，增强了模型的泛化能力。预测时使用提取图片四个角加中间五个位置并进行左右翻转一共十幅图片的方法求取平均值，这也是后面刷比赛的基本使用技巧。</strong><br><strong>6.分块训练，当年的GPU没有这么强大，Alexnet创新地将图像分为上下两块分别训练，然后在全连接层合并在一起。</strong><br><strong>7.总体的数据参数大概为240M。</strong>  </p>
+<h2 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h2><p><img src="/2019/02/27/神经网络结构汇总/Vgg.png" alt="Vgg">  </p>
+<p>1.Input层<br>&emsp;&emsp;输入图片为224*224*3。<br>2.CONV3-64<br>&emsp;&emsp;经过（3*3*3）*64卷积核，生成featuremap为224*224*64。<br>3.CONV3-64<br>&emsp;&emsp;经过（3*3*64）*64卷积核，生成featuremap为224*224*64。<br>4.Max pool<br>&emsp;&emsp;经过（2*2）max pool核，生成featuremap为112*112*64。<br>5.CONV3-128。<br>&emsp;&emsp;经过（3*3*64）*128卷积核，生成featuremap为112*112*128。<br>6.CONV3-128<br>&emsp;&emsp; 经过（3*3*128）*128卷积，生成featuremap为112*112*128。<br>7.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为56*56*128。<br>8.CONV3-256<br>&emsp;&emsp;经过（3*3*128）*256卷积核，生成featuremap为56*56*256。<br>9.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>10.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>11.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为28*28*256。<br>12.CONV3-512<br>&emsp;&emsp;经过（3*3*256）*512卷积核，生成featuremap为28*28*512。<br>13.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>14.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>15.Max pool<br>&emsp;&emsp;经过（2*2）maxpool,生成featuremap为14*14*512。<br>16.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>17.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>18.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>19.Max pool<br>&emsp;&emsp;经过2*2卷积，生成featuremap为7*7*512。<br>20.FC-4096<br>&emsp;&emsp;输入为7*7*512，输出为1*1*4096，总参数量为7*7*512*4096。<br>21.FC-4096<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>22.FC-1000<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
+<p><strong>总结:</strong>  </p>
+<p><strong>1. 共包含参数约为550M。</strong><br><strong>2. 全部使用3*3的卷积核和2*2的最大池化核。</strong><br><strong>3. 简化了卷积神经网络的结构。</strong>  </p>
 
-# 原始图像
-image = Image.open(&#39;match_learning/picture/1.jpg&#39;)  # 打开图片
-# image.show()
-plt.figure(&quot;origan_image&quot;)
-plt.imshow(image)
-plt.show()
-
-# 亮度增强
-enh_bri = ImageEnhance.Brightness(image)
-brightness = 1.5
-image_brightened = enh_bri.enhance(brightness)
-# image_brightened.show()
-plt.figure(&quot;brightened&quot;)
-plt.imshow(image_brightened)
-plt.show()
-image_brightened.save(&#39;match_learning/picture/image_brightened.jpg&#39;)
-
-# 色度增强
-enh_col = ImageEnhance.Color(image)
-color = 1.5
-image_colored = enh_col.enhance(color)
-# image_colored.show()
-plt.figure(&quot;colored&quot;)
-plt.imshow(image_colored)
-plt.show()
-image_colored.save(&#39;match_learning/picture/image_colored.jpg&#39;)
-
-# 对比度增强
-enh_con = ImageEnhance.Contrast(image)
-contrast = 1.5
-image_contrasted = enh_con.enhance(contrast)
-# image_contrasted.show()
-plt.figure(&quot;contrast&quot;)
-plt.imshow(image_contrasted)
-plt.show()
-image_contrasted.save(&#39;match_learning/picture/image_contrasted.jpg&#39;)
-
-# 锐度增强
-enh_sha = ImageEnhance.Sharpness(image)
-sharpness = 1.5
-image_sharped = enh_sha.enhance(sharpness)
-# image_sharped.show()
-plt.figure(&quot;sharpness&quot;)
-plt.imshow(image_sharped)
-plt.show()
-image_sharped.save(&#39;match_learning/picture/image_sharped.jpg&#39;)
-</code></pre>
-<h3 id="3-2-python学习笔记"><a href="#3-2-python学习笔记" class="headerlink" title="3.2 python学习笔记"></a>3.2 <a href="https://github.com/JiangChenrui/DeeplingAI/blob/master/cs231n/python_study.py" target="_blank" rel="noopener">python学习笔记</a></h3>
       
     </div>
     
@@ -443,13 +372,7 @@ image_sharped.save(&#39;match_learning/picture/image_sharped.jpg&#39;)
       
         <div class="post-tags">
           
-            <a href="/tags/编程/" rel="tag"># 编程</a>
-          
-            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
-          
-            <a href="/tags/笔记/" rel="tag"># 笔记</a>
-          
-            <a href="/tags/计算机视觉/" rel="tag"># 计算机视觉</a>
+            <a href="/tags/深度学习，计算机视觉，CNN/" rel="tag"># 深度学习，计算机视觉，CNN</a>
           
         </div>
       
@@ -462,15 +385,15 @@ image_sharped.save(&#39;match_learning/picture/image_sharped.jpg&#39;)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2019/02/26/将博客搬至CSDN/" rel="next" title="将博客搬至CSDN">
+                <i class="fa fa-chevron-left"></i> 将博客搬至CSDN
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/01/23/hello-world/" rel="prev" title="Hello World">
-                Hello World <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -628,7 +551,7 @@ image_sharped.save(&#39;match_learning/picture/image_sharped.jpg&#39;)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-学习AI需要哪些技能"><span class="nav-text">1 学习AI需要哪些技能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-吴恩达深度学习课后作业"><span class="nav-text">2 吴恩达深度学习课后作业</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-神经网络和深度学习"><span class="nav-text">2.1 神经网络和深度学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-1-logistic回归"><span class="nav-text">2.1.1 logistic回归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-2-浅层神经网络"><span class="nav-text">2.1.2 浅层神经网络</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-3-深层神经网络"><span class="nav-text">2.1.3 深层神经网络</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-改善深层神经网络"><span class="nav-text">2.2 改善深层神经网络</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-深度学习的实用层面"><span class="nav-text">2.2.1 深度学习的实用层面</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-cs231n课程笔记"><span class="nav-text">3 cs231n课程笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-图像处理的一些简单方法"><span class="nav-text">3.1 图像处理的一些简单方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-python学习笔记"><span class="nav-text">3.2 python学习笔记</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeNet5"><span class="nav-text">LeNet5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AlexNet"><span class="nav-text">AlexNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VGG"><span class="nav-text">VGG</span></a></li></ol></div>
             
 
           </div>
