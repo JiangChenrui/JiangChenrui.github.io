@@ -19,7 +19,7 @@
     
     
   <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
 
 
 
@@ -71,12 +71,6 @@
   
 
   
-    
-      
-    
-
-    
-  
 
   
     
@@ -97,7 +91,7 @@
   
     
     
-    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|18:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link href="//fonts.css.network/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
   
 
 
@@ -144,15 +138,14 @@
 <meta property="og:site_name" content="姜晨瑞的博客">
 <meta property="og:description" content="本文收集了一些神经网络的架构，包含常用的一些模型。   LeNet51.Input&amp;emsp;&amp;emsp;输入图像统一归一化为32*32。2.C1卷积层&amp;emsp;&amp;emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。3.S2池化层&amp;emsp;&amp;emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。4.C3卷积">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="https://jiangchenrui.github.io/LeNet5.png">
-<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/神经网络结构汇总/LeNet5.png">
-<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/神经网络结构汇总/AlexNet.png">
-<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/神经网络结构汇总/Vgg.png">
-<meta property="og:updated_time" content="2019-03-05T13:08:04.293Z">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/LeNet5.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/AlexNet.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/Vgg.png">
+<meta property="og:updated_time" content="2019-03-06T01:42:06.772Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络结构汇总">
 <meta name="twitter:description" content="本文收集了一些神经网络的架构，包含常用的一些模型。   LeNet51.Input&amp;emsp;&amp;emsp;输入图像统一归一化为32*32。2.C1卷积层&amp;emsp;&amp;emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。3.S2池化层&amp;emsp;&amp;emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。4.C3卷积">
-<meta name="twitter:image" content="https://jiangchenrui.github.io/LeNet5.png">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/LeNet5.png">
 
 
 
@@ -284,9 +277,41 @@
       
 
       
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            Search
+          </a>
+        </li>
+      
     </ul>
   
 
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="Searching..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
   
 </nav>
 
@@ -380,9 +405,30 @@
 
           
             
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/02/27/神经网络结构汇总/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/02/27/神经网络结构汇总/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
           
 
           
+          
+             <span id="/2019/02/27/神经网络结构汇总/" class="leancloud_visitors" data-flag-title="神经网络结构汇总">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">Visitors&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -405,11 +451,11 @@
 
       
         <p>本文收集了一些神经网络的架构，包含常用的一些模型。  </p>
-<h2 id="LeNet5"><a href="#LeNet5" class="headerlink" title="LeNet5"></a>LeNet5</h2><p><img src="/LeNet5.png" alt="LeNet5"><br><img src="神经网络结构汇总/LeNet5.png" alt="LeNet5"><br>1.Input<br>&emsp;&emsp;输入图像统一归一化为32*32。<br>2.C1卷积层<br>&emsp;&emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。<br>3.S2池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。<br>4.C3卷积层<br>&emsp;&emsp;经过(5*5*6)*16卷积核，stride=1，生成featuremap为10*10*16。<br>5.S4池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为5*5*16。<br>6.C5卷积层<br>&emsp;&emsp;经过(5*5*16)*120卷积核，stride=1， 生成featuremap为1*1*120。<br>7.F6全连接层<br>&emsp;&emsp;输入为1*1*120，输出为1*1*84，总参数量为120*84。<br>8.Output全连接层。<br>&emsp;&emsp;输入为1*1*84，输出为1*1*10，总参数量为84*10。10就是分类的类别数。  </p>
-<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p>![AlexNet]<br><img src="神经网络结构汇总/AlexNet.png" alt="AlexNet"><br>1.Input<br>&emsp;&emsp;输入图像为227*227*3。<br>2.Conv1<br>&emsp;&emsp;经过(11*11*3)*96卷积核，stride=4， (227-11)/4+1=55，生成featuremap为55*55*96。<br>3.Pool1<br>&emsp;&emsp;经过3*3的池化核，stride=2，(55-3)/2+1=27，生成featuremap为27*27*96。<br>4.Norm1<br>&emsp;&emsp;local_size=5，生成featuremap为27*27*96。<br>5.Conv2<br>&emsp;&emsp;经过(5*5*96)*256的卷积核，pad=2，group=2，(27+2*2-5)/1+1=27，生成featuremap为27*27*256。<br>6.Pool2<br>&emsp;&emsp;经过3*3的池化核，stride=2，(27-3)/2+1=13，生成featuremap为13*13*256。<br>7.Norm2<br>&emsp;&emsp;local_size=5, 生成featuremap为13*13*256。<br>8.Conv3<br>&emsp;&emsp;经过(3*3*256)*384卷积核，pad=1， (13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>9.Conv4<br>&emsp;&emsp;经过(3*3*384)*384卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>10.Conv5<br>&emsp;&emsp;经过(3*3*384)*256卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*256。<br>11.Pool5<br>&emsp;&emsp;经过(3*3)的池化核，stride=2，(13-3)/2+1=6，生成featuremap为6*6*256。<br>12.Fc6<br>&emsp;&emsp;输入为(6*6*256)*4096全连接，生成featuremap为1*1*4096。<br>13.Dropout6<br>&emsp;&emsp;在训练的时候以1/2概率使得隐藏层的某些神经元的输出为0，这样就丢掉了一半节点的输出，BP的时候也不更新这些节点，以下Droupout同理。<br>14.Fc7<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>15.Dropout7<br>&emsp;&emsp;生成featuremap为1*1*4096。<br>16.Fc8<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
+<h2 id="LeNet5"><a href="#LeNet5" class="headerlink" title="LeNet5"></a>LeNet5</h2><p><img src="/2019/02/27/神经网络结构汇总/LeNet5.png" alt="LeNet5"><br>1.Input<br>&emsp;&emsp;输入图像统一归一化为32*32。<br>2.C1卷积层<br>&emsp;&emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。<br>3.S2池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。<br>4.C3卷积层<br>&emsp;&emsp;经过(5*5*6)*16卷积核，stride=1，生成featuremap为10*10*16。<br>5.S4池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为5*5*16。<br>6.C5卷积层<br>&emsp;&emsp;经过(5*5*16)*120卷积核，stride=1， 生成featuremap为1*1*120。<br>7.F6全连接层<br>&emsp;&emsp;输入为1*1*120，输出为1*1*84，总参数量为120*84。<br>8.Output全连接层。<br>&emsp;&emsp;输入为1*1*84，输出为1*1*10，总参数量为84*10。10就是分类的类别数。  </p>
+<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p>![AlexNet]<br><img src="/2019/02/27/神经网络结构汇总/AlexNet.png" alt="AlexNet"><br>1.Input<br>&emsp;&emsp;输入图像为227*227*3。<br>2.Conv1<br>&emsp;&emsp;经过(11*11*3)*96卷积核，stride=4， (227-11)/4+1=55，生成featuremap为55*55*96。<br>3.Pool1<br>&emsp;&emsp;经过3*3的池化核，stride=2，(55-3)/2+1=27，生成featuremap为27*27*96。<br>4.Norm1<br>&emsp;&emsp;local_size=5，生成featuremap为27*27*96。<br>5.Conv2<br>&emsp;&emsp;经过(5*5*96)*256的卷积核，pad=2，group=2，(27+2*2-5)/1+1=27，生成featuremap为27*27*256。<br>6.Pool2<br>&emsp;&emsp;经过3*3的池化核，stride=2，(27-3)/2+1=13，生成featuremap为13*13*256。<br>7.Norm2<br>&emsp;&emsp;local_size=5, 生成featuremap为13*13*256。<br>8.Conv3<br>&emsp;&emsp;经过(3*3*256)*384卷积核，pad=1， (13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>9.Conv4<br>&emsp;&emsp;经过(3*3*384)*384卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>10.Conv5<br>&emsp;&emsp;经过(3*3*384)*256卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*256。<br>11.Pool5<br>&emsp;&emsp;经过(3*3)的池化核，stride=2，(13-3)/2+1=6，生成featuremap为6*6*256。<br>12.Fc6<br>&emsp;&emsp;输入为(6*6*256)*4096全连接，生成featuremap为1*1*4096。<br>13.Dropout6<br>&emsp;&emsp;在训练的时候以1/2概率使得隐藏层的某些神经元的输出为0，这样就丢掉了一半节点的输出，BP的时候也不更新这些节点，以下Droupout同理。<br>14.Fc7<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>15.Dropout7<br>&emsp;&emsp;生成featuremap为1*1*4096。<br>16.Fc8<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
 <p><strong>总结:</strong></p>
 <p><strong>1.网络比LeNet更深，包括5个卷积层和3个全连接层。</strong><br><strong>2.使用relu激活函数，收敛很快，解决了Sigmoid在网络较深时出现的梯度弥散问题。</strong><br><strong>3.加入了dropout层，防止过拟合。</strong><br><strong>4.使用了LRN归一化层，对局部神经元的活动创建竞争机制，抑制反馈较小的神经元放大反应大的神经元，增强了模型的泛化能力。</strong><br><strong>5.使用裁剪翻转等操作做数据增强，增强了模型的泛化能力。预测时使用提取图片四个角加中间五个位置并进行左右翻转一共十幅图片的方法求取平均值，这也是后面刷比赛的基本使用技巧。</strong><br><strong>6.分块训练，当年的GPU没有这么强大，Alexnet创新地将图像分为上下两块分别训练，然后在全连接层合并在一起。</strong><br><strong>7.总体的数据参数大概为240M。</strong>  </p>
-<h2 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h2><p><img src="神经网络结构汇总/Vgg.png" alt="Vgg">  </p>
+<h2 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h2><p><img src="/2019/02/27/神经网络结构汇总/Vgg.png" alt="Vgg">  </p>
 <p>1.Input层<br>&emsp;&emsp;输入图片为224*224*3。<br>2.CONV3-64<br>&emsp;&emsp;经过（3*3*3）*64卷积核，生成featuremap为224*224*64。<br>3.CONV3-64<br>&emsp;&emsp;经过（3*3*64）*64卷积核，生成featuremap为224*224*64。<br>4.Max pool<br>&emsp;&emsp;经过（2*2）max pool核，生成featuremap为112*112*64。<br>5.CONV3-128。<br>&emsp;&emsp;经过（3*3*64）*128卷积核，生成featuremap为112*112*128。<br>6.CONV3-128<br>&emsp;&emsp; 经过（3*3*128）*128卷积，生成featuremap为112*112*128。<br>7.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为56*56*128。<br>8.CONV3-256<br>&emsp;&emsp;经过（3*3*128）*256卷积核，生成featuremap为56*56*256。<br>9.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>10.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>11.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为28*28*256。<br>12.CONV3-512<br>&emsp;&emsp;经过（3*3*256）*512卷积核，生成featuremap为28*28*512。<br>13.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>14.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>15.Max pool<br>&emsp;&emsp;经过（2*2）maxpool,生成featuremap为14*14*512。<br>16.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>17.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>18.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>19.Max pool<br>&emsp;&emsp;经过2*2卷积，生成featuremap为7*7*512。<br>20.FC-4096<br>&emsp;&emsp;输入为7*7*512，输出为1*1*4096，总参数量为7*7*512*4096。<br>21.FC-4096<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>22.FC-1000<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
 <p><strong>总结:</strong>  </p>
 <p><strong>1. 共包含参数约为550M。</strong><br><strong>2. 全部使用3*3的卷积核和2*2的最大池化核。</strong><br><strong>3. 简化了卷积神经网络的结构。</strong>  </p>
@@ -461,6 +507,17 @@
       
     </footer>
   </div>
+  <div>
+      
+          <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">
+              -------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------
+        </div>
+    
+</div>
+      
+  </div>
   
   
   
@@ -480,6 +537,9 @@
 
           
 
+  
+    <div class="comments" id="comments">
+    </div>
   
 
 
@@ -702,6 +762,8 @@
   
 
 
+  
+
 
 
 
@@ -742,6 +804,11 @@
     <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
 
   
 
@@ -771,7 +838,7 @@
   
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
 
 
 
@@ -806,15 +873,478 @@
 
 
 
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
+        appKey: 'yrwQQpoA00WVm649FXM7AKqW',
+        placeholder: '欢迎批评指正',
+        avatar:'robohash',
+        guest_info:guest,
+        pageSize:'10' || 10,
+    });
+  </script>
+
 
 
   
 
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
 
 
 
 
   
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz", "yrwQQpoA00WVm649FXM7AKqW");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+
+
 
   
 
