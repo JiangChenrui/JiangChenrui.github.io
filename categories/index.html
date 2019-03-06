@@ -671,28 +671,25 @@
 
 
 
-
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-
-   <script type="text/javascript">
-        var gitalk = new Gitalk({
+  
+    
+      <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+      <script type="text/javascript">
+        const gitalk = new Gitalk({
           clientID: '3a22bc08385fee05a86d',
           clientSecret: 'fd0923fd7627cd90a6d1a2d35c7e0a60a8eb5c87',
           repo: 'blog-comment',
           owner: 'JiangChenrui',
-          admin: ['JiangChenrui'],
-          id: location.pathname,
-          labels: 'gitalk',
-          perPage: 15,
+          admin: ''.split(','),
+          id: '1548213523000', #这个是基于文章时间创建 Issues ，默认是以文章标题作为标签创建 Issues 会导致长标题初始化失败。
           pagerDirection: 'last',
-          createIssueManually: true,
+          // facebook-like distraction free mode
           distractionFreeMode: false
         })
-
-        gitalk.render('gitalk-container')           
-       </script>
+        gitalk.render('gitalk-container')
+      </script>
+    
+  
 
 
   
