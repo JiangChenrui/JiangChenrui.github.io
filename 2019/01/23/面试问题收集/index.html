@@ -119,7 +119,7 @@
 
 
 
-  <meta name="keywords" content="计算机视觉,面试,深度学习,神经网络,">
+  <meta name="keywords" content="深度学习,计算机视觉,面试,神经网络,">
 
 
 
@@ -131,7 +131,7 @@
 
 
 <meta name="description" content="GItHub使用指南GitHub 编辑指导GItHub 公式编辑Markdown 教程   计算机视觉面试问题SVMCNN常见网络收集   softmax函数attentiondata augmentation正则化泰勒公式Batch Normalization网络参数是如何计算的ShuffleNetdeepwise separable conv最优化方法1.数学概念   RNNLSTMRPNPC">
-<meta name="keywords" content="计算机视觉,面试,深度学习,神经网络">
+<meta name="keywords" content="深度学习,计算机视觉,面试,神经网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试问题收集">
 <meta property="og:url" content="https://JiangChenrui.github.io/2019/01/23/面试问题收集/index.html">
@@ -401,16 +401,6 @@
 
           
             
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/01/23/面试问题收集/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2019/01/23/面试问题收集/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
           
 
           
@@ -466,11 +456,11 @@
       
         <div class="post-tags">
           
+            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
+          
             <a href="/tags/计算机视觉/" rel="tag"># 计算机视觉</a>
           
             <a href="/tags/面试/" rel="tag"># 面试</a>
-          
-            <a href="/tags/深度学习/" rel="tag"># 深度学习</a>
           
             <a href="/tags/神经网络/" rel="tag"># 神经网络</a>
           
@@ -540,7 +530,7 @@
   
     <div class="comments" id="comments">
     </div>
-  
+
   
 
 
@@ -867,31 +857,22 @@
 
 
 
-  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-  <script src="//unpkg.com/valine/dist/Valine.min.js"></script>
-  
-  <script type="text/javascript">
-    var GUEST = ['nick','mail','link'];
-    var guest = 'nick,mail,link';
-    guest = guest.split(',').filter(item=>{
-      return GUEST.indexOf(item)>-1;
-    });
-    new Valine({
-        el: '#comments' ,
-        verify: false,
-        notify: false,
-        appId: 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
-        appKey: 'yrwQQpoA00WVm649FXM7AKqW',
-        placeholder: '',
-        avatar:'robohash',
-        guest_info:guest,
-        pageSize:'10' || 10,
-    });
-  </script>
 
 
-
-
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '3a22bc08385fee05a86d',
+          clientSecret: 'fd0923fd7627cd90a6d1a2d35c7e0a60a8eb5c87',
+          repo: 'blog comment',
+          owner: 'JiangChenrui',
+          admin: ['JiangChenrui'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+    </script>
 
 
   
