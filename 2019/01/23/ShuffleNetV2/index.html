@@ -573,9 +573,6 @@
 
   
     <div class="comments" id="comments">
-      
-        <div id="gitment-container"></div>
-      
     </div>
 
   
@@ -901,47 +898,33 @@
 
 
 
-<!-- LOCAL: You can save these files to your site and update links -->
-    
-        
-        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-    
-<!-- END LOCAL -->
-
-    
-
-    
-      <script type="text/javascript">
-      function renderGitment(){
-        var gitment = new Gitment({
-            id: 'itfanr_blog_20190123042448', 
-            owner: 'JiangChenrui',
-            repo: 'JiangChenrui.github.io',
-            
-            oauth: {
-            
-            
-                client_secret: 'fd0923fd7627cd90a6d1a2d35c7e0a60a8eb5c87',
-            
-                client_id: '3a22bc08385fee05a86d'
-            }});
-        gitment.render('gitment-container');
-      }
-
-      
-      renderGitment();
-      
-      </script>
-    
 
 
 
 
 
 
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
 
-  
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '3a22bc08385fee05a86d',
+          clientSecret: 'fd0923fd7627cd90a6d1a2d35c7e0a60a8eb5c87',
+          repo: 'JiangChenrui.github.io',
+          owner: 'JiangChenrui',
+          admin: [''],
+          id: location.pathname,
+          labels: 'gitalk',
+          perPage: 15,
+          pagerDirection: 'last',
+          createIssueManually: true,
+          distractionFreeMode: false
+        })
+
+        gitalk.render('gitalk-container')           
+       </script>
 
 
   
