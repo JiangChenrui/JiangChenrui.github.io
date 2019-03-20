@@ -149,7 +149,7 @@
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/MoblieNetV2/MobileNetV2_Table4.png">
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/MoblieNetV2/MobileNetV2_Table5.png">
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/MoblieNetV2/MobileNetV2_Table6.png">
-<meta property="og:updated_time" content="2019-03-05T12:43:54.725Z">
+<meta property="og:updated_time" content="2019-03-18T07:23:59.303Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MobileNetV2 倒置残差和线性瓶颈">
 <meta name="twitter:description" content="参考博客论文地址   摘要&amp;emsp;&amp;emsp;在本文中，我们描述了一种新的移动网络结构MobileNetV2，它提高了移动网络在多类型任务和基准以及不同网络尺寸范围的最佳性能。我们还介绍了一种有效地使用轻量级网络进行目标检测的新颖架构SSDLite。并且我们将Deeplabv3进行修剪后构建出一种用于移动语义分割的模型，称为Mobile Deeplabv3。&amp;emsp;&amp;emsp;Mobile">
@@ -451,7 +451,7 @@
         <p><a href="https://blog.csdn.net/u011974639/article/details/79199588" target="_blank" rel="noopener">参考博客</a><br><a href="https://arxiv.org/pdf/1801.04381.pdf" target="_blank" rel="noopener">论文地址</a>  </p>
 <h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;在本文中，我们描述了一种新的移动网络结构MobileNetV2，它提高了移动网络在多类型任务和基准以及不同网络尺寸范围的最佳性能。我们还介绍了一种有效地使用轻量级网络进行目标检测的新颖架构SSDLite。并且我们将Deeplabv3进行修剪后构建出一种用于移动语义分割的模型，称为Mobile Deeplabv3。<br>&emsp;&emsp;MobileNetV2基于倒置残差结构，并且在窄boottleneck层中有快捷连接。中间的扩大层使用轻量级的深度卷积来过滤特征作为非线性的来源。另外，我们发现在窄层中去除非线性来保持表现能力是很重要的，我们证明了这可以提高性能并且直观地启发了我们网络的设计。<br>&emsp;&emsp;最后，我们的方法允许输入/输出域与转换的表达性分离，这为进一步分析提供了方便的框架。我们测量我们在ImageNet分类，COCO物体检测，VOC图像分割上的表现。我们评估准确性与乘法加法（MAdd）测量的操作次数，实际延迟和参数数量之间的权衡。  </p>
 <h2 id="1-介绍"><a href="#1-介绍" class="headerlink" title="1 介绍"></a>1 介绍</h2><p>&emsp;&emsp;神经网络在机器智能领域有革命性地作用，比如在图像识别任务中超过了人类的识别准确率。然而，提高准确率的同时带来了新的代价：先进的网络需要的高计算能力超越了许多手机和嵌入式应用计算能力。<br>&emsp;&emsp;本文介绍了一种新的为移动和资源受限环境特殊定制的神经网络结构。我们的网络在保持相同准确率的情况下通过减少计算量和内存需求，推动了移动定制计算机视觉模型的水平。<br>&emsp;&emsp;我们主要贡献是一种新的层模块：具有线性瓶颈的倒置残差。这个模块采用了一种低维的压缩表示作为输入，首先扩展成高维然后使用轻量级深度卷积过滤。随后使用线性卷积将特征投影回低维表示。官方实现TensorFlow-Slim提供一部分操作。<br>&emsp;&emsp;该模块可以在任何现代框架中使用标准操作有效地实现，并允许我们的模型使用标准基准测试在多个性能点上击败最新技术。此外，这种卷积模块特别适用于移动设计，因为它可以通过永远不会完全实现大型中间张量来显着减少推理期间所需的内存占用。这减少了许多嵌入式硬件设计中对主存储器访问的需求，这些设计提供了少量非常快速的软件控制的高速缓冲存储器。  </p>
-<h2 id="2-实际工作"><a href="#2-实际工作" class="headerlink" title="2 实际工作"></a>2 实际工作</h2><p>&emsp;&emsp;在最近几年，调整深度神经网络的架构以在准确率和性能之间有一个最佳平衡成为一个积极研究的领域。早期的网络如AlexNet,VGGNet,GoogLeNet以及ResNet，这些网络的设计都进行了大量的手工体系结构搜索和训练算法改进。最近在网络架构探索上有了很多进展，比如超参数还有各种网络修剪方法以及连通性学习。大量的工作也致力于内部卷积模块的连接架构的改变，比如ShuffleNet[20]或引入了稀疏性[21]和其它[22]。<br>&emsp;&emsp;最近，[23, 24, 25, 26]引入了架构探索的新方向，将遗传算法和强化学习加入了其中。然而一个缺点是得到的网络最终会十分复杂。本文的目的是找到然后是神经网络更好地运作并用它指导最简单的网络设计。我们的方法应该被视为[23]描述方法的一种互补和相近的工作。在这种情况下，我们的方法类似于[20,22]所采用的方法并允许进一步改善性能，同时提供内部操作的一部分。我们的网络设计基于MobileNetV1。保留了它的简洁性而且不要求任何特殊操作就能显著提升准确率，实现了移动应用的多图像分类和检测任务的最新技术。  </p>
+<h2 id="2-相关工作"><a href="#2-相关工作" class="headerlink" title="2 相关工作"></a>2 相关工作</h2><p>&emsp;&emsp;在最近几年，调整深度神经网络的架构以在准确率和性能之间有一个最佳平衡成为一个积极研究的领域。早期的网络如AlexNet,VGGNet,GoogLeNet以及ResNet，这些网络的设计都进行了大量的手工体系结构搜索和训练算法改进。最近在网络架构探索上有了很多进展，比如超参数还有各种网络修剪方法以及连通性学习。大量的工作也致力于内部卷积模块的连接架构的改变，比如ShuffleNet[20]或引入了稀疏性[21]和其它[22]。<br>&emsp;&emsp;最近，[23, 24, 25, 26]引入了架构探索的新方向，将遗传算法和强化学习加入了其中。然而一个缺点是得到的网络最终会十分复杂。本文的目的是找到然后是神经网络更好地运作并用它指导最简单的网络设计。我们的方法应该被视为[23]描述方法的一种互补和相近的工作。在这种情况下，我们的方法类似于[20,22]所采用的方法并允许进一步改善性能，同时提供内部操作的一部分。我们的网络设计基于MobileNetV1。保留了它的简洁性而且不要求任何特殊操作就能显著提升准确率，实现了移动应用的多图像分类和检测任务的最新技术。  </p>
 <h2 id="3-预备、讨论和直觉"><a href="#3-预备、讨论和直觉" class="headerlink" title="3 预备、讨论和直觉"></a>3 预备、讨论和直觉</h2><h3 id="3-1-深度可分离卷积"><a href="#3-1-深度可分离卷积" class="headerlink" title="3.1 深度可分离卷积"></a>3.1 深度可分离卷积</h3><p>&emsp;&emsp;深度可分离卷积是现在很多高效神经网络模块的关键部分，并且我们也将其应用到我们的网络中。基础思想是使用分解的版本代替全卷积层，将全卷积层分为深度卷积和点卷积两个部分。第一次深度卷积是使用单个卷积滤波器在每个输入通道上进行轻量级滤波。第二次点卷积使用1x1的卷积主要负责通过计算输入通道的线性组合来建立新的特征。<br>&emsp;&emsp;标准卷积在输入通道为$d_{i}$输出通道为$d_{j}$，卷积和大小为$k\times k$的情况下计算量为$h\times w\times d_{i}\times d_{j}\times k^2$。深度可分离卷积的计算量为</p>
 <script type="math/tex; mode=display">
 h*w*d_{i}*(k^2+d_{j})(1)</script><p>，实验证实深度可分离卷积在性能上与常规卷积几乎相同，但计算量大致变为原来的$1/k^2$。我们使用的k为3。  </p>
@@ -507,8 +507,8 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/01/23/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/01/23/深度学习笔记/" rel="next" title="深度学习笔记">
+                <i class="fa fa-chevron-left"></i> 深度学习笔记
               </a>
             
           </div>
@@ -613,7 +613,7 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -635,7 +635,7 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -700,7 +700,7 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-介绍"><span class="nav-text">1 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-实际工作"><span class="nav-text">2 实际工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-预备、讨论和直觉"><span class="nav-text">3 预备、讨论和直觉</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-深度可分离卷积"><span class="nav-text">3.1 深度可分离卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-线性瓶颈"><span class="nav-text">3.2 线性瓶颈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-残差倒置"><span class="nav-text">3.3 残差倒置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-信息流动的说明"><span class="nav-text">3.4 信息流动的说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-网络结构"><span class="nav-text">4 网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-实验记录"><span class="nav-text">5 实验记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-存取效率推断"><span class="nav-text">5.1 存取效率推断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-实验"><span class="nav-text">6 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-ImageNet分类"><span class="nav-text">6.1 ImageNet分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-目标检测"><span class="nav-text">6.2 目标检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-语义分割"><span class="nav-text">6.3 语义分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-强化学习"><span class="nav-text">6.4 强化学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-讨论和未来工作"><span class="nav-text">7 讨论和未来工作</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#摘要"><span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-介绍"><span class="nav-text">1 介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-相关工作"><span class="nav-text">2 相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-预备、讨论和直觉"><span class="nav-text">3 预备、讨论和直觉</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-深度可分离卷积"><span class="nav-text">3.1 深度可分离卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-线性瓶颈"><span class="nav-text">3.2 线性瓶颈</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-残差倒置"><span class="nav-text">3.3 残差倒置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-信息流动的说明"><span class="nav-text">3.4 信息流动的说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-网络结构"><span class="nav-text">4 网络结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-实验记录"><span class="nav-text">5 实验记录</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-存取效率推断"><span class="nav-text">5.1 存取效率推断</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-实验"><span class="nav-text">6 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#6-1-ImageNet分类"><span class="nav-text">6.1 ImageNet分类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-2-目标检测"><span class="nav-text">6.2 目标检测</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-3-语义分割"><span class="nav-text">6.3 语义分割</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-4-强化学习"><span class="nav-text">6.4 强化学习</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-讨论和未来工作"><span class="nav-text">7 讨论和未来工作</span></a></li></ol></div>
             
 
           </div>
