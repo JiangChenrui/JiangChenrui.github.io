@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[vnc操作]]></title>
+    <url>%2F2019%2F03%2F21%2Fvnc%E6%93%8D%E4%BD%9C%2F</url>
+    <content type="text"><![CDATA[参考博客 查看vnc进程：1ps -ef | grep vnc 杀掉vnc进程1vncserver -kill :9 使用指定分辨率启动vnc1vncserver -geometry 1920x1080 :43 查看vnc帮助1vnc -help]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>远程桌面</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Residual Attention Network]]></title>
     <url>%2F2019%2F03%2F18%2FResidual-Attention-Network%2F</url>
     <content type="text"><![CDATA[摘要&emsp;&emsp;在这个工作中，我们提出了“残差注意网络”，它是一种使用注意力机制的卷积神经网络，能够将最先进的前馈神经网络机制融合到端对端的训练中。我们的残差注意网络是由生成注意力感知特征的注意力模块堆叠而成的。注意力感知特征会随着层数的加深自适应地改变。在每个注意力模块的内部，自上而下自下而上的前馈结构能够将前馈和反馈结构展开到单个的前馈过程中。重要的事，我们提出的注意力残差学习非常深的残差注意网络，能够轻松地扩展到数百层。&emsp;&emsp;我们对CIFAR-10和CIFAR-100数据集进行了广泛的分析，以验证上述每个模块的有效性。我们的剩余注意力网络在三个基准数据集上实现了最先进的物体识别性能，包括CIFAR-10（3.90％误差），CIFAR-100（20.45％误差）和ImageNet（4.8％单一模型和单一作物，顶部 - 5错误）。请注意，与ResNet-200相比，我们的方法实现了0.6％的前1精度提升，46％的主干深度和69％的前向FLOP。该实验还表明，我们的网络可以抵御嘈杂的标签。 1 介绍&emsp;&emsp;]]></content>
@@ -118,6 +130,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F01%2F23%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.博客搭建参考next主题使用教程多终端同步教程主题美化科学上网 快速开始创建一个新的文章1hexo new "My New Post" More info: Writing 运行服务1hexo server More info: Server 生成静态文件1hexo generate More info: Generating 部署到远程站点1hexo deploy 发布文章1hexo d --g More info: Deployment 添加图片在目标的.comfig.yml文件的38行修改数据，可以在新建博客的同时新建一个资源文件夹来放置图片，博客引用时直接使用![picture](picture_name)]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>博客</tag>
+        <tag>hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[深度学习笔记]]></title>
     <url>%2F2019%2F01%2F23%2F%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[培养专注的习惯，学会独立思考 1 学习AI需要哪些技能 1.编程基础 熟练使用linux，git，vim等环境和工具。 熟练掌握 C/C++、Python等编程语言。 熟练掌握cmake，g++等编译工具。 2.算法基础 熟悉传统图像算法，机器学习算法。 熟练跟踪并阅读行业前沿研究，复现结果。 系统性熟悉深度学习理论。 3.框架基础 熟练掌握 Caffe、TensorFlow、pytorch等以及不断新出的开源平台。 4.其它基础 掌握爬虫等前后端的基础知识。 了解并熟悉Cuda等GPU编程技术，了解一些移动端的硬件知识。 了解并熟悉 Android、iOS 等移动端的基础知识，在项目中可能会需要使用。 2 吴恩达深度学习课后作业吴恩达深度学习视频作业参考 2.1 神经网络和深度学习2.1.1 logistic回归作业代码 2.1.2 浅层神经网络作业代码 2.1.3 深层神经网络作业代码 2.2 改善深层神经网络2.2.1 深度学习的实用层面3 cs231n课程笔记3.1 图像处理的一些简单方法12345678910from PIL import Imagefrom PIL import ImageEnhanceimport matplotlib.pyplot as plt# 原始图像image = Image.open('match_learning/picture/1.jpg') # 打开图片# image.show()plt.figure("origan_image")plt.imshow(image)plt.show() 123456789# 亮度增强enh_bri = ImageEnhance.Brightness(image)brightness = 1.5image_brightened = enh_bri.enhance(brightness)# image_brightened.show()plt.figure("brightened")plt.imshow(image_brightened)plt.show()image_brightened.save('match_learning/picture/image_brightened.jpg') 123456789# 色度增强enh_col = ImageEnhance.Color(image)color = 1.5image_colored = enh_col.enhance(color)# image_colored.show()plt.figure("colored")plt.imshow(image_colored)plt.show()image_colored.save('match_learning/picture/image_colored.jpg') 123456789# 对比度增强enh_con = ImageEnhance.Contrast(image)contrast = 1.5image_contrasted = enh_con.enhance(contrast)# image_contrasted.show()plt.figure("contrast")plt.imshow(image_contrasted)plt.show()image_contrasted.save('match_learning/picture/image_contrasted.jpg') 123456789# 锐度增强enh_sha = ImageEnhance.Sharpness(image)sharpness = 1.5image_sharped = enh_sha.enhance(sharpness)# image_sharped.show()plt.figure("sharpness")plt.imshow(image_sharped)plt.show()image_sharped.save('match_learning/picture/image_sharped.jpg') 3.2 python学习笔记]]></content>
@@ -129,18 +153,6 @@
         <tag>深度学习</tag>
         <tag>笔记</tag>
         <tag>计算机视觉</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F01%2F23%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.博客搭建参考next主题使用教程多终端同步教程主题美化科学上网 快速开始创建一个新的文章1hexo new "My New Post" More info: Writing 运行服务1hexo server More info: Server 生成静态文件1hexo generate More info: Generating 部署到远程站点1hexo deploy 发布文章1hexo d --g More info: Deployment 添加图片在目标的.comfig.yml文件的38行修改数据，可以在新建博客的同时新建一个资源文件夹来放置图片，博客引用时直接使用![picture](picture_name)]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>博客</tag>
-        <tag>hexo</tag>
       </tags>
   </entry>
 </search>
