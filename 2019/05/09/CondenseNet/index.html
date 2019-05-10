@@ -150,7 +150,7 @@
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Table2.png">
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Table3.png">
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Table4.png">
-<meta property="og:updated_time" content="2019-05-09T10:02:29.691Z">
+<meta property="og:updated_time" content="2019-05-10T01:30:24.499Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CondenseNet">
 <meta name="twitter:description" content="论文地址代码地址 1. 简介&amp;emsp;&amp;emsp; 2. 相关工作 &amp;emsp;&amp;emsp; 3. CondenseNets&amp;emsp;&amp;emsp;在DenseNet的基础上使用1x1的分组卷积效果不好，作者认为这是由使用前面的特征图与当前特征图合并做输入引起的。这与典型的卷积输入有两点不同：1.它们有固定的秩序，2.它们更加多样化。不相关组的特征分配会妨碍特征在网络的再利用。作者对输入的特征图">
@@ -455,7 +455,7 @@
 <p>&emsp;&emsp;</p>
 <h2 id="3-CondenseNets"><a href="#3-CondenseNets" class="headerlink" title="3. CondenseNets"></a>3. CondenseNets</h2><p>&emsp;&emsp;在DenseNet的基础上使用1x1的分组卷积效果不好，作者认为这是由使用前面的特征图与当前特征图合并做输入引起的。这与典型的卷积输入有两点不同：1.它们有固定的秩序，2.它们更加多样化。不相关组的特征分配会妨碍特征在网络的再利用。作者对输入的特征图进行随机置换减小了对准确性的负面影响，但在相同的计算成本下比smaller DenseNets准确率低。<br>&emsp;&emsp;在DenseNet中已经证明：将早期的特征作为后期层的输入对特征重用是十分有效的。但是并不是所有的早期特征对随后的层有影响，很难预测哪些特征应该被使用。为了解决这个问题，我们提出了一种在训练中自动学习输入特征分组的方法。学习组结构允许每个滤波器选择它自己最相关的一组输入。<br><img src="/2019/05/09/CondenseNet/Figure3.png" alt="figure3">  </p>
 <h2 id="3-1-学习组卷积"><a href="#3-1-学习组卷积" class="headerlink" title="3.1 学习组卷积"></a>3.1 学习组卷积</h2><p>&emsp;&emsp;我们通过多阶段过程学习组卷积，如图3和图4所示。训练迭代的前半部分包括压缩阶段。在这里，我们重复训练网络，稀疏诱导正则化，进行固定次数的迭代，然后修剪掉具有权重比较低的不重要滤波器。培训的后半部分包括优化阶段，我们在分组修复后学习过滤器。执行修剪时，我们确保来自同一组的过滤器共享相同的稀疏模式。结果，一旦训练完成（测试阶段），可以使用标准组卷积来实现稀疏化层。由于组卷积由许多深度学习库有效实现，因此在理论上和实践中都可以节省大量计算量。我们将在下面介绍我们的方法。  </p>
-<h3 id="滤波器分组"><a href="#滤波器分组" class="headerlink" title="滤波器分组"></a>滤波器分组</h3><p>&emsp;&emsp;卷积过程用4D张量$O<em>R</em>W*H$表示，其中O表示输出通道数，R表示输入通道数，W和H表示滤波器的长宽。训练前将滤波器分为相同大小的G组，$F_{ij}^{g}$表示组g内第i个输出的第j个输入的权重。  </p>
+<h3 id="滤波器分组"><a href="#滤波器分组" class="headerlink" title="滤波器分组"></a>滤波器分组</h3><p>&emsp;&emsp;卷积过程用4D张量$O\times R\times W\times H$表示，其中O表示输出通道数，R表示输入通道数，W和H表示滤波器的长宽。训练前将滤波器分为相同大小的G组，$F_{ij}^{g}$表示组g内第i个输出的第j个输入的权重。  </p>
 <h3 id="压缩标准"><a href="#压缩标准" class="headerlink" title="压缩标准"></a>压缩标准</h3><p>&emsp;&emsp;在训练过程中，筛选出没组中不重要的输入特征的子集。第j个输入特征的对于滤波器组g的重要性通过它在组内所有输出之间的权重的平均值来评估，即$\sum_{i=1}^{O/G}{|F_{ij}^{g}|}$，换句话说，如果它们的L1范数比其他列的L1范数小，则我们删除$F^{g}$中的列（通过将它们归零）。这使卷积层在结构上稀疏：来自同一组的滤波器总是接收与相同的特征输入。  </p>
 <h3 id="Group-Lasso"><a href="#Group-Lasso" class="headerlink" title="Group Lasso"></a>Group Lasso</h3><p>&emsp;&emsp;为减少权重修剪带来的负面影响，L1正则化通常用来诱导稀疏性。为了是同一组滤波器有相同的稀疏输入，我们使用以下的组稀疏性计算方法：</p>
 <script type="math/tex; mode=display">\sum_{g=1}^{G}\sum_{j=1}^{R}\sqrt{\sum_{i=1}^{O/G}{F_{ij}^{g}}^2}</script><p>&emsp;&emsp;组正则化将$F_{g}$中所有的元素置为0，因为平方根中的项由该列中的最大元素控制。这会使模型向组水平的稀疏方面发展。  </p>
@@ -1308,7 +1308,38 @@
         showTime(Counter);
       }
     });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config("");
 </script>
@@ -1326,17 +1357,6 @@
 </script>
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
-
-
-
-  
-
-  
-
-  
-  
-
-  
   
 
 
