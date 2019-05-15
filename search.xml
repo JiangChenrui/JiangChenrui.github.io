@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[jupyter添加虚拟环境]]></title>
+    <url>%2F2019%2F05%2F15%2Fjupyter%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83%2F</url>
+    <content type="text"><![CDATA[参考地址服务器端jupyter开启远程访问 virtualenv + jupyter notebook&emsp;&emsp;为了方便远程使用服务器，在服务器端打开了远程访问，之后需要将服务器中创建的虚拟环境添加到jupyter中。 1.进入虚拟环境 1source pytorch3/bin/activate 2.安装IPykernel 1234&lt; python2 &gt;pip install ipykernel&lt; python3 &gt;pip3 install ipykernel 3.将 Virtualenv 加入IPykernel 1234&lt; python2 &gt;python2 -m ipykernel install --user --name=myproject&lt; python3 &gt;python3 -m ipykernel install --user --name=myproject 4.启动jupyter notebook并更改kernel]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>远程桌面</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Joint Face Detection and Alignment Using Multitask]]></title>
+    <url>%2F2019%2F05%2F10%2FJoint-Face-Detection-and-Alignment-Using-Multitask%2F</url>
+    <content type="text"><![CDATA[论文地址 摘要&emsp;&emsp;由于各种姿势，照明和遮挡，无约束环境中的人脸检测和对齐具有挑战性。最近的研究表明，深度学习方法可以在这两项任务上取得好的表现。在本文中，我们提出了一个深度级联多任务框架，它利用检测和对齐之间的内在联系来提高其性能。特别是，我们的框架利用级联架构，通过三个阶段精心设计的深度卷积网络，以粗略到精细的方式预测面部和地标位置。此外，我们提出了一种新的在线硬样本挖掘策略，可进一步提高实践中的性能。我们的方法在具有挑战性的人脸检测数据集和基准测试和WIDER FACE人脸检测基准测试方面取得了最先进的技术，并在面部对齐的野外基准测试中注释了面部标志，同时保持了实时性能。 简介&emsp;&emsp;面部检测和对齐对于许多面部应用至关重要，例如面部识别和面部表情分析。然而，面部的大的视觉变化，例如遮挡，大的姿势变化和极端的照明，对于实际应用中的这些任务提出了巨大的挑战。&emsp;&emsp;Viola和Jones提出的级联人脸检测器利用Haar-Like特征和AdaBoost训练级联分类器，实现了良好的性能和实时效率。但是，相当一部分工作表明，这种检测在实际应用中面对剧烈视觉变化的人脸时会显著减低表现，即使有高级的特征和分类器。基于级联结构，Mathias等人引入了用于人脸检测的可变形零件模型，并实现了卓越的性能。然而，它们在计算上是昂贵的并且通常在训练阶段需要大量的注释。最近，卷积神经网络（CNN）在各种计算机视觉任务中取得了显着进步，例如图像分类和人脸识别。受到计算机视觉任务中深度学习方法的重大成功的启发，一些研究利用深度CNN进行人脸检测。杨等人训练深层CNN进行面部属性识别，以获得面部区域的高响应，进一步产生面部候选窗口。然而，由于其复杂的CNN结构，这种方法在实践中耗时。李等人使用级联CNN进行人脸检测，但它需要从面部检测中进行边界框校准，并且需要额外的计算费用，并忽略了面部标志定位和边界框回归之间的内在相关性。&emsp;&emsp;面部对齐也吸引了广泛的研究兴趣。该领域的研究工作大致可分为两类，基于回归的方法和模板拟合方法。最近，张等人提出使用面部属性识别作为辅助任务，以使用深CNN增强面部对齐性能。&emsp;&emsp;然而，大多数先前的面部检测和面部对齐方法忽略了这两个任务之间的固有相关性。虽然现有的几个作品试图共同解决它们，但这些作品仍然存在局限性。例如，陈等人利用像素值差异的特征，与随机森林联合进行对齐和检测。但是，这些手工功能限制了它的性能。张等人使用多任务CNN来提高多视图人脸检测的准确性，但检测召回受到弱脸检测器产生的初始检测窗口的限制。&emsp;&emsp;另一方面，在训练中挖掘硬样品对于增强探测器的功率至关重要。然而，传统的硬样本挖掘通常以离线方式执行，这显着增加了手动操作。期望设计一种用于面部检测的在线硬样本挖掘方法，其自动适应当前训练状态。&emsp;&emsp;在这封信中，我们提出了一个新的框架，通过多任务学习使用统一的级联CNN来集成这两个任务。拟议的CNN包括三个阶段。在第一阶段，它通过浅CNN快速生成候选窗口。然后，它通过更复杂的CNN拒绝大量非面部窗口来细化窗口。最后，它使用更强大的CNN再次细化结果并输出五个面部标志位置。由于这个多任务学习框架，算法的性能可以显着提高。本函的主要贡献概括如下： (1) 我们提出了一种新的级联CNNs框架，用于联合面部检测和对齐，并精心设计轻量级CNN架构以实现实时性能。 (2) 我们提出了一种有效的方法来进行在线硬样本挖掘，以提高性能。 (3) 在具有挑战性的基准测试中进行了广泛的实验，以显示与人脸检测和面部对齐任务中的最新技术相比所提出的方法的显着性能改进。 方法 总体框架&emsp;&emsp; CNN结构&emsp;&emsp; 训练&emsp;&emsp; 实验&emsp;&emsp;]]></content>
+      <categories>
+        <category>论文阅读</category>
+      </categories>
+      <tags>
+        <tag>人脸识别</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[CondenseNet]]></title>
     <url>%2F2019%2F05%2F09%2FCondenseNet%2F</url>
     <content type="text"><![CDATA[论文地址代码地址 1. 简介&emsp;&emsp; 2. 相关工作 &emsp;&emsp; 3. CondenseNets&emsp;&emsp;在DenseNet的基础上使用1x1的分组卷积效果不好，作者认为这是由使用前面的特征图与当前特征图合并做输入引起的。这与典型的卷积输入有两点不同：1.它们有固定的秩序，2.它们更加多样化。不相关组的特征分配会妨碍特征在网络的再利用。作者对输入的特征图进行随机置换减小了对准确性的负面影响，但在相同的计算成本下比smaller DenseNets准确率低。&emsp;&emsp;在DenseNet中已经证明：将早期的特征作为后期层的输入对特征重用是十分有效的。但是并不是所有的早期特征对随后的层有影响，很难预测哪些特征应该被使用。为了解决这个问题，我们提出了一种在训练中自动学习输入特征分组的方法。学习组结构允许每个滤波器选择它自己最相关的一组输入。 3.1 学习组卷积&emsp;&emsp;我们通过多阶段过程学习组卷积，如图3和图4所示。训练迭代的前半部分包括压缩阶段。在这里，我们重复训练网络，稀疏诱导正则化，进行固定次数的迭代，然后修剪掉具有权重比较低的不重要滤波器。培训的后半部分包括优化阶段，我们在分组修复后学习过滤器。执行修剪时，我们确保来自同一组的过滤器共享相同的稀疏模式。结果，一旦训练完成（测试阶段），可以使用标准组卷积来实现稀疏化层。由于组卷积由许多深度学习库有效实现，因此在理论上和实践中都可以节省大量计算量。我们将在下面介绍我们的方法。 滤波器分组&emsp;&emsp;卷积过程用4D张量$O\times R\times W\times H$表示，其中O表示输出通道数，R表示输入通道数，W和H表示滤波器的长宽。训练前将滤波器分为相同大小的G组，$F_{ij}^{g}$表示组g内第i个输出的第j个输入的权重。 压缩标准&emsp;&emsp;在训练过程中，筛选出没组中不重要的输入特征的子集。第j个输入特征的对于滤波器组g的重要性通过它在组内所有输出之间的权重的平均值来评估，即$\sum_{i=1}^{O/G}{|F_{ij}^{g}|}$，换句话说，如果它们的L1范数比其他列的L1范数小，则我们删除$F^{g}$中的列（通过将它们归零）。这使卷积层在结构上稀疏：来自同一组的滤波器总是接收与相同的特征输入。 Group Lasso&emsp;&emsp;为减少权重修剪带来的负面影响，L1正则化通常用来诱导稀疏性。为了是同一组滤波器有相同的稀疏输入，我们使用以下的组稀疏性计算方法： \sum_{g=1}^{G}\sum_{j=1}^{R}\sqrt{\sum_{i=1}^{O/G}{F_{ij}^{g}}^2}&emsp;&emsp;组正则化将$F_{g}$中所有的元素置为0，因为平方根中的项由该列中的最大元素控制。这会使模型向组水平的稀疏方面发展。 压缩因子&emsp;&emsp;除了学习组卷积能够自动发现良好的连接模式之外，它们还比标准组卷积更灵活。 特别是，组使用的特征图的比例不一定需要是1/G。 我们定义了一个可能与G不同的凝聚因子C，并允许每个组选择输入的R/C。 压缩步骤&emsp;&emsp;与在预训练网络中修剪权重的方法相比，我们的权重修剪过程被整合到训练过程中。 如图3所示（使用C = 3），在每个C-1压缩阶段结束时，我们修剪滤波器权重的1/C。 在训练结束时，每个滤波器组中仅保留1/C的权重。 在我们的所有实验中，我们将凝聚阶段的训练时期的数量设置为$M/2(c-1)$，其中M表示训练时期的总数 ，使得训练时期的前半部分用于压缩。 在训练过程的后半部分，优化阶段，我们训练了稀疏模型。（实际操作中将剪掉的分支置为0）。 学习率&emsp;&emsp;我们采用Loshchilov等人的余弦形状学习率表。它可以平滑地退化学习率，并且通常可以提高准确度。 图4将学习率显示为训练时期（品红色）的函数，以及在CIFAR-10数据集上训练的CondenseNet的相应训练损失（蓝色曲线）。在时期150处的损失的突然增加是由最终的冷凝操作引起的，其消除了剩余重量的一半。 然而，该图显示该模型在优化阶段从该修剪步骤逐渐恢复。 索引层&emsp;&emsp;在训练完成后，我们移除修剪的权重并将稀疏模型转化为具有常规模式的网络，在图三的测试步骤中可以看到索引层。索引层在输入滤波器重新排列进行输出，以便于现有的常规组卷积的实现。图1显示了训练期间（中间）和测试期间（右侧）CondenseNet层的转换。 在训练期间，1×1卷积是学习组卷积（L-Conv），但在测试期间，在索引层的帮助下，它变为标准组卷积（G-Conv）。 3.2 网络设计&emsp;&emsp;除了使用上面介绍的学习组卷积之外，我们还对常规DenseNet架构进行了两处更改。这些更改旨在进一步简化体系结构并提高其计算效率。图5说明了我们对DenseNet架构所做的两项更改。 增长增长率&emsp;&emsp;原始的DenseNet设计每层增加$k$个特征图，表示增长率。在DenseNet中，较深的层更依赖于高水平的特征而不是低水平的特征，这激励我们提高网络的捷径连接。我们发现可以通过随深度增长而提高增长率来实现。这增加了后期层相对于前面层的比率。将增长率变化设置为$k=2^{m-1}k_{0}$，其中m是密集块的索引，k0是常量。 这种设定增长率的方式不会引入任何额外的超参数。 “增长增长率”（IGR）策略在模型的后续层中放置了更大比例的参数。 这大大提高了计算效率，但在某些情况下可能会降低参数效率。根据具体的硬件限制而定。 完全密集连接&emsp;&emsp;为了鼓励功能重用，甚至比原来的DenseNet架构更多，我们将输入层连接到网络中的所有后续层，即使这些层位于不同的密集块中（参见图5）。由于密集块具有不同的特征分辨率，因此当我们使用平均池作为低分辨率层的输入时，我们对具有更高分辨率的特征映射进行下采样。 4 实验&emsp;&emsp;]]></content>
@@ -51,17 +74,6 @@
       </categories>
       <tags>
         <tag>深度学习，计算机视觉，CNN</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[将博客搬至CSDN]]></title>
-    <url>%2F2019%2F02%2F26%2F%E5%B0%86%E5%8D%9A%E5%AE%A2%E6%90%AC%E8%87%B3CSDN%2F</url>
-    <content type="text"><![CDATA[尝试将个人博客搬到CSDN]]></content>
-      <categories>
-        <category>博客</category>
-      </categories>
-      <tags>
-        <tag>博客</tag>
       </tags>
   </entry>
   <entry>
@@ -142,18 +154,6 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[Hello World]]></title>
-    <url>%2F2019%2F01%2F23%2Fhello-world%2F</url>
-    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.博客搭建参考next主题使用教程多终端同步教程主题美化hexo中使用Mathjax科学上网 快速开始创建一个新的文章1hexo new "My New Post" More info: Writing 运行服务1hexo server More info: Server 生成静态文件1hexo generate More info: Generating 部署到远程站点1hexo deploy 发布文章1hexo d --g More info: Deployment 添加图片在目标的.comfig.yml文件的38行修改数据，可以在新建博客的同时新建一个资源文件夹来放置图片，博客引用时直接使用![picture](picture_name) 数学公式行内效果为(a+b+c)^2独自一行公式需要使公式独占一行效果为 (a+b+c)^2]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>博客</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[深度学习笔记]]></title>
     <url>%2F2019%2F01%2F23%2F%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[培养专注的习惯，学会独立思考 1 学习AI需要哪些技能 1.编程基础 熟练使用linux，git，vim等环境和工具。 熟练掌握 C/C++、Python等编程语言。 熟练掌握cmake，g++等编译工具。 2.算法基础 熟悉传统图像算法，机器学习算法。 熟练跟踪并阅读行业前沿研究，复现结果。 系统性熟悉深度学习理论。 3.框架基础 熟练掌握 Caffe、TensorFlow、pytorch等以及不断新出的开源平台。 4.其它基础 掌握爬虫等前后端的基础知识。 了解并熟悉Cuda等GPU编程技术，了解一些移动端的硬件知识。 了解并熟悉 Android、iOS 等移动端的基础知识，在项目中可能会需要使用。 2 吴恩达深度学习课后作业吴恩达深度学习视频作业参考 2.1 神经网络和深度学习2.1.1 logistic回归作业代码 2.1.2 浅层神经网络作业代码 2.1.3 深层神经网络作业代码 2.2 改善深层神经网络2.2.1 深度学习的实用层面3 cs231n课程笔记3.1 图像处理的一些简单方法12345678910from PIL import Imagefrom PIL import ImageEnhanceimport matplotlib.pyplot as plt# 原始图像image = Image.open('match_learning/picture/1.jpg') # 打开图片# image.show()plt.figure("origan_image")plt.imshow(image)plt.show() 123456789# 亮度增强enh_bri = ImageEnhance.Brightness(image)brightness = 1.5image_brightened = enh_bri.enhance(brightness)# image_brightened.show()plt.figure("brightened")plt.imshow(image_brightened)plt.show()image_brightened.save('match_learning/picture/image_brightened.jpg') 123456789# 色度增强enh_col = ImageEnhance.Color(image)color = 1.5image_colored = enh_col.enhance(color)# image_colored.show()plt.figure("colored")plt.imshow(image_colored)plt.show()image_colored.save('match_learning/picture/image_colored.jpg') 123456789# 对比度增强enh_con = ImageEnhance.Contrast(image)contrast = 1.5image_contrasted = enh_con.enhance(contrast)# image_contrasted.show()plt.figure("contrast")plt.imshow(image_contrasted)plt.show()image_contrasted.save('match_learning/picture/image_contrasted.jpg') 123456789# 锐度增强enh_sha = ImageEnhance.Sharpness(image)sharpness = 1.5image_sharped = enh_sha.enhance(sharpness)# image_sharped.show()plt.figure("sharpness")plt.imshow(image_sharped)plt.show()image_sharped.save('match_learning/picture/image_sharped.jpg') 3.2 python学习笔记]]></content>
@@ -163,8 +163,20 @@
       <tags>
         <tag>深度学习</tag>
         <tag>编程</tag>
-        <tag>计算机视觉</tag>
         <tag>笔记</tag>
+        <tag>计算机视觉</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Hello World]]></title>
+    <url>%2F2019%2F01%2F23%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.博客搭建参考next主题使用教程多终端同步教程主题美化hexo中使用Mathjax科学上网 快速开始创建一个新的文章1hexo new "My New Post" More info: Writing 运行服务1hexo server More info: Server 生成静态文件1hexo generate More info: Generating 部署到远程站点1hexo deploy 发布文章1hexo d --g More info: Deployment 添加图片在目标的.comfig.yml文件的38行修改数据，可以在新建博客的同时新建一个资源文件夹来放置图片，博客引用时直接使用![picture](picture_name) 数学公式行内效果为(a+b+c)^2独自一行公式需要使公式独占一行效果为 (a+b+c)^2]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>博客</tag>
       </tags>
   </entry>
 </search>
