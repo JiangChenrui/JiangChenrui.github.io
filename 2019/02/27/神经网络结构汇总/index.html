@@ -141,7 +141,7 @@
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/LeNet5.png">
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/AlexNet.png">
 <meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/Vgg.png">
-<meta property="og:updated_time" content="2019-03-06T11:39:39.917Z">
+<meta property="og:updated_time" content="2019-05-28T02:59:36.282Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="神经网络结构汇总">
 <meta name="twitter:description" content="本文收集了一些神经网络的架构，包含常用的一些模型。   LeNet51.Input&amp;emsp;&amp;emsp;输入图像统一归一化为32*32。2.C1卷积层&amp;emsp;&amp;emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。3.S2池化层&amp;emsp;&amp;emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。4.C3卷积">
@@ -449,6 +449,7 @@
 <p>1.Input层<br>&emsp;&emsp;输入图片为224*224*3。<br>2.CONV3-64<br>&emsp;&emsp;经过（3*3*3）*64卷积核，生成featuremap为224*224*64。<br>3.CONV3-64<br>&emsp;&emsp;经过（3*3*64）*64卷积核，生成featuremap为224*224*64。<br>4.Max pool<br>&emsp;&emsp;经过（2*2）max pool核，生成featuremap为112*112*64。<br>5.CONV3-128。<br>&emsp;&emsp;经过（3*3*64）*128卷积核，生成featuremap为112*112*128。<br>6.CONV3-128<br>&emsp;&emsp; 经过（3*3*128）*128卷积，生成featuremap为112*112*128。<br>7.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为56*56*128。<br>8.CONV3-256<br>&emsp;&emsp;经过（3*3*128）*256卷积核，生成featuremap为56*56*256。<br>9.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>10.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>11.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为28*28*256。<br>12.CONV3-512<br>&emsp;&emsp;经过（3*3*256）*512卷积核，生成featuremap为28*28*512。<br>13.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>14.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>15.Max pool<br>&emsp;&emsp;经过（2*2）maxpool,生成featuremap为14*14*512。<br>16.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>17.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>18.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>19.Max pool<br>&emsp;&emsp;经过2*2卷积，生成featuremap为7*7*512。<br>20.FC-4096<br>&emsp;&emsp;输入为7*7*512，输出为1*1*4096，总参数量为7*7*512*4096。<br>21.FC-4096<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>22.FC-1000<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
 <p><strong>总结:</strong>  </p>
 <p><strong>1. 共包含参数约为550M。</strong><br><strong>2. 全部使用3*3的卷积核和2*2的最大池化核。</strong><br><strong>3. 简化了卷积神经网络的结构。</strong>  </p>
+<p><a href="https://blog.csdn.net/u011974639/article/details/79199306" target="_blank" rel="noopener">MobileNet</a>  </p>
 
       
     </div>
@@ -489,8 +490,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/03/18/Domain-Separation-Networks/" rel="prev" title="Domain Separation Networks">
-                Domain Separation Networks <i class="fa fa-chevron-right"></i>
+              <a href="/2019/03/18/Residual-Attention-Network/" rel="prev" title="Residual Attention Network">
+                Residual Attention Network <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -585,7 +586,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -596,7 +597,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">categories</span>
                 </a>
               </div>
@@ -607,7 +608,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
