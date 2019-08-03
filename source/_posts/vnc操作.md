@@ -7,7 +7,7 @@ tags: [服务器, 远程桌面]
 
 [参考博客](https://blog.csdn.net/yingyujianmo/article/details/45201097)  
 
-## 查看vnc进程：
+## 查看vnc进程
 
 ```shell
 ps -ef | grep vnc

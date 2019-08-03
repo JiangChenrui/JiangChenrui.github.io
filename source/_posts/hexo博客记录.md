@@ -15,11 +15,11 @@ tags: [hexo, 博客]
 
 * 然后在项目地址下输入
 
-```shell
-npm install hexo  # 安装hexo
-npm install
-npm install hexo-deployer-git
-```
+    ```shell
+    npm install hexo  # 安装hexo
+    npm install
+    npm install hexo-deployer-git
+    ```
 
 ## vscode编写markdown
 
