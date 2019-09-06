@@ -13,7 +13,7 @@ tags:
 
     ```python
     import sys
-    sys.excutable
+    sys.executable
 
     '/home/boyunvision/pytorch3.6/bin/python'
     ```
@@ -22,7 +22,7 @@ tags:
 
     ```python
     import sys
-    sys.executabel
+    sys.executable
 
     '/usr/bin/python'
     ```
