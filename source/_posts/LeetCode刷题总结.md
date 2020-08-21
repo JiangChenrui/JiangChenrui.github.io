@@ -1,8 +1,8 @@
 ---
 title: LeetCode刷题总结
 date: 2019-01-23 19:14:30
-categories: 编程
-tags: [C++, LeetCode, 编程, 算法]
+categories: 算法
+tags: [c++, LeetCode, 算法]
 ---
 
 ## 1 数组用法

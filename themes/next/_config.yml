@@ -186,9 +186,9 @@ sidebar:
   #  - hide    expand only when click on the sidebar toggle icon.
   #  - remove  Totally remove sidebar including sidebar toggle.
   display: post
-  #display: always
-  #display: hide
-  #display: remove
+  # display: always
+  # display: hide
+  # display: remove
 
   # Sidebar offset from top menubar in pixels (only for Pisces | Gemini).
   offset: 12
@@ -233,9 +233,9 @@ post_meta:
 # Dependencies: https://github.com/willin/hexo-wordcount
 post_wordcount:
   item_text: true
-  wordcount: false
+  wordcount: true
   min2read: false
-  totalcount: false
+  totalcount: true
   separated_meta: true
 
 # Wechat Subscriber
@@ -386,7 +386,7 @@ changyan:
 # You can get your appid and appkey from https://leancloud.cn
 # more info please open https://valine.js.org 
 valine:
-  enable: false
+  enable: true
   appid:  cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz
   appkey: yrwQQpoA00WVm649FXM7AKqW
   notify: false # mail notifier , https://github.com/xCss/Valine/wiki

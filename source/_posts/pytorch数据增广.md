@@ -5,7 +5,6 @@ categories: pytorch
 tags:
 - 深度学习
 - 笔记
-- 编程
 ---
 
 **常用的数据增广方法**

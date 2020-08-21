@@ -5,6 +5,10 @@ categories: [blog]
 tags: [hexo, 博客]
 ---
 
+## [hexo+next博客搭建攻略](https://io-oi.me/tech/hexo-next-optimization/#%E5%8A%A0%E9%80%9F-hexo-%E5%8D%9A%E5%AE%A2)
+
+[博客优化](https://gisersqdai.top/2017/11/22/hexo+NexT%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E7%AC%AC%E4%BA%8C%E5%BC%B9/)
+
 ## [多端更新hexo博客](https://blog.csdn.net/Monkey_LZL/article/details/60870891)
 
 [换电脑更新博客](https://www.zhihu.com/question/21193762)

@@ -1,7 +1,7 @@
 ---
 title: numpy.random函数的一些用法
 date: 2019-01-23 19:07:20
-categories: 编程
+categories: python
 tags: [python, numpy, 笔记]
 ---
 [参考博客](https://blog.csdn.net/u012149181/article/details/78913167)
