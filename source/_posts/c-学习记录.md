@@ -6,7 +6,7 @@ tags:
 - c++
 ---
 
-## 指针常量和常量指针
+## 一.指针常量和常量指针
 
 常量指针指向的内容不可以修改，指针的指向可以修改；指针常量的指向不可以修改，指针指向的值可以修改。
 
@@ -31,14 +31,115 @@ void const_pointer() {
     cout << "p2 is " << *p2 << endl;
 }
 ```
+## 二.数组
 
-## 引用
+### 2.1 二维数组定义和分配内存
+
+c++中有三种方法来动态申请多维数组
+
+1)  c中的malloc/free
+2)  c++中的new/delete
+3)  STL容器中的vector
+
+#### 2.1.1 第一种： malloc/free
+
+```c++
+/**
+ * c++动态申请多维数组
+ * 第一种 malloc/free
+ * @param len 一维数组大小
+ * @param m 二维数组行数
+ * @param n 二维数组列数
+ */
+void dynamicCreate1Array(int len, int m, int n) {
+    // 一维数组
+    int *p;
+    p = (int*)malloc(sizeof(int)*len);    // 动态开辟m大小的数组
+    cout << "malloc/free" << endl;
+    PrintArray(p, len);
+    // 释放空间
+    free(p);
+
+    // 二维数组
+    int **p2;
+    p2 = (int**)malloc(sizeof(int*)*m);         //开辟行
+    for (int i = 0; i < m; ++i) {
+        p2[i] = (int*)malloc(sizeof(int*)*n);   //开辟列
+    }
+    PrintArray(p2, m, n);
+    // 释放空间
+    for (int i = 0; i < m; ++i)
+        free(*(p2+i));
+}
+```
+
+#### 2.1.2 第二种：new/delete
+
+```c++
+/**
+ * c++动态申请多维数组
+ * 第二种 new/delete
+ * @param len 一维数组大小
+ * @param m 二维数组行数
+ * @param n 二维数组列数
+ */
+void dynamicCreate2Array(int len, int m, int n) {
+    // 开辟空间
+    int *p = new int[len];      // 只分配空间未进行初始话
+    int *p1 = new int[len]();    // 分配空间并进行初始化
+    cout << "new/delete" << endl;
+    PrintArray(p, len);
+    PrintArray(p1, len);
+    // 释放空间
+    delete[] p;
+    delete[] p1;
+
+    int **p2 = new int*[m];     // 开辟行
+    for (int i = 0; i < m; ++i)
+        p2[i] = new int[n]();     // 开辟列
+    PrintArray(p2, m, n);
+    // 释放空间
+    for (int i = 0; i < m; ++i)
+        delete[] p2[i];
+    delete[] p2;
+}
+```
+
+#### 2.1.3 第三种：STL容器中的vector
+
+```c++
+/**
+ * c++动态申请多维数组
+ * 第三种 
+ * @param len 一维数组大小
+ * @param m 二维数组行数
+ * @param n 二维数组列数
+ */
+void dynamicCreate3Array(int len, int m, int n) {
+    vector<int> p(len);
+    cout << "vector" << endl;
+    cout << "输出一维数组" << endl;
+    for (int i = 0; i < p.size(); ++i)
+        cout << p[i] << ' ';
+    cout << endl;
+
+    vector<vector<int> > p2(m, vector<int>(n));
+    cout << "输出二维数组" << endl;
+    for (int i = 0; i < m; ++i) {
+        for (int j = 0; j < n; ++j)
+            cout << p2[i][j] << ' ';
+        cout << endl;
+    }
+}
+```
+
+## 三.引用
 
 引用的本质是指针常量
 
-## 类
+## 四.类
 
-### 类的权限
+### 4.1 类的权限
 
 类的权限有3种
 
@@ -46,11 +147,11 @@ void const_pointer() {
 2. protected 类内可以访问，类外不可以访问，可以继承
 3. private 类内可以访问，类外不可以访问，不可以继承
 
-### struct和class的区别
+### 4.2 struct和class的区别
 
 struct默认权限为公共，class默认权限为私有。
 
-### 构造函数和析构函数
+### 4.3 构造函数和析构函数
 
 * 构造函数
     * 函数名与类名相同
@@ -62,24 +163,24 @@ struct默认权限为公共，class默认权限为私有。
     * 析构函数不可以有参数，不可以发生重载
     * 对象在销毁前会自动调用析构函数，而且只会调用一次
 
-### 深拷贝与浅拷贝
+### 4.4 深拷贝与浅拷贝
 
 * 浅拷贝：简单的赋值拷贝操作（系统默认拷贝构造方式为浅拷贝）
 * 深拷贝：在堆区重新申请空间，进行拷贝操作
 
-## 文件读写
+## 五.文件读写
 
-### c++文件操作有三类
+### 5.1 c++文件操作有三类
 
 1. ofstream:写操作
 2. ifstream:读操作
 3. fstream: 读写操作
 
-### 读/写文件的步骤
+### 5.2 读/写文件的步骤
 
 打开头文件->创建流对象->打开文件->写/读数据->关闭文件
 
-### 打开文件的方式
+### 5.3 打开文件的方式
 
 | 模式 | 含义 |
 | ------- | ------- |
@@ -90,7 +191,7 @@ struct默认权限为公共，class默认权限为私有。
 | trunc | 若文件已存在，打开文件并截  取流（清除原有数据) |
 | binary | 以二进制流方式打开文件 |
 
-### 读取文本文件的四种方法
+### 5.4 读取文本文件的四种方法
 
 ```c++
 void test02() {
@@ -130,7 +231,7 @@ void test02() {
 }
 ```
 
-### 二进制文件的读写
+### 5.5 二进制文件的读写
 
 ```c++
 class Person {
