@@ -6,6 +6,7 @@ tags:
 - 深度学习
 - attention
 - 图像分类
+description: <center>Residual Attention Network论文阅读记录</center>
 ---
 
 [论文地址](https://arxiv.org/pdf/1704.06904)  

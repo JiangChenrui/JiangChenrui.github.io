@@ -5,6 +5,7 @@ categories: pytorch
 tags:
 - 深度学习
 - 笔记
+description: <center>pytorch模型保存和加载</center>
 ---
 
 [官方文档](https://pytorch.apachecn.org/docs/1.0/saving_loading_models.html)

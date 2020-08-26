@@ -3,6 +3,7 @@ title: vnc操作
 date: 2019-03-21 15:42:15
 categories: 服务器
 tags: [服务器, 远程桌面]
+description: <center>vnc操作记录</center>
 ---
 
 [参考博客](https://blog.csdn.net/yingyujianmo/article/details/45201097)  

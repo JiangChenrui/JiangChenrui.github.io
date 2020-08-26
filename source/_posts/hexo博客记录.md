@@ -3,13 +3,18 @@ title: hexo博客记录
 date: 2019-07-15 11:08:35
 categories: [blog]
 tags: [hexo, 博客]
+description: <center>hexo博客搭建和美化记录</center>
 ---
 
 ## [hexo+next博客搭建攻略](https://io-oi.me/tech/hexo-next-optimization/#%E5%8A%A0%E9%80%9F-hexo-%E5%8D%9A%E5%AE%A2)
 
-[博客优化](https://gisersqdai.top/2017/11/22/hexo+NexT%E5%8D%9A%E5%AE%A2%E4%BC%98%E5%8C%96%E7%AC%AC%E4%BA%8C%E5%BC%B9/)
+[博客优化](http://lyxf.live/posts/2063/)
 
 ## [多端更新hexo博客](https://blog.csdn.net/Monkey_LZL/article/details/60870891)
+
+## [7.2版本后添加背景](https://blog.csdn.net/Louis_li51/article/details/105227430)
+
+&emsp;&emsp;将原来的source/css/_custom/custom.styl文件的内容复制到themes/next/source/css/_common/components/pages/pages.styl文件中
 
 [换电脑更新博客](https://www.zhihu.com/question/21193762)
 

@@ -3,6 +3,7 @@ title: jupyter添加虚拟环境
 date: 2019-05-15 09:41:24
 categories: 服务器
 tags: [服务器, 远程桌面, jupyter]
+description: <center>jupyer添加虚拟环境</center>
 ---
 [参考地址](https://www.jianshu.com/p/0432155d1bef)  
 [服务器端jupyter开启远程访问](https://blog.csdn.net/simple_the_best/article/details/77005400)  

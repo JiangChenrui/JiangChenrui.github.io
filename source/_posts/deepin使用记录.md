@@ -5,6 +5,7 @@ categories: [linux]
 tags:
 - linux
 - deepin
+description: <center>记录安装和使用deepin操作系统遇到的问题和解决方法</center>
 ---
 
 ## 安装deepin与win10双系统

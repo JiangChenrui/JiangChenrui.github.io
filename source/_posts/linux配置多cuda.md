@@ -3,6 +3,7 @@ title: linux配置多cuda
 date: 2019-07-29 14:33:43
 categories: linux
 tags: [linux]
+description: <center>linux配置多版本cuda操作方法</center>
 ---
 
 &emsp;&emsp;最近实习工作需要多个环境的pytorch与cuda，目前所需为pytorch-0.4.1(cuda9.0/cudnn7.5.1/python3.6)与pytorch-0.4.1(cuda8.0/cudnn5.1/python2.7)，pytorch和python版本可以使用virtualenv控制，cuda版本需要安装多个版本cuda，然后生成要使用cuda版本的软链接，将软链接地址加入到环境变量中。

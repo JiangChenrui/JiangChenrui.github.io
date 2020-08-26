@@ -6,6 +6,7 @@ categories: 论文阅读
 tags:
 - 深度学习
 - 轻量级网络
+description: <center>阅读CondeseNet论文后的记录</center>
 ---
 [论文地址](https://arxiv.org/abs/1711.09224)  
 [代码地址](https://github.com/ShichenLiu/CondenseNet)

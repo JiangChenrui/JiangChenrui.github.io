@@ -5,6 +5,7 @@ categories: [linux]
 tags:
 - linux
 - 操作系统
+description: <center>记录使用linux系统过程中的操作指令</center>
 ---
 
 ## linux资源查看工具top

@@ -5,6 +5,7 @@ categories: [python]
 tags:
 - jupyter
 - python
+description: <center>pip安装包后jupyter不能导入问题的解决方法</center>
 ---
 
 &emsp;&emsp;最近使用jupyter发现在虚拟环境下安装了包，但是在该环境下启动的jupyter却不能正确导入包，问题应该出在jupyter调用的python包和环境下的包不一样导致的，以下是解决方法，[参考博客](https://blog.csdn.net/qq_34650787/article/details/83304080)

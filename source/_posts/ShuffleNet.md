@@ -6,6 +6,7 @@ categories: 论文阅读
 tags:
 - 深度学习
 - 轻量级网络
+description: <center>ShuffleNet论文阅读记录</center>
 ---
 
 [论文地址]

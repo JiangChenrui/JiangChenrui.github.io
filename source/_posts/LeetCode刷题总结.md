@@ -3,6 +3,7 @@ title: LeetCode刷题总结
 date: 2019-01-23 19:14:30
 categories: 算法
 tags: [c++, LeetCode, 算法]
+description: <center>记录刷题过程汇总遇到的问题和解决方法</center>
 ---
 
 ## 1 数组用法

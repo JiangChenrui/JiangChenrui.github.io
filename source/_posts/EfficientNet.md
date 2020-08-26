@@ -4,6 +4,7 @@ date: 2019-07-19 09:49:39
 mathjax: true
 categories: 论文阅读
 tags: [深度学习, 轻量级网络]
+description: <center>EfficientNet论文阅读记录</center>
 ---
 
 [论文](https://arxiv.org/pdf/1905.11946.pdf)
