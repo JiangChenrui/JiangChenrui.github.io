@@ -209,16 +209,17 @@ links:
 
 # Table of Contents in the Sidebar
 # Front-matter variable (unsupport wrap expand_all).
+# 是否启动自动标题
 toc:
   enable: true
-  # Automatically add list number to toc.
-  number: false
-  # If true, all words will placed on next lines if header width longer then sidebar width.
-  wrap: true
-  # If true, all level of TOC in a post will be displayed, rather than the activated part of it.
-  expand_all: false
-  # Maximum heading depth of generated toc.
-  max_depth: 6
+  # 标题添加序号
+  number: true
+  # 长标题是否另起一行
+  wrap: false
+  # 是否显示所有标题
+  expand_all: true
+  # 标题最大深度.
+  max_depth: 4
 
 # A button to open designated chat widget in sidebar.
 # Firstly, you need enable the chat service you want to activate its sidebar button.
@@ -567,7 +568,7 @@ quicklink:
 # Multiple Comment System Support
 comments:
   # Available values: tabs | buttons
-  style: tabs
+  style: buttons
   # Choose a comment system to be displayed by default.
   # Available values: changyan | disqus | disqusjs | gitalk | livere | valine
   active:

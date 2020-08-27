@@ -11,24 +11,24 @@ description: <center>阅读CondeseNet论文后的记录</center>
 [论文地址](https://arxiv.org/abs/1711.09224)  
 [代码地址](https://github.com/ShichenLiu/CondenseNet)
 
-## 1. 简介  
+## 简介  
 
 &emsp;&emsp;
 
-## 2. 相关工作  
+## 相关工作  
 
 ![figure1](CondenseNet/Figure1.png)
 ![figure2](CondenseNet/Figure2.png)
 
 &emsp;&emsp;
 
-## 3. CondenseNets  
+## CondenseNets  
 
 &emsp;&emsp;在DenseNet的基础上使用1x1的分组卷积效果不好，作者认为这是由使用前面的特征图与当前特征图合并做输入引起的。这与典型的卷积输入有两点不同：1.它们有固定的秩序，2.它们更加多样化。不相关组的特征分配会妨碍特征在网络的再利用。作者对输入的特征图进行随机置换减小了对准确性的负面影响，但在相同的计算成本下比smaller DenseNets准确率低。  
 &emsp;&emsp;在DenseNet中已经证明：将早期的特征作为后期层的输入对特征重用是十分有效的。但是并不是所有的早期特征对随后的层有影响，很难预测哪些特征应该被使用。为了解决这个问题，我们提出了一种在训练中自动学习输入特征分组的方法。学习组结构允许每个滤波器选择它自己最相关的一组输入。  
 ![figure3](CondenseNet/Figure3.png)  
 
-## 3.1 学习组卷积  
+## 学习组卷积  
 
 &emsp;&emsp;我们通过多阶段过程学习组卷积，如图3和图4所示。训练迭代的前半部分包括压缩阶段。在这里，我们重复训练网络，稀疏诱导正则化，进行固定次数的迭代，然后修剪掉具有权重比较低的不重要滤波器。培训的后半部分包括优化阶段，我们在分组修复后学习过滤器。执行修剪时，我们确保来自同一组的过滤器共享相同的稀疏模式。结果，一旦训练完成（测试阶段），可以使用标准组卷积来实现稀疏化层。由于组卷积由许多深度学习库有效实现，因此在理论上和实践中都可以节省大量计算量。我们将在下面介绍我们的方法。  
 
@@ -64,7 +64,7 @@ $$\sum_{g=1}^{G}\sum_{j=1}^{R}\sqrt{\sum_{i=1}^{O/G}{F_{ij}^{g}}^2}$$
 
 &emsp;&emsp;在训练完成后，我们移除修剪的权重并将稀疏模型转化为具有常规模式的网络，在图三的测试步骤中可以看到索引层。索引层在输入滤波器重新排列进行输出，以便于现有的常规组卷积的实现。图1显示了训练期间（中间）和测试期间（右侧）CondenseNet层的转换。 在训练期间，1×1卷积是学习组卷积（L-Conv），但在测试期间，在索引层的帮助下，它变为标准组卷积（G-Conv）。
 
-## 3.2 网络设计  
+## 网络设计  
 
 &emsp;&emsp;除了使用上面介绍的学习组卷积之外，我们还对常规DenseNet架构进行了两处更改。这些更改旨在进一步简化体系结构并提高其计算效率。图5说明了我们对DenseNet架构所做的两项更改。
 ![figure5](CondenseNet/Figure5.png)  
@@ -80,7 +80,7 @@ $$\sum_{g=1}^{G}\sum_{j=1}^{R}\sqrt{\sum_{i=1}^{O/G}{F_{ij}^{g}}^2}$$
 ![Figure7](CondenseNet/Figure7.png)
 ![Figure8](CondenseNet/Figure8.png)
 
-### 4 实验  
+### 实验  
 
 ![Table1](CondenseNet/Table1.png)
 ![Table2](CondenseNet/Table2.png)

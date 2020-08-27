@@ -6,7 +6,7 @@ tags: [c++, LeetCode, 算法]
 description: <center>记录刷题过程汇总遇到的问题和解决方法</center>
 ---
 
-## 1 数组用法
+## 数组用法
 
 ```c++
 //元素交换
@@ -23,7 +23,7 @@ a.push_back();
 vector< vector<int> > result
 ```
 
-## 2 set集合的用法
+## set集合的用法
 
 集合中没有重复元素
 
@@ -48,7 +48,7 @@ it = s.find(10);
 
 mutiset：多重集合与set最大的区别是它可以插入重复元素，如果删除的话，相同的会一起删除，如果查找的话，返回该元素的迭代器的位置，若有相同，返回第一个元素的地址，其它使用和set基本类似。  
 
-## 3 [map用法](https://www.cnblogs.com/fnlingnzb-learner/p/5833051.html)  
+## [map用法](https://www.cnblogs.com/fnlingnzb-learner/p/5833051.html)  
 
 c++中map中的元素按key升序排列，基本格式为map<string, int> m，需要使用头文件#include<map>。  
 
@@ -60,7 +60,7 @@ studentsID.instert(map<int, string>::value_type(2, "student_two"));
 studentID[3]="student_three";
 ```
 
-## 4 字符串
+## 字符串
 
 ```c++
 //排序
@@ -74,7 +74,7 @@ string firstname(name.substr(0,4));
 
 ```
 
-## 5 运算
+## 运算
 
 异或（^）：二进制数进行运算相同为0，不同为1
 与运算（&）：同时为1，才为1；
@@ -84,7 +84,7 @@ string firstname(name.substr(0,4));
 右移（>>）:正数左补0，负数左补1
 不同长度的数据进行位运算时，系统会自动补齐。
 
-## 6 栈
+## 栈
 
 栈具有先进后出的特性  
 
@@ -106,7 +106,7 @@ s.empty() // true表示未空，false表示非空
 s.size()
 ```
 
-## 7 队列  
+## 队列  
 
 ```c++
 // 定义队列
