@@ -24,7 +24,9 @@ deepin安装需要在硬盘上分出500M的efi分区和一个根目录分区，�
 
 我们可以使用xrandr来设置显示器的分辨率帧率及使用的接口：
 
-    sudo xrandr --output DP-0 --mode 3440x1440 --rate 144
+```shell
+sudo xrandr --output DP-0 --mode 3440x1440 --rate 144
+```
 
 其中 --output 后面的参数为选择输出的接口，--mode 后面的参数为显示的分辨率，--rate 后面的参数为显示的刷新率。
 但是在设置完144刷新率后发现屏幕有些发灰，于是又退回到了60

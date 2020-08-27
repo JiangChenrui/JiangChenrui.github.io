@@ -6,9 +6,13 @@ categories: 论文阅读
 tags:
 - 深度学习
 - 轻量级网络
-description: <center>MobileNetV3基于互补搜索技术的组合以及新颖的架构设计呈现下一代MobileNets。MobileNetV3通过硬件网络架构搜索（NAS）与NetAdapt算法相结合的方式调整到移动电话CPU，然后通过新颖的架构改进进行改进。本文开始探索自动搜索算法和网络设计如何协同工作，以利用互补的方法来改善整体的现状。通过这个过程，我们为发布创建了两个新的MobileNet模型：MobileNetV3-Large和MobileNetV3-Small，它们针对高资源和低资源使用情况。然后，这些模型被适应并应用于对象检测和语义分割的任务。对于语义分割（或任何密集像素预测）的任务，我们提出了一种新的有效分割解码器Lite Reduced Atrous Spatial Pyramid Pooling（LR-ASPP）。我们实现了移动分类，检测和分割的最新技术成果。MobileNetV3-Large在ImageNet分类上的准确度提高了3.2％，与MobileNetV2相比，延迟降低了15％。与MobileNetV2相比，MobileNetV3-Small的准确度提高了4.6％，同时将延迟降低了5％。MobileNetV3-大检测速度提高了25％，与COCO检测时的MobileNetV2大致相同。MobileNetV3-Large LR-ASPP比MobileNetV2 R-ASPP快30％，与Cityscapes细分的准确度相似。</center>
+description: <center>MobileNetV3论文阅读记录</center>
 ---
 [论文地址](https://arxiv.org/pdf/1905.02244.pdf)
+
+## 摘要
+
+&emsp;&emsp;我们基于互补搜索技术的组合以及新颖的架构设计呈现下一代MobileNets。MobileNetV3通过硬件网络架构搜索（NAS）与NetAdapt算法相结合的方式调整到移动电话CPU，然后通过新颖的架构改进进行改进。本文开始探索自动搜索算法和网络设计如何协同工作，以利用互补的方法来改善整体的现状。通过这个过程，我们为发布创建了两个新的MobileNet模型：MobileNetV3-Large和MobileNetV3-Small，它们针对高资源和低资源使用情况。然后，这些模型被适应并应用于对象检测和语义分割的任务。对于语义分割（或任何密集像素预测）的任务，我们提出了一种新的有效分割解码器Lite Reduced Atrous Spatial Pyramid Pooling（LR-ASPP）。我们实现了移动分类，检测和分割的最新技术成果。MobileNetV3-Large在ImageNet分类上的准确度提高了3.2％，与MobileNetV2相比，延迟降低了15％。与MobileNetV2相比，MobileNetV3-Small的准确度提高了4.6％，同时将延迟降低了5％。MobileNetV3-大检测速度提高了25％，与COCO检测时的MobileNetV2大致相同。MobileNetV3-Large LR-ASPP比MobileNetV2 R-ASPP快30％，与Cityscapes细分的准确度相似。
 
 ## 简介
 

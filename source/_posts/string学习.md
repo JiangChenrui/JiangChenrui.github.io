@@ -5,6 +5,7 @@ categories: [c++]
 tags: 
 - c++
 - string
+top: 8
 description: <center>本文主要对c++中string字符串的操作如赋值、拼接、查找、替换和截取等进行了实现并和char*进行了对比</center>
 ---
 

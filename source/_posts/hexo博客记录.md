@@ -3,6 +3,7 @@ title: hexo博客记录
 date: 2019-07-15 11:08:35
 categories: [blog]
 tags: [hexo, 博客]
+top: 3
 description: <center>hexo博客搭建和美化记录</center>
 ---
 
@@ -39,3 +40,21 @@ description: <center>hexo博客搭建和美化记录</center>
 1. [插件推荐](https://juejin.im/post/5c45b92751882525487c5c66)
 2. Markdown All in One插件快捷键
    ![快捷键](hexo博客记录/快捷键.png)
+
+## hexo版本升级
+
+* 全局升级hexo-cli，先使用```hexo version```查看当前版本，然后```npm i hexo-cli -g```更新，再次使用```hexo version```查看更新是否成功。
+
+* 使用```npm install -g npm-check```和```npm-check```，检查系统中的插件是否有升级的，可以看到自己前面都安装了那些插件。
+
+* 使用```npm install -g npm-upgrade```和```npm-upgrade```，升级系统中的插件
+
+* 使用npm update -g和npm update --save
+
+## npm更换国内源
+
+在使用npm安装过程中发现下载很慢，网上查找问题后，可以使用更换国内源的方法解决。
+
+```shell
+npm config set registry http://registry.npm.taobao.org
+```
