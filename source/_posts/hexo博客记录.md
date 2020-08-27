@@ -12,7 +12,11 @@ description: <center>hexo博客搭建和美化记录</center>
 
 ## [多端更新hexo博客](https://blog.csdn.net/Monkey_LZL/article/details/60870891)
 
-## [7.2版本后添加背景](https://blog.csdn.net/Louis_li51/article/details/105227430)
+## 更新next版本到7.7后
+
+[7.2版本后添加背景](https://blog.csdn.net/Louis_li51/article/details/105227430)
+
+[借鉴博客](https://tding.top/docs/getting-started/data-files.html)
 
 &emsp;&emsp;将原来的source/css/_custom/custom.styl文件的内容复制到themes/next/source/css/_common/components/pages/pages.styl文件中
 
