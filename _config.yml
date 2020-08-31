@@ -103,3 +103,9 @@ symbols_count_time:
   time: true # 阅读时长
   total_symbols: true # 所有文章总字数
   total_time: true # 所有文章阅读中时长
+
+# 自动生成sitemap
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml

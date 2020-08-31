@@ -8,6 +8,13 @@ tags:
 description: <center>记录使用linux系统过程中的操作指令</center>
 ---
 
+## 命令行更新vscode
+
+```shell
+wget https://vscode-update.azurewebsites.net/latest/linux-deb-x64/stable -O /tmp/code_latest_amd64.deb
+sudo dpkg -i /tmp/code_latest_amd64.deb
+```
+
 ## linux资源查看工具top
 
 在自动输入top后显示的信息如下
