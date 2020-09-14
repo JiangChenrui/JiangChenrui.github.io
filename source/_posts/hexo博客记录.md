@@ -43,11 +43,11 @@ description: <center>hexo博客搭建和美化记录</center>
 
 ## hexo版本升级
 
-* 全局升级hexo-cli，先使用```hexo version```查看当前版本，然后```npm i hexo-cli -g```更新，再次使用```hexo version```查看更新是否成功。
+* 全局升级hexo-cli，先使用`hexo version`查看当前版本，然后`npm i hexo-cli -g`更新，再次使用`hexo version`查看更新是否成功。
 
-* 使用```npm install -g npm-check```和```npm-check```，检查系统中的插件是否有升级的，可以看到自己前面都安装了那些插件。
+* 使用`npm install -g npm-check`和`npm-check`，检查系统中的插件是否有升级的，可以看到自己前面都安装了那些插件。
 
-* 使用```npm install -g npm-upgrade```和```npm-upgrade```，升级系统中的插件
+* 使用`npm install -g npm-upgrade`和`npm-upgrade`，升级系统中的插件
 
 * 使用npm update -g和npm update --save
 
