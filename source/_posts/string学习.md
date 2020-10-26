@@ -153,3 +153,29 @@ int pos = email.find("@");
 string usrName = email.substr(0, pos);
 cout << usrName << endl;
 ```
+
+## 字符串分割
+
+```c++
+/**
+ * 字符串分割
+ * @param str 原字符串
+ * @param splitChar 分割字符
+ * @return 分割后的字符串数组
+ */
+vector<string> split(const string &str, const string &splitChar) {
+    vector<string> res;
+    if (str == "")
+        return res;
+    string strs = str + splitChar;
+    size_t pos = strs.find(splitChar);
+
+    while (pos != strs.npos) {
+        string temp = strs.substr(0, pos);
+        res.push_back(temp);
+        strs = strs.substr(pos+1, strs.size());
+        pos = strs.find(splitChar);
+    }
+    return res;
+}
+```

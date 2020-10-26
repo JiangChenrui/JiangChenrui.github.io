@@ -12,6 +12,17 @@ description: <center>本文主要记录c++学习过程中遇到的一些问题�
 
 [使用:进行迭代](https://blog.csdn.net/hailong0715/article/details/54172848)
 
+## 容器
+
+[c++优先队列`priority_queue`](https://blog.csdn.net/weixin_36888577/article/details/79937886)
+
+```c++
+//升序队列
+priority_queue <int,vector<int>,greater<int> > q;
+//降序队列
+priority_queue <int,vector<int>,less<int> >q;
+```
+
 ## 指针常量和常量指针
 
 常量指针指向的内容不可以修改，指针的指向可以修改；指针常量的指向不可以修改，指针指向的值可以修改。
