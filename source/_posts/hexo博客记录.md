@@ -3,7 +3,7 @@ title: hexo博客记录
 date: 2019-07-15 11:08:35
 categories: [blog]
 tags: [hexo, 博客]
-top: 3
+top: 20
 description: <center>hexo博客搭建和美化记录</center>
 ---
 
