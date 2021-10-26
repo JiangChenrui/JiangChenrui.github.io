@@ -65,3 +65,9 @@ ps -ef | grep defunct | more
 ls -R /data/*.jpg > file.txt
 cat *.txt > all.txt  // 将所有txt拼接
 ```
+
+## 批量删除
+
+```shell
+find . -name "*.pyc" | xargs rm -f
+```
