@@ -303,7 +303,7 @@ related_posts:
 # Dependencies: https://github.com/hexojs/hexo-deployer-git
 post_edit:
   enable: false
-  url: https://jiangchenrui.gitee.io/ # Link for view source
+  url: https://jiangchenrui.github.io/ # Link for view source
   #url: https://github.com/user-name/repo-name/edit/branch-name/subdirectory-name # Link for fork & edit
 
 # Show previous post and next post in post footer if exists
