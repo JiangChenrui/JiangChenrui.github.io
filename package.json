@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.9.0"
+    "version": "7.3.0"
   },
   "dependencies": {
     "axios": "^0.19.0",
     "gitalk": "^1.5.0",
-    "hexo": "^3.9.0",
+    "hexo": "^7.3.0",
     "hexo-asset-image": "git+https://github.com/CodeFalling/hexo-asset-image.git",
     "hexo-deployer-git": "^1.0.0",
     "hexo-generator-archive": "^0.1.5",

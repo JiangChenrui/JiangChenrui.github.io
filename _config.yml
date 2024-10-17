@@ -89,7 +89,7 @@ theme: next # 选择主题
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: https://github.com/JiangChenrui/JiangChenrui.git
+  repo: https://github.com/JiangChenrui/JiangChenrui.io.git
   branch: master
 
 search:
