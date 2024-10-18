@@ -341,18 +341,6 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       </tags>
   </entry>
   <entry>
-    <title>git命令大全</title>
-    <url>/2021/07/29/git%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/</url>
-    <content><![CDATA[<p><a href="https://gist.github.com/guweigang/9848271">摘自https://gist.github.com/guweigang/9848271</a></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init                                                  # 初始化本地git仓库（创建新仓库）</span><br><span class="line">git config --global user.name &quot;xxx&quot;                       # 配置用户名</span><br><span class="line">git config --global user.email &quot;xxx@xxx.com&quot;              # 配置邮件</span><br><span class="line">git config --global color.ui true                         # git status等命令自动着色</span><br><span class="line">git config --global color.status auto</span><br><span class="line">git config --global color.diff auto</span><br><span class="line">git config --global color.branch auto</span><br><span class="line">git config --global color.interactive auto</span><br><span class="line">git config --global --unset http.proxy                    # remove  proxy configuration on git</span><br><span class="line">git clone git+ssh://git@192.168.53.168/VT.git             # clone远程仓库</span><br><span class="line">git status                                                # 查看当前版本状态（是否修改）</span><br><span class="line">git add xyz                                               # 添加xyz文件至index</span><br><span class="line">git add .                                                 # 增加当前子目录下所有更改过的文件至index</span><br><span class="line">git commit -m &#x27;xxx&#x27;                                       # 提交</span><br><span class="line">git commit --amend -m &#x27;xxx&#x27;                               # 合并上一次提交（用于反复修改）</span><br><span class="line">git commit -am &#x27;xxx&#x27;                                      # 将add和commit合为一步</span><br><span class="line">git rm xxx                                                # 删除index中的文件</span><br><span class="line">git rm -r *                                               # 递归删除</span><br><span class="line">git log                                                   # 显示提交日志</span><br><span class="line">git log -1                                                # 显示1行日志 -n为n行</span><br><span class="line">git log -5</span><br><span class="line">git log --stat                                            # 显示提交日志及相关变动文件</span><br><span class="line">git log -p -m</span><br><span class="line">git show dfb02e6e4f2f7b573337763e5c0013802e392818         # 显示某个提交的详细内容</span><br><span class="line">git show dfb02                                            # 可只用commitid的前几位</span><br><span class="line">git show HEAD                                             # 显示HEAD提交日志</span><br><span class="line">git show HEAD^                                            # 显示HEAD的父（上一个版本）的提交日志 ^^为上两个版本 ^5为上5个版本</span><br><span class="line">git tag                                                   # 显示已存在的tag</span><br><span class="line">git tag -a v2.0 -m &#x27;xxx&#x27;                                  # 增加v2.0的tag</span><br><span class="line">git show v2.0                                             # 显示v2.0的日志及详细内容</span><br><span class="line">git log v2.0                                              # 显示v2.0的日志</span><br><span class="line">git diff                                                  # 显示所有未添加至index的变更</span><br><span class="line">git diff --cached                                         # 显示所有已添加index但还未commit的变更</span><br><span class="line">git diff HEAD^                                            # 比较与上一个版本的差异</span><br><span class="line">git diff HEAD -- ./lib                                    # 比较与HEAD版本lib目录的差异</span><br><span class="line">git diff origin/master..master                            # 比较远程分支master上有本地分支master上没有的</span><br><span class="line">git diff origin/master..master --stat                     # 只显示差异的文件，不显示具体内容</span><br><span class="line">git remote add origin git+ssh://git@192.168.53.168/VT.git # 增加远程定义（用于push/pull/fetch）</span><br><span class="line">git branch                                                # 显示本地分支</span><br><span class="line">git branch --contains 50089                               # 显示包含提交50089的分支</span><br><span class="line">git branch -a                                             # 显示所有分支</span><br><span class="line">git branch -r                                             # 显示所有原创分支</span><br><span class="line">git branch --merged                                       # 显示所有已合并到当前分支的分支</span><br><span class="line">git branch --no-merged                                    # 显示所有未合并到当前分支的分支</span><br><span class="line">git branch -m master master_copy                          # 本地分支改名</span><br><span class="line">git checkout -b master_copy                               # 从当前分支创建新分支master_copy并检出</span><br><span class="line">git checkout -b master master_copy                        # 上面的完整版</span><br><span class="line">git checkout features/performance                         # 检出已存在的features/performance分支</span><br><span class="line">git checkout --track hotfixes/BJVEP933                    # 检出远程分支hotfixes/BJVEP933并创建本地跟踪分支</span><br><span class="line">git checkout v2.0                                         # 检出版本v2.0</span><br><span class="line">git checkout -b devel origin/develop                      # 从远程分支develop创建新本地分支devel并检出</span><br><span class="line">git checkout -- README                                    # 检出head版本的README文件（可用于修改错误回退）</span><br><span class="line">git merge origin/master                                   # 合并远程master分支至当前分支</span><br><span class="line">git cherry-pick ff44785404a8e                             # 合并提交ff44785404a8e的修改</span><br><span class="line">git push origin master                                    # 将当前分支push到远程master分支</span><br><span class="line">git push origin :hotfixes/BJVEP933                        # 删除远程仓库的hotfixes/BJVEP933分支</span><br><span class="line">git push --tags                                           # 把所有tag推送到远程仓库</span><br><span class="line">git fetch                                                 # 获取所有远程分支（不更新本地分支，另需merge）</span><br><span class="line">git fetch --prune                                         # 获取所有原创分支并清除服务器上已删掉的分支</span><br><span class="line">git pull origin master                                    # 获取远程分支master并merge到当前分支</span><br><span class="line">git mv README README2                                     # 重命名文件README为README2</span><br><span class="line">git reset --hard HEAD                                     # 将当前版本重置为HEAD（通常用于merge失败回退）</span><br><span class="line">git rebase</span><br><span class="line">git branch -d hotfixes/BJVEP933                           # 删除分支hotfixes/BJVEP933（本分支修改已合并到其他分支）</span><br><span class="line">git branch -D hotfixes/BJVEP933                           # 强制删除分支hotfixes/BJVEP933</span><br><span class="line">git ls-files                                              # 列出git index包含的文件</span><br><span class="line">git show-branch                                           # 图示当前分支历史</span><br><span class="line">git show-branch --all                                     # 图示所有分支历史</span><br><span class="line">git whatchanged                                           # 显示提交历史对应的文件修改</span><br><span class="line">git revert dfb02e6e4f2f7b573337763e5c0013802e392818       # 撤销提交dfb02e6e4f2f7b573337763e5c0013802e392818</span><br><span class="line">git ls-tree HEAD                                          # 内部命令：显示某个git对象</span><br><span class="line">git rev-parse v2.0                                        # 内部命令：显示某个ref对于的SHA1 HASH</span><br><span class="line">git reflog                                                # 显示所有提交，包括孤立节点</span><br><span class="line">git show HEAD@&#123;5&#125;</span><br><span class="line">git show master@&#123;yesterday&#125;                               # 显示master分支昨天的状态</span><br><span class="line">git log --pretty=format:&#x27;%h %s&#x27; --graph                   # 图示提交日志</span><br><span class="line">git show HEAD~3</span><br><span class="line">git show -s --pretty=raw 2be7fcb476</span><br><span class="line">git stash                                                 # 暂存当前修改，将所有至为HEAD状态</span><br><span class="line">git stash list                                            # 查看所有暂存</span><br><span class="line">git stash show -p stash@&#123;0&#125;                               # 参考第一次暂存</span><br><span class="line">git stash apply stash@&#123;0&#125;                                 # 应用第一次暂存</span><br><span class="line">git grep &quot;delete from&quot;                                    # 文件中搜索文本“delete from”</span><br><span class="line">git grep -e &#x27;#define&#x27; --and -e SORT_DIRENT</span><br><span class="line">git gc</span><br><span class="line">git fsck</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>git</category>
-      </categories>
-      <tags>
-        <tag>git操作</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>deepin使用记录</title>
     <url>/2020/08/04/deepin%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<h2 id="安装deepin与win10双系统"><a href="#安装deepin与win10双系统" class="headerlink" title="安装deepin与win10双系统"></a>安装deepin与win10双系统</h2><p>deepin安装需要在硬盘上分出500M的efi分区和一个根目录分区，制作安装u盘，安装完成后直接进入win10，这种情况是因为引导系统启动的是win10的efi分区文件，需要在bios界面修改引导启动的分区设置，将引导修改为deepin分区。</p>
@@ -369,6 +357,18 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       <tags>
         <tag>linux</tag>
         <tag>deepin</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>git命令大全</title>
+    <url>/2021/07/29/git%E5%91%BD%E4%BB%A4%E5%A4%A7%E5%85%A8/</url>
+    <content><![CDATA[<p><a href="https://gist.github.com/guweigang/9848271">摘自https://gist.github.com/guweigang/9848271</a></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">git init                                                  # 初始化本地git仓库（创建新仓库）</span><br><span class="line">git config --global user.name &quot;xxx&quot;                       # 配置用户名</span><br><span class="line">git config --global user.email &quot;xxx@xxx.com&quot;              # 配置邮件</span><br><span class="line">git config --global color.ui true                         # git status等命令自动着色</span><br><span class="line">git config --global color.status auto</span><br><span class="line">git config --global color.diff auto</span><br><span class="line">git config --global color.branch auto</span><br><span class="line">git config --global color.interactive auto</span><br><span class="line">git config --global --unset http.proxy                    # remove  proxy configuration on git</span><br><span class="line">git clone git+ssh://git@192.168.53.168/VT.git             # clone远程仓库</span><br><span class="line">git status                                                # 查看当前版本状态（是否修改）</span><br><span class="line">git add xyz                                               # 添加xyz文件至index</span><br><span class="line">git add .                                                 # 增加当前子目录下所有更改过的文件至index</span><br><span class="line">git commit -m &#x27;xxx&#x27;                                       # 提交</span><br><span class="line">git commit --amend -m &#x27;xxx&#x27;                               # 合并上一次提交（用于反复修改）</span><br><span class="line">git commit -am &#x27;xxx&#x27;                                      # 将add和commit合为一步</span><br><span class="line">git rm xxx                                                # 删除index中的文件</span><br><span class="line">git rm -r *                                               # 递归删除</span><br><span class="line">git log                                                   # 显示提交日志</span><br><span class="line">git log -1                                                # 显示1行日志 -n为n行</span><br><span class="line">git log -5</span><br><span class="line">git log --stat                                            # 显示提交日志及相关变动文件</span><br><span class="line">git log -p -m</span><br><span class="line">git show dfb02e6e4f2f7b573337763e5c0013802e392818         # 显示某个提交的详细内容</span><br><span class="line">git show dfb02                                            # 可只用commitid的前几位</span><br><span class="line">git show HEAD                                             # 显示HEAD提交日志</span><br><span class="line">git show HEAD^                                            # 显示HEAD的父（上一个版本）的提交日志 ^^为上两个版本 ^5为上5个版本</span><br><span class="line">git tag                                                   # 显示已存在的tag</span><br><span class="line">git tag -a v2.0 -m &#x27;xxx&#x27;                                  # 增加v2.0的tag</span><br><span class="line">git show v2.0                                             # 显示v2.0的日志及详细内容</span><br><span class="line">git log v2.0                                              # 显示v2.0的日志</span><br><span class="line">git diff                                                  # 显示所有未添加至index的变更</span><br><span class="line">git diff --cached                                         # 显示所有已添加index但还未commit的变更</span><br><span class="line">git diff HEAD^                                            # 比较与上一个版本的差异</span><br><span class="line">git diff HEAD -- ./lib                                    # 比较与HEAD版本lib目录的差异</span><br><span class="line">git diff origin/master..master                            # 比较远程分支master上有本地分支master上没有的</span><br><span class="line">git diff origin/master..master --stat                     # 只显示差异的文件，不显示具体内容</span><br><span class="line">git remote add origin git+ssh://git@192.168.53.168/VT.git # 增加远程定义（用于push/pull/fetch）</span><br><span class="line">git branch                                                # 显示本地分支</span><br><span class="line">git branch --contains 50089                               # 显示包含提交50089的分支</span><br><span class="line">git branch -a                                             # 显示所有分支</span><br><span class="line">git branch -r                                             # 显示所有原创分支</span><br><span class="line">git branch --merged                                       # 显示所有已合并到当前分支的分支</span><br><span class="line">git branch --no-merged                                    # 显示所有未合并到当前分支的分支</span><br><span class="line">git branch -m master master_copy                          # 本地分支改名</span><br><span class="line">git checkout -b master_copy                               # 从当前分支创建新分支master_copy并检出</span><br><span class="line">git checkout -b master master_copy                        # 上面的完整版</span><br><span class="line">git checkout features/performance                         # 检出已存在的features/performance分支</span><br><span class="line">git checkout --track hotfixes/BJVEP933                    # 检出远程分支hotfixes/BJVEP933并创建本地跟踪分支</span><br><span class="line">git checkout v2.0                                         # 检出版本v2.0</span><br><span class="line">git checkout -b devel origin/develop                      # 从远程分支develop创建新本地分支devel并检出</span><br><span class="line">git checkout -- README                                    # 检出head版本的README文件（可用于修改错误回退）</span><br><span class="line">git merge origin/master                                   # 合并远程master分支至当前分支</span><br><span class="line">git cherry-pick ff44785404a8e                             # 合并提交ff44785404a8e的修改</span><br><span class="line">git push origin master                                    # 将当前分支push到远程master分支</span><br><span class="line">git push origin :hotfixes/BJVEP933                        # 删除远程仓库的hotfixes/BJVEP933分支</span><br><span class="line">git push --tags                                           # 把所有tag推送到远程仓库</span><br><span class="line">git fetch                                                 # 获取所有远程分支（不更新本地分支，另需merge）</span><br><span class="line">git fetch --prune                                         # 获取所有原创分支并清除服务器上已删掉的分支</span><br><span class="line">git pull origin master                                    # 获取远程分支master并merge到当前分支</span><br><span class="line">git mv README README2                                     # 重命名文件README为README2</span><br><span class="line">git reset --hard HEAD                                     # 将当前版本重置为HEAD（通常用于merge失败回退）</span><br><span class="line">git rebase</span><br><span class="line">git branch -d hotfixes/BJVEP933                           # 删除分支hotfixes/BJVEP933（本分支修改已合并到其他分支）</span><br><span class="line">git branch -D hotfixes/BJVEP933                           # 强制删除分支hotfixes/BJVEP933</span><br><span class="line">git ls-files                                              # 列出git index包含的文件</span><br><span class="line">git show-branch                                           # 图示当前分支历史</span><br><span class="line">git show-branch --all                                     # 图示所有分支历史</span><br><span class="line">git whatchanged                                           # 显示提交历史对应的文件修改</span><br><span class="line">git revert dfb02e6e4f2f7b573337763e5c0013802e392818       # 撤销提交dfb02e6e4f2f7b573337763e5c0013802e392818</span><br><span class="line">git ls-tree HEAD                                          # 内部命令：显示某个git对象</span><br><span class="line">git rev-parse v2.0                                        # 内部命令：显示某个ref对于的SHA1 HASH</span><br><span class="line">git reflog                                                # 显示所有提交，包括孤立节点</span><br><span class="line">git show HEAD@&#123;5&#125;</span><br><span class="line">git show master@&#123;yesterday&#125;                               # 显示master分支昨天的状态</span><br><span class="line">git log --pretty=format:&#x27;%h %s&#x27; --graph                   # 图示提交日志</span><br><span class="line">git show HEAD~3</span><br><span class="line">git show -s --pretty=raw 2be7fcb476</span><br><span class="line">git stash                                                 # 暂存当前修改，将所有至为HEAD状态</span><br><span class="line">git stash list                                            # 查看所有暂存</span><br><span class="line">git stash show -p stash@&#123;0&#125;                               # 参考第一次暂存</span><br><span class="line">git stash apply stash@&#123;0&#125;                                 # 应用第一次暂存</span><br><span class="line">git grep &quot;delete from&quot;                                    # 文件中搜索文本“delete from”</span><br><span class="line">git grep -e &#x27;#define&#x27; --and -e SORT_DIRENT</span><br><span class="line">git gc</span><br><span class="line">git fsck</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>git</category>
+      </categories>
+      <tags>
+        <tag>git操作</tag>
       </tags>
   </entry>
   <entry>
@@ -392,30 +392,6 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       </categories>
       <tags>
         <tag>git操作</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2019/01/23/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br><a href="https://zhuanlan.zhihu.com/p/25729240">博客搭建参考</a><br><a href="http://theme-next.iissnan.com/getting-started.html#avatar-setting">next主题使用教程</a><br><a href="https://blog.csdn.net/Monkey_LZL/article/details/60870891">多终端同步教程</a><br><a href="https://www.jianshu.com/p/344cf061598d">主题美化</a><br><a href="https://monkey0105.github.io/2017/09/21/hexo-mathjax/">hexo中使用Mathjax</a><br><strong><a href="http://chogenfran.github.io/JamesHe.github.io/2016/05/01/%E5%82%BB%E7%93%9C%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%95%99%E7%A8%8B%EF%BC%88XX-NET%EF%BC%89/">科学上网</a></strong></p>
-<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="创建一个新的文章"><a href="#创建一个新的文章" class="headerlink" title="创建一个新的文章"></a>创建一个新的文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="运行服务"><a href="#运行服务" class="headerlink" title="运行服务"></a>运行服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="部署到远程站点"><a href="#部署到远程站点" class="headerlink" title="部署到远程站点"></a>部署到远程站点</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
-<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo d --g</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
-<h3 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a>添加图片</h3><p>在目标的.comfig.yml文件的38行修改数据，可以在新建博客的同时新建一个资源文件夹来放置图片，博客引用时直接使用![picture](picture_name)  </p>
-<h3 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h3><p>行内效果为<script type="math/tex">(a+b+c)^2</script><br>独自一行公式需要使公式独占一行<br>效果为</p>
-<script type="math/tex; mode=display">(a+b+c)^2</script>]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>博客</tag>
       </tags>
   </entry>
   <entry>
@@ -457,6 +433,58 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       <tags>
         <tag>hexo</tag>
         <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2019/01/23/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.<br><a href="https://zhuanlan.zhihu.com/p/25729240">博客搭建参考</a><br><a href="http://theme-next.iissnan.com/getting-started.html#avatar-setting">next主题使用教程</a><br><a href="https://blog.csdn.net/Monkey_LZL/article/details/60870891">多终端同步教程</a><br><a href="https://www.jianshu.com/p/344cf061598d">主题美化</a><br><a href="https://monkey0105.github.io/2017/09/21/hexo-mathjax/">hexo中使用Mathjax</a><br><strong><a href="http://chogenfran.github.io/JamesHe.github.io/2016/05/01/%E5%82%BB%E7%93%9C%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%E6%95%99%E7%A8%8B%EF%BC%88XX-NET%EF%BC%89/">科学上网</a></strong></p>
+<h2 id="快速开始"><a href="#快速开始" class="headerlink" title="快速开始"></a>快速开始</h2><h3 id="创建一个新的文章"><a href="#创建一个新的文章" class="headerlink" title="创建一个新的文章"></a>创建一个新的文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="运行服务"><a href="#运行服务" class="headerlink" title="运行服务"></a>运行服务</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="生成静态文件"><a href="#生成静态文件" class="headerlink" title="生成静态文件"></a>生成静态文件</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo generate</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="部署到远程站点"><a href="#部署到远程站点" class="headerlink" title="部署到远程站点"></a>部署到远程站点</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+<h3 id="发布文章"><a href="#发布文章" class="headerlink" title="发布文章"></a>发布文章</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">hexo d --g</span><br></pre></td></tr></table></figure>
+<p>More info: <a href="https://hexo.io/docs/deployment.html">Deployment</a></p>
+<h3 id="添加图片"><a href="#添加图片" class="headerlink" title="添加图片"></a>添加图片</h3><p>在目标的.comfig.yml文件的38行修改数据，可以在新建博客的同时新建一个资源文件夹来放置图片，博客引用时直接使用![picture](picture_name)  </p>
+<h3 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h3><p>行内效果为<script type="math/tex">(a+b+c)^2</script><br>独自一行公式需要使公式独占一行<br>效果为</p>
+<script type="math/tex; mode=display">(a+b+c)^2</script>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>jupyter添加虚拟环境</title>
+    <url>/2019/05/15/jupyter%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/</url>
+    <content><![CDATA[<p><a href="https://www.jianshu.com/p/0432155d1bef">参考地址</a><br><a href="https://blog.csdn.net/simple_the_best/article/details/77005400">服务器端jupyter开启远程访问</a>  </p>
+<h2 id="virtualenv-jupyter-notebook"><a href="#virtualenv-jupyter-notebook" class="headerlink" title="virtualenv + jupyter notebook"></a>virtualenv + jupyter notebook</h2><p>&emsp;&emsp;为了方便远程使用服务器，在服务器端打开了远程访问，之后需要将服务器中创建的虚拟环境添加到jupyter中。</p>
+<ul>
+<li><p>1.进入虚拟环境  </p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source pytorch3/bin/activate</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2.安装IPykernel</p>
+ <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt; python2 &gt;</span><br><span class="line">pip install ipykernel</span><br><span class="line">&lt; python3 &gt;</span><br><span class="line">pip3 install ipykernel</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>3.将 Virtualenv 加入IPykernel</p>
+  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt; python2 &gt;</span><br><span class="line">python2 -m ipykernel install --user --name=myproject</span><br><span class="line">&lt; python3 &gt;</span><br><span class="line">python3 -m ipykernel install --user --name=myproject</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>4.启动jupyter notebook并更改kernel</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>远程桌面</tag>
+        <tag>jupyter</tag>
       </tags>
   </entry>
   <entry>
@@ -515,34 +543,6 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       <tags>
         <tag>linux</tag>
         <tag>操作系统</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>jupyter添加虚拟环境</title>
-    <url>/2019/05/15/jupyter%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/</url>
-    <content><![CDATA[<p><a href="https://www.jianshu.com/p/0432155d1bef">参考地址</a><br><a href="https://blog.csdn.net/simple_the_best/article/details/77005400">服务器端jupyter开启远程访问</a>  </p>
-<h2 id="virtualenv-jupyter-notebook"><a href="#virtualenv-jupyter-notebook" class="headerlink" title="virtualenv + jupyter notebook"></a>virtualenv + jupyter notebook</h2><p>&emsp;&emsp;为了方便远程使用服务器，在服务器端打开了远程访问，之后需要将服务器中创建的虚拟环境添加到jupyter中。</p>
-<ul>
-<li><p>1.进入虚拟环境  </p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">source pytorch3/bin/activate</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>2.安装IPykernel</p>
- <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt; python2 &gt;</span><br><span class="line">pip install ipykernel</span><br><span class="line">&lt; python3 &gt;</span><br><span class="line">pip3 install ipykernel</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>3.将 Virtualenv 加入IPykernel</p>
-  <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">&lt; python2 &gt;</span><br><span class="line">python2 -m ipykernel install --user --name=myproject</span><br><span class="line">&lt; python3 &gt;</span><br><span class="line">python3 -m ipykernel install --user --name=myproject</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>4.启动jupyter notebook并更改kernel</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>服务器</category>
-      </categories>
-      <tags>
-        <tag>服务器</tag>
-        <tag>远程桌面</tag>
-        <tag>jupyter</tag>
       </tags>
   </entry>
   <entry>
@@ -779,6 +779,23 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       </tags>
   </entry>
   <entry>
+    <title>vnc操作</title>
+    <url>/2019/03/21/vnc%E6%93%8D%E4%BD%9C/</url>
+    <content><![CDATA[<p><a href="https://blog.csdn.net/yingyujianmo/article/details/45201097">参考博客</a>  </p>
+<h2 id="查看vnc进程"><a href="#查看vnc进程" class="headerlink" title="查看vnc进程"></a>查看vnc进程</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -ef | grep vnc</span><br></pre></td></tr></table></figure>
+<h2 id="杀掉vnc进程"><a href="#杀掉vnc进程" class="headerlink" title="杀掉vnc进程"></a>杀掉vnc进程</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vncserver -kill :9</span><br></pre></td></tr></table></figure>
+<h2 id="使用指定分辨率启动vnc"><a href="#使用指定分辨率启动vnc" class="headerlink" title="使用指定分辨率启动vnc"></a>使用指定分辨率启动vnc</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vncserver -geometry 1920x1080 :43</span><br></pre></td></tr></table></figure>
+<h2 id="查看vnc帮助"><a href="#查看vnc帮助" class="headerlink" title="查看vnc帮助"></a>查看vnc帮助</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vnc -help</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>服务器</category>
+      </categories>
+      <tags>
+        <tag>服务器</tag>
+        <tag>远程桌面</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>string学习</title>
     <url>/2020/08/11/string%E5%AD%A6%E4%B9%A0/</url>
     <content><![CDATA[<h2 id="string和char-的区别"><a href="#string和char-的区别" class="headerlink" title="string和char*的区别"></a>string和char*的区别</h2><ul>
@@ -802,23 +819,6 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       </tags>
   </entry>
   <entry>
-    <title>vnc操作</title>
-    <url>/2019/03/21/vnc%E6%93%8D%E4%BD%9C/</url>
-    <content><![CDATA[<p><a href="https://blog.csdn.net/yingyujianmo/article/details/45201097">参考博客</a>  </p>
-<h2 id="查看vnc进程"><a href="#查看vnc进程" class="headerlink" title="查看vnc进程"></a>查看vnc进程</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ps -ef | grep vnc</span><br></pre></td></tr></table></figure>
-<h2 id="杀掉vnc进程"><a href="#杀掉vnc进程" class="headerlink" title="杀掉vnc进程"></a>杀掉vnc进程</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vncserver -kill :9</span><br></pre></td></tr></table></figure>
-<h2 id="使用指定分辨率启动vnc"><a href="#使用指定分辨率启动vnc" class="headerlink" title="使用指定分辨率启动vnc"></a>使用指定分辨率启动vnc</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vncserver -geometry 1920x1080 :43</span><br></pre></td></tr></table></figure>
-<h2 id="查看vnc帮助"><a href="#查看vnc帮助" class="headerlink" title="查看vnc帮助"></a>查看vnc帮助</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">vnc -help</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>服务器</category>
-      </categories>
-      <tags>
-        <tag>服务器</tag>
-        <tag>远程桌面</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>将博客搬至CSDN</title>
     <url>/2020/08/26/%E5%B0%86%E5%8D%9A%E5%AE%A2%E6%90%AC%E8%87%B3CSDN/</url>
     <content><![CDATA[]]></content>
@@ -837,131 +837,6 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
       </categories>
       <tags>
         <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深度学习目标检测方法汇总</title>
-    <url>/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/</url>
-    <content><![CDATA[<h2 id="目标检测简介"><a href="#目标检测简介" class="headerlink" title="目标检测简介"></a>目标检测简介</h2><p>&emsp;&emsp;目标检测是计算机视觉的一个重要研究方向，是指从一个场景（或图片）中找到感兴趣的目标。任务大致分为三个流程：</p>
-<ul>
-<li>从场景中提取候选区</li>
-<li>从候选区提取特征</li>
-<li>识别候选区的类别并对有效的候选框进行位置精修</li>
-</ul>
-<p>&emsp;&emsp;目标检测在生活的各个领域都有了广泛的应用，它是将图像或视频中的目标与不感兴趣的部分区分开，判断是否存在目标，若存在目标则确定目标的位置。近年来，随着互联网技术、人工智能计算和智能硬件的迅猛发展，人类生活中存在着大量的图像和视频数据，这使得计算机视觉的研究也越来越火热。目标检测技术作为计算机视觉领域的一个重要组成部分，也受到了很大程度上的关注。目前在实际生活中的应用也十分广泛，包括目标跟踪，视频监控，信息安全，自动驾驶，图像检索，医学图像分析，网络数据挖掘，无人机导航，遥感信息分析，国防系统，以及机器人环境感知等。<br>&emsp;&emsp;目标检测方法主要分为两大类：</p>
-<ul>
-<li>基于传统图像处理和机器学习算法的目标检测方法</li>
-<li>基于深度学习的目标检测方法</li>
-</ul>
-<p>&emsp;&emsp;传统目标检测方法主要分为六个步骤，包括图像预处理，窗口滑动，特征提取，选择以及分类，和后处理这六个步骤。每个步骤所做的工作分别是：a)图像预处理是对检测图像进行图像的去噪声和增强，以及色彩转换等操作；b)窗口滑动是指在待测图像中滑动一个大小相同的窗口，将窗口中的子图像提取出来做候选区域；c)特征提取就是对候选区域使用特定的算法进行处理；d)特征选择即从上一步提取的特征向量中挑选出具有代表性的特征，降低特征的维数；e)特征分类就是利用特定的分类器对特征进行分类，判定候选区是否包含了目标及其类别；f)后处理是指合并判断为同一类别的相交候选区，计算出每个目标的边界框。<br>&emsp;&emsp;传统目标检测方法的检测重点是在特征提取（如何提高特征的表达能力和抗形变能力）和特征分类（如何提高分类器的准确度和速度上）。由此，研究人员提出了多种形式的特征和分类器，其中，代表性的特征有代表性的特征有SIFT(scale-invariant feature transform)、Hear、HOG(histogram of oriented gradient)、Strip等；代表性的分类器有AdaBoost、SVM(support vector machine)、DPM(deformable parts model)、RF(random forest)等。<br>&emsp;&emsp;但是，传统的目标检测方法的准确度并不能达到实际需求，其根本原因有两个，<font color="#ff000">一个是使用滑动窗口的策略进行区域选择时针对性不强，提高了时间复杂度和窗口冗余，另一个是使用设计的特征。</font>设计的特征存在以下三个缺点：a)设计的特征为低层特征，对目标的表达能力不足；b)设计的特征可分性差，导致分类的错误率较高；c)设计的特征具有针对性，很难选择单一特征应用于多目标检测，例如：Hear特征用于人脸检测，HOG特征用于行人检测，Stip特征用于车辆检测。<br>&emsp;&emsp;随着计算机性能的不断提高，曾经难以实现的深度学习算法变得切实可行，目标检测开始进入深度学习时代。深度学习提取的特征为高层特征，相比于传统的目标检测方法的设计特征，学习的特征更加丰富，表达能力更强。而且深度学习将特征提取，特征选择以及特征分类融合到一个模型中，通过端对端的训练，从整体上进行功能优化，增加了特征的可分性。基于深度学习的目标检测算法大致可以分为三类：a)基于区域建议的目标检测算法：如R-CNN，Fast-RCNN，Faster-RCNN；b)基于回归的目标检测算法：如YOLO，SSD；c)基于搜索的目标检测算法，如基于视觉注意的AttentionNet，基于强化学习的算法。  </p>
-<h3 id="基于区域提名的深度学习目标检测算法"><a href="#基于区域提名的深度学习目标检测算法" class="headerlink" title="基于区域提名的深度学习目标检测算法"></a>基于区域提名的深度学习目标检测算法</h3><p>&emsp;&emsp;卷积神经网络（CNN）是区域提议（Region Propoal）算法的核心组成部分，卷积神经网络最早是有Yann LeCun教授提出来的，早期的卷积神经网络是用作分类器使用的，主要用于图像识别。卷积神经网络有三个结构上的特性：局部连接、权重共享以及空间和时间上的采样。这些特性使得卷积神经网络具有一定程度上的平移、缩放和扭曲不变性。在2006年Hinton提出使用深度神经网络从大量的数据中自动学习高层特征。区域建议在此基础上解决了传统目标检测方法存在的两个问题。比较常用的区域建议方法有Selective search和Edge boxes。此后，CNN网络迅速发展，微软最新的ResNet和谷歌的Inception V4模型的Top-5 error降到了4%以内，所以目标检测得到候选区域后使用CNN对其进行图像分类的准确率和检测速度上都有提高。这类算法的主要步骤是：</p>
-<ul>
-<li>首先使用选择性搜索算法（Selective Serch）、Bing、EdgeBoxes这些目标候选区域生成算法生成一系列候选目标区域；</li>
-<li>然后通过深度神经网络提取目标候选区域的特征；</li>
-<li>最后用这些特征进行分类，以及目标真实边界的回归。</li>
-</ul>
-<h4 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h4><p>&emsp;&emsp;R-CNN算法可以说是利用深度学习进行目标检测的开山之作，将深度学习引入了目标检测领域，一举将PASCAL VOC上的检测率从35.1%提升到53.7%。针对传统目标检测方法存在的两个问题，R-CNN都有了很好的解决方法：<font color="#ff000">预先提前一系列可能是物体的候选区域，之后仅在这些候选区域上提取特征，进行判断，</font>从而解决了传统目标检测方法利用滑动窗口依次判断所有可能的区域造成时间复杂度太高和窗口冗余的问题；<font color="#ff000">训练深度网络来进行特征提取替代人工设定特征，</font>解决了人工设定特征的三个缺点。<br>&emsp;&emsp;R-CNN的实现步骤主要有4个：</p>
-<ul>
-<li>a)首先用选择性搜索算法（selective Search）提取1k-2k个候选区域；</li>
-<li>b)使用深度卷积神经网络提取每一个候选区的深度特征；</li>
-<li>c)训练SVM分类器来对这些特征进行分类；</li>
-<li>d)最后通过边界回归算法程序定位目标边界框。</li>
-</ul>
-<p><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer1.png" alt="Figure1"></p>
-<p>&emsp;&emsp;但是，由于在特征提取后进行分类的过程中有一个全连接层的操作，这一个操作要求提取特征的图片需要相同尺度的大小，提取的不合适的特征图片需要进行裁切（Crop）或者变形缩放（Warp），这在一定程度上造成图像畸形，影响最终结果。随后He等人提出SPP-NET缩放很好的解决了这一问题。</p>
-<h4 id="SPP-NET"><a href="#SPP-NET" class="headerlink" title="SPP-NET"></a>SPP-NET</h4><p>&emsp;&emsp;R-CNN存在的问题在SPP-NET解决主要在于SPP网络的提出，这一网络解决了R-CNN这一网络要求提取特征要求相同尺度的大小这一问题。下面是R-CNN和SPP-NET网络结构的对比。</p>
-<p><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer2.png" alt="Figure2"></p>
-<p>&emsp;&emsp;R-CNN现在提取图片特征后先进行卷积后再进行全连接层的训练，而SPP-NET的网络在进行卷积之后再进行SPP操作，这一操作可以让网络输入任何大小的图片，都会生成固定大小的输出，整体的结构除了这一点以外和之前的R-CNN没有什么不同，因此在其它方面，SPP-NET存在和R-CNN一样的问题。</p>
-<h4 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h4><p>&emsp;&emsp;在2015年，继提出R-CNN算法后，Ross Girshick提出了Faster RCNN，流程更为紧凑，大幅提升了目标检测的速度，同样使用最大规模的网络，Fast R-CNN和R-CNN相比，训练时间从84小时减少为9.5小时，测试时间从47秒减少为0.32秒。在PASCAL VOC 2007上的准确率相差无几，约在66%~67%之间。<br>&emsp;&emsp;Fast RCNN主要解决了R-CNN的三个问题：</p>
-<ul>
-<li><p><strong>测试速度慢</strong><br>RCNN一张图片内候选框之间大量重叠，提取特征操作冗余。<br>Fast RCNN将整张图像归一化后直接送入深度网络，在邻接时，才加入候选框信息，在末尾的少数几层处理每个候选框。</p>
-</li>
-<li><p><strong>训练速度慢</strong><br>原因同上<br>在训练时，Fast RCNN先将一张图像送入网络，紧接着送入从这幅图像上提取出的候选区域。这些候选区域的前几层特征不需要再重复计算。</p>
-</li>
-<li><p><strong>训练所需空间大</strong><br>RCNN中独立的分类器和回归器需要大量特征作为训练样本。</p>
-<font color="#ff000">Fast RCNN把类别判断和位置精确统一用深度网络实现，不再需要额外存储。</font>
-
-</li>
-</ul>
-<p>&emsp;&emsp;其中，Fast RCNN最大的贡献是全连接层的提速。<br>&emsp;&emsp;分类和位置调整都是通过全连接层（fc）实现的，设前一级数据为x后一级数据为y，全连接层参数为w，尺寸为$u<em>v$。一次前向传播（forward）即为：<script type="math/tex">y = Wx</script><br>    计算复杂度为$u</em>v$。<br>    将W进行SVD分解，并用前t个特征值近似<script type="math/tex">W=U\Sigma   V^T\approx U(:,1:t)\cdot \Sigma  (1:t,1:t)\cdot V(:,1:t)^T</script><br>    原来的前向传播分解为两步：<script type="math/tex">y = Wx = U\cdot (\Sigma   \cdot V^T)\cdot x = U\cdot z</script><br>    计算复杂度变为$u\times t+v\times t$。<br>    在实现时，相当于把一个全连接层拆分为两个，中间以一个低维数据相连。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer3.png" alt="Figure3"><br>    其实验结果为：</p>
-<pre><code>* 网络末端同步训练的分类和位置调整，提升准确度；
-* 使用多尺度的图像金字塔，性能几乎没有提高；
-* 倍增训练数据，能够有2%~3%的准确度提升；
-* 网络直接输出各类概率（softmax），比SVM分类器性能略好；
-* 更多候选窗不能提升性能。
-</code></pre><h4 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h4><p>&emsp;&emsp;同在2015年，Ross Girshick团队提出了Faster R-CNN，简单网络的目标检测速度达到17fps，在PASCAL VOC上准确率为59.9%；复杂网络达到5fps，准确率78.8%。<br>&emsp;&emsp;从RCNN到Fast RCNN，再到Faster R-CNN，目标检测的四个基本步骤（候选区域生成，特征提取，分类，位置精修）终于被统一到一个深度网络框架之内。所有计算没有重复，完全在GPU中完成，大大提高了运行速度。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer4.png" alt="Figure4"><br>&emsp;&emsp;Faster RCNN可以简单地看做”区域生成网络+Fast R-CNN“的系统，用区域生成网络代替Fast R-CNN中的Selective Search方法。Faster R-CNN着重解决了这个系统中的三个问题：</p>
-<pre><code>1.如何设计区域生成网络
-2.如何训练区域生成网络
-3.如何让区域生成网络和Fast RCNN网络共享特征提取网络
-</code></pre><p>&emsp;&emsp;Faster R-CNN提出了区域生成网络RPN，快速生成候选区域；通过交替训练，使RPN和Fast RCNN网络共享参数。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer5.png" alt="Figure5"></p>
-<h3 id="基于回归的目标检测算法"><a href="#基于回归的目标检测算法" class="headerlink" title="基于回归的目标检测算法"></a>基于回归的目标检测算法</h3><p>&emsp;&emsp;虽然Faster R-CNN是目前主流的目标检测算法之一，但是速度上并不能满足实时的要求，随后出现YOLO，SSD这一类的算法逐渐凸显出其优略性，这类方法充分地利用了回归的思想，直接在原始图像的多个位置回归，判别出目标边框以及目标类别。</p>
-<h4 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h4><p>&emsp;&emsp;2016年Redmon等人提出的YOLO算法是一个可以一次性预测多个Box位置和类别的卷积神经网络，YOLO算法的网络设计延续了GoogleNet的核心思想，真正意思上实现了端到端的目标检测，并且发挥了速度快的优势，但其精度有所下滑。但在同年Redmon等人在YOLO的基础上提出了YOLO9000算法，保持了YOLO的速度，提高了准确度。主要有两方面的改进：1)在原先的YOLO检测框架上进行一系列的改进，弥补了检测精度的不足；2)提出了目标检测和目标训练和二为一的方法。YOLOv2算法的训练网络采用降采样的方法在特定的情况下可以进行动态调整，这种机制可以使网络预测不同大小的图片，让检测速度和精度之间达到平衡。</p>
-<h4 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h4><p>&emsp;&emsp;2016年Liu等人提出SSD算法，该算法结合YOLO的回归思想以及Faster R-CNN的anchor机制做到了速度和准确率并存。最初的YOLO算法是在7x77x7的框架下识别物体，用这种框架检测小物体时，准确率会下降。在SSD算法中去掉了YOLO算法的全连接层，所以对任意大小的物体都可以检测，性能基本不变。对SSD的测试集进行训练和训练使用候选区域及用来池化的标准测试器之间最大的不同之处在于，ground truth 需要被赋予一组固定集合检测输出中某一个特定输出。当这个赋值确定之后，损失函数和后向传播就能够实现端到端的应用。总之，SSD结合了YOLO中的回归思想和Faster R-CNN中的anchor机制，使用全图各个位置的多尺度区域特征进行回归，既保持了YOLO速度快的特性，也保证了窗口预测跟Faster R-CNN一样精准。</p>
-]]></content>
-      <categories>
-        <category>目标检测</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>目标检测</tag>
-        <tag>计算机视觉</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>深度学习笔记</title>
-    <url>/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
-    <content><![CDATA[<p>培养专注的习惯，学会独立思考</p>
-<h2 id="学习AI需要哪些技能"><a href="#学习AI需要哪些技能" class="headerlink" title="学习AI需要哪些技能"></a><a href="https://zhuanlan.zhihu.com/p/52814848">学习AI需要哪些技能</a></h2><ul>
-<li><p>1.编程基础  </p>
-<ul>
-<li>熟练使用linux，git，vim等环境和工具。  </li>
-<li>熟练掌握 C/C++、Python等编程语言。  </li>
-<li>熟练掌握cmake，g++等编译工具。  </li>
-</ul>
-</li>
-<li><p>2.算法基础  </p>
-<ul>
-<li>熟悉传统图像算法，机器学习算法。  </li>
-<li>熟练跟踪并阅读行业前沿研究，复现结果。</li>
-<li>系统性熟悉深度学习理论。</li>
-</ul>
-</li>
-<li><p>3.框架基础  </p>
-<ul>
-<li>熟练掌握 Caffe、TensorFlow、pytorch等以及不断新出的开源平台。  </li>
-</ul>
-</li>
-<li><p>4.其它基础</p>
-<ul>
-<li>掌握爬虫等前后端的基础知识。  </li>
-<li>了解并熟悉Cuda等GPU编程技术，了解一些移动端的硬件知识。  </li>
-<li>了解并熟悉 Android、iOS 等移动端的基础知识，在项目中可能会需要使用。  </li>
-</ul>
-</li>
-</ul>
-<h2 id="吴恩达深度学习课后作业"><a href="#吴恩达深度学习课后作业" class="headerlink" title="吴恩达深度学习课后作业"></a>吴恩达深度学习课后作业</h2><p><a href="https://mooc.study.163.com/learn/2001281002?tid=2001392029#/learn/content">吴恩达深度学习视频</a><br><a href="https://blog.csdn.net/u013733326/article/details/79827273">作业参考</a></p>
-<h3 id="神经网络和深度学习"><a href="#神经网络和深度学习" class="headerlink" title="神经网络和深度学习"></a>神经网络和深度学习</h3><h4 id="logistic回归"><a href="#logistic回归" class="headerlink" title="logistic回归"></a>logistic回归</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week2_Logistic">作业代码</a>  </p>
-<h4 id="浅层神经网络"><a href="#浅层神经网络" class="headerlink" title="浅层神经网络"></a>浅层神经网络</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week3_simple_net">作业代码</a>  </p>
-<h4 id="深层神经网络"><a href="#深层神经网络" class="headerlink" title="深层神经网络"></a>深层神经网络</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week4_complex_net">作业代码</a></p>
-<h3 id="改善深层神经网络"><a href="#改善深层神经网络" class="headerlink" title="改善深层神经网络"></a>改善深层神经网络</h3><h4 id="深度学习的实用层面"><a href="#深度学习的实用层面" class="headerlink" title="深度学习的实用层面"></a>深度学习的实用层面</h4><h2 id="cs231n课程笔记"><a href="#cs231n课程笔记" class="headerlink" title="cs231n课程笔记"></a>cs231n课程笔记</h2><h3 id="图像处理的一些简单方法"><a href="#图像处理的一些简单方法" class="headerlink" title="图像处理的一些简单方法"></a><a href="https://github.com/JiangChenrui/matching_learning_note/blob/master/image_enhance.py">图像处理的一些简单方法</a></h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageEnhance</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 原始图像</span></span><br><span class="line">image = Image.<span class="built_in">open</span>(<span class="string">&#x27;match_learning/picture/1.jpg&#x27;</span>)  <span class="comment"># 打开图片</span></span><br><span class="line"><span class="comment"># image.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;origan_image&quot;</span>)</span><br><span class="line">plt.imshow(image)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.jpg" alt="picture1">  </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 亮度增强</span></span><br><span class="line">enh_bri = ImageEnhance.Brightness(image)</span><br><span class="line">brightness = <span class="number">1.5</span></span><br><span class="line">image_brightened = enh_bri.enhance(brightness)</span><br><span class="line"><span class="comment"># image_brightened.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;brightened&quot;</span>)</span><br><span class="line">plt.imshow(image_brightened)</span><br><span class="line">plt.show()</span><br><span class="line">image_brightened.save(<span class="string">&#x27;match_learning/picture/image_brightened.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_brightened.jpg" alt="picture2">  </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 色度增强</span></span><br><span class="line">enh_col = ImageEnhance.Color(image)</span><br><span class="line">color = <span class="number">1.5</span></span><br><span class="line">image_colored = enh_col.enhance(color)</span><br><span class="line"><span class="comment"># image_colored.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;colored&quot;</span>)</span><br><span class="line">plt.imshow(image_colored)</span><br><span class="line">plt.show()</span><br><span class="line">image_colored.save(<span class="string">&#x27;match_learning/picture/image_colored.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_colored.jpg" alt="picture3">  </p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 对比度增强</span></span><br><span class="line">enh_con = ImageEnhance.Contrast(image)</span><br><span class="line">contrast = <span class="number">1.5</span></span><br><span class="line">image_contrasted = enh_con.enhance(contrast)</span><br><span class="line"><span class="comment"># image_contrasted.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;contrast&quot;</span>)</span><br><span class="line">plt.imshow(image_contrasted)</span><br><span class="line">plt.show()</span><br><span class="line">image_contrasted.save(<span class="string">&#x27;match_learning/picture/image_contrasted.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_contrasted.jpg" alt="picture4"></p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 锐度增强</span></span><br><span class="line">enh_sha = ImageEnhance.Sharpness(image)</span><br><span class="line">sharpness = <span class="number">1.5</span></span><br><span class="line">image_sharped = enh_sha.enhance(sharpness)</span><br><span class="line"><span class="comment"># image_sharped.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;sharpness&quot;</span>)</span><br><span class="line">plt.imshow(image_sharped)</span><br><span class="line">plt.show()</span><br><span class="line">image_sharped.save(<span class="string">&#x27;match_learning/picture/image_sharped.jpg&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_sharped.jpg" alt="picture5">  </p>
-<h3 id="python学习笔记"><a href="#python学习笔记" class="headerlink" title="python学习笔记"></a><a href="https://github.com/JiangChenrui/DeeplingAI/blob/master/cs231n/python_study.py">python学习笔记</a></h3>]]></content>
-      <categories>
-        <category>学习笔记</category>
-      </categories>
-      <tags>
-        <tag>深度学习</tag>
-        <tag>笔记</tag>
-        <tag>计算机视觉</tag>
-        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
@@ -1166,6 +1041,131 @@ h*w*d^{'}*t(d^{'}+k^{2}+d^{''})</script><p>与（1）相比多了额外的项,�
         <tag>c++</tag>
         <tag>算法</tag>
         <tag>数据结构</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度学习目标检测方法汇总</title>
+    <url>/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/</url>
+    <content><![CDATA[<h2 id="目标检测简介"><a href="#目标检测简介" class="headerlink" title="目标检测简介"></a>目标检测简介</h2><p>&emsp;&emsp;目标检测是计算机视觉的一个重要研究方向，是指从一个场景（或图片）中找到感兴趣的目标。任务大致分为三个流程：</p>
+<ul>
+<li>从场景中提取候选区</li>
+<li>从候选区提取特征</li>
+<li>识别候选区的类别并对有效的候选框进行位置精修</li>
+</ul>
+<p>&emsp;&emsp;目标检测在生活的各个领域都有了广泛的应用，它是将图像或视频中的目标与不感兴趣的部分区分开，判断是否存在目标，若存在目标则确定目标的位置。近年来，随着互联网技术、人工智能计算和智能硬件的迅猛发展，人类生活中存在着大量的图像和视频数据，这使得计算机视觉的研究也越来越火热。目标检测技术作为计算机视觉领域的一个重要组成部分，也受到了很大程度上的关注。目前在实际生活中的应用也十分广泛，包括目标跟踪，视频监控，信息安全，自动驾驶，图像检索，医学图像分析，网络数据挖掘，无人机导航，遥感信息分析，国防系统，以及机器人环境感知等。<br>&emsp;&emsp;目标检测方法主要分为两大类：</p>
+<ul>
+<li>基于传统图像处理和机器学习算法的目标检测方法</li>
+<li>基于深度学习的目标检测方法</li>
+</ul>
+<p>&emsp;&emsp;传统目标检测方法主要分为六个步骤，包括图像预处理，窗口滑动，特征提取，选择以及分类，和后处理这六个步骤。每个步骤所做的工作分别是：a)图像预处理是对检测图像进行图像的去噪声和增强，以及色彩转换等操作；b)窗口滑动是指在待测图像中滑动一个大小相同的窗口，将窗口中的子图像提取出来做候选区域；c)特征提取就是对候选区域使用特定的算法进行处理；d)特征选择即从上一步提取的特征向量中挑选出具有代表性的特征，降低特征的维数；e)特征分类就是利用特定的分类器对特征进行分类，判定候选区是否包含了目标及其类别；f)后处理是指合并判断为同一类别的相交候选区，计算出每个目标的边界框。<br>&emsp;&emsp;传统目标检测方法的检测重点是在特征提取（如何提高特征的表达能力和抗形变能力）和特征分类（如何提高分类器的准确度和速度上）。由此，研究人员提出了多种形式的特征和分类器，其中，代表性的特征有代表性的特征有SIFT(scale-invariant feature transform)、Hear、HOG(histogram of oriented gradient)、Strip等；代表性的分类器有AdaBoost、SVM(support vector machine)、DPM(deformable parts model)、RF(random forest)等。<br>&emsp;&emsp;但是，传统的目标检测方法的准确度并不能达到实际需求，其根本原因有两个，<font color="#ff000">一个是使用滑动窗口的策略进行区域选择时针对性不强，提高了时间复杂度和窗口冗余，另一个是使用设计的特征。</font>设计的特征存在以下三个缺点：a)设计的特征为低层特征，对目标的表达能力不足；b)设计的特征可分性差，导致分类的错误率较高；c)设计的特征具有针对性，很难选择单一特征应用于多目标检测，例如：Hear特征用于人脸检测，HOG特征用于行人检测，Stip特征用于车辆检测。<br>&emsp;&emsp;随着计算机性能的不断提高，曾经难以实现的深度学习算法变得切实可行，目标检测开始进入深度学习时代。深度学习提取的特征为高层特征，相比于传统的目标检测方法的设计特征，学习的特征更加丰富，表达能力更强。而且深度学习将特征提取，特征选择以及特征分类融合到一个模型中，通过端对端的训练，从整体上进行功能优化，增加了特征的可分性。基于深度学习的目标检测算法大致可以分为三类：a)基于区域建议的目标检测算法：如R-CNN，Fast-RCNN，Faster-RCNN；b)基于回归的目标检测算法：如YOLO，SSD；c)基于搜索的目标检测算法，如基于视觉注意的AttentionNet，基于强化学习的算法。  </p>
+<h3 id="基于区域提名的深度学习目标检测算法"><a href="#基于区域提名的深度学习目标检测算法" class="headerlink" title="基于区域提名的深度学习目标检测算法"></a>基于区域提名的深度学习目标检测算法</h3><p>&emsp;&emsp;卷积神经网络（CNN）是区域提议（Region Propoal）算法的核心组成部分，卷积神经网络最早是有Yann LeCun教授提出来的，早期的卷积神经网络是用作分类器使用的，主要用于图像识别。卷积神经网络有三个结构上的特性：局部连接、权重共享以及空间和时间上的采样。这些特性使得卷积神经网络具有一定程度上的平移、缩放和扭曲不变性。在2006年Hinton提出使用深度神经网络从大量的数据中自动学习高层特征。区域建议在此基础上解决了传统目标检测方法存在的两个问题。比较常用的区域建议方法有Selective search和Edge boxes。此后，CNN网络迅速发展，微软最新的ResNet和谷歌的Inception V4模型的Top-5 error降到了4%以内，所以目标检测得到候选区域后使用CNN对其进行图像分类的准确率和检测速度上都有提高。这类算法的主要步骤是：</p>
+<ul>
+<li>首先使用选择性搜索算法（Selective Serch）、Bing、EdgeBoxes这些目标候选区域生成算法生成一系列候选目标区域；</li>
+<li>然后通过深度神经网络提取目标候选区域的特征；</li>
+<li>最后用这些特征进行分类，以及目标真实边界的回归。</li>
+</ul>
+<h4 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h4><p>&emsp;&emsp;R-CNN算法可以说是利用深度学习进行目标检测的开山之作，将深度学习引入了目标检测领域，一举将PASCAL VOC上的检测率从35.1%提升到53.7%。针对传统目标检测方法存在的两个问题，R-CNN都有了很好的解决方法：<font color="#ff000">预先提前一系列可能是物体的候选区域，之后仅在这些候选区域上提取特征，进行判断，</font>从而解决了传统目标检测方法利用滑动窗口依次判断所有可能的区域造成时间复杂度太高和窗口冗余的问题；<font color="#ff000">训练深度网络来进行特征提取替代人工设定特征，</font>解决了人工设定特征的三个缺点。<br>&emsp;&emsp;R-CNN的实现步骤主要有4个：</p>
+<ul>
+<li>a)首先用选择性搜索算法（selective Search）提取1k-2k个候选区域；</li>
+<li>b)使用深度卷积神经网络提取每一个候选区的深度特征；</li>
+<li>c)训练SVM分类器来对这些特征进行分类；</li>
+<li>d)最后通过边界回归算法程序定位目标边界框。</li>
+</ul>
+<p><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer1.png" alt="Figure1"></p>
+<p>&emsp;&emsp;但是，由于在特征提取后进行分类的过程中有一个全连接层的操作，这一个操作要求提取特征的图片需要相同尺度的大小，提取的不合适的特征图片需要进行裁切（Crop）或者变形缩放（Warp），这在一定程度上造成图像畸形，影响最终结果。随后He等人提出SPP-NET缩放很好的解决了这一问题。</p>
+<h4 id="SPP-NET"><a href="#SPP-NET" class="headerlink" title="SPP-NET"></a>SPP-NET</h4><p>&emsp;&emsp;R-CNN存在的问题在SPP-NET解决主要在于SPP网络的提出，这一网络解决了R-CNN这一网络要求提取特征要求相同尺度的大小这一问题。下面是R-CNN和SPP-NET网络结构的对比。</p>
+<p><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer2.png" alt="Figure2"></p>
+<p>&emsp;&emsp;R-CNN现在提取图片特征后先进行卷积后再进行全连接层的训练，而SPP-NET的网络在进行卷积之后再进行SPP操作，这一操作可以让网络输入任何大小的图片，都会生成固定大小的输出，整体的结构除了这一点以外和之前的R-CNN没有什么不同，因此在其它方面，SPP-NET存在和R-CNN一样的问题。</p>
+<h4 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h4><p>&emsp;&emsp;在2015年，继提出R-CNN算法后，Ross Girshick提出了Faster RCNN，流程更为紧凑，大幅提升了目标检测的速度，同样使用最大规模的网络，Fast R-CNN和R-CNN相比，训练时间从84小时减少为9.5小时，测试时间从47秒减少为0.32秒。在PASCAL VOC 2007上的准确率相差无几，约在66%~67%之间。<br>&emsp;&emsp;Fast RCNN主要解决了R-CNN的三个问题：</p>
+<ul>
+<li><p><strong>测试速度慢</strong><br>RCNN一张图片内候选框之间大量重叠，提取特征操作冗余。<br>Fast RCNN将整张图像归一化后直接送入深度网络，在邻接时，才加入候选框信息，在末尾的少数几层处理每个候选框。</p>
+</li>
+<li><p><strong>训练速度慢</strong><br>原因同上<br>在训练时，Fast RCNN先将一张图像送入网络，紧接着送入从这幅图像上提取出的候选区域。这些候选区域的前几层特征不需要再重复计算。</p>
+</li>
+<li><p><strong>训练所需空间大</strong><br>RCNN中独立的分类器和回归器需要大量特征作为训练样本。</p>
+<font color="#ff000">Fast RCNN把类别判断和位置精确统一用深度网络实现，不再需要额外存储。</font>
+
+</li>
+</ul>
+<p>&emsp;&emsp;其中，Fast RCNN最大的贡献是全连接层的提速。<br>&emsp;&emsp;分类和位置调整都是通过全连接层（fc）实现的，设前一级数据为x后一级数据为y，全连接层参数为w，尺寸为$u<em>v$。一次前向传播（forward）即为：<script type="math/tex">y = Wx</script><br>    计算复杂度为$u</em>v$。<br>    将W进行SVD分解，并用前t个特征值近似<script type="math/tex">W=U\Sigma   V^T\approx U(:,1:t)\cdot \Sigma  (1:t,1:t)\cdot V(:,1:t)^T</script><br>    原来的前向传播分解为两步：<script type="math/tex">y = Wx = U\cdot (\Sigma   \cdot V^T)\cdot x = U\cdot z</script><br>    计算复杂度变为$u\times t+v\times t$。<br>    在实现时，相当于把一个全连接层拆分为两个，中间以一个低维数据相连。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer3.png" alt="Figure3"><br>    其实验结果为：</p>
+<pre><code>* 网络末端同步训练的分类和位置调整，提升准确度；
+* 使用多尺度的图像金字塔，性能几乎没有提高；
+* 倍增训练数据，能够有2%~3%的准确度提升；
+* 网络直接输出各类概率（softmax），比SVM分类器性能略好；
+* 更多候选窗不能提升性能。
+</code></pre><h4 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h4><p>&emsp;&emsp;同在2015年，Ross Girshick团队提出了Faster R-CNN，简单网络的目标检测速度达到17fps，在PASCAL VOC上准确率为59.9%；复杂网络达到5fps，准确率78.8%。<br>&emsp;&emsp;从RCNN到Fast RCNN，再到Faster R-CNN，目标检测的四个基本步骤（候选区域生成，特征提取，分类，位置精修）终于被统一到一个深度网络框架之内。所有计算没有重复，完全在GPU中完成，大大提高了运行速度。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer4.png" alt="Figure4"><br>&emsp;&emsp;Faster RCNN可以简单地看做”区域生成网络+Fast R-CNN“的系统，用区域生成网络代替Fast R-CNN中的Selective Search方法。Faster R-CNN着重解决了这个系统中的三个问题：</p>
+<pre><code>1.如何设计区域生成网络
+2.如何训练区域生成网络
+3.如何让区域生成网络和Fast RCNN网络共享特征提取网络
+</code></pre><p>&emsp;&emsp;Faster R-CNN提出了区域生成网络RPN，快速生成候选区域；通过交替训练，使RPN和Fast RCNN网络共享参数。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer5.png" alt="Figure5"></p>
+<h3 id="基于回归的目标检测算法"><a href="#基于回归的目标检测算法" class="headerlink" title="基于回归的目标检测算法"></a>基于回归的目标检测算法</h3><p>&emsp;&emsp;虽然Faster R-CNN是目前主流的目标检测算法之一，但是速度上并不能满足实时的要求，随后出现YOLO，SSD这一类的算法逐渐凸显出其优略性，这类方法充分地利用了回归的思想，直接在原始图像的多个位置回归，判别出目标边框以及目标类别。</p>
+<h4 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h4><p>&emsp;&emsp;2016年Redmon等人提出的YOLO算法是一个可以一次性预测多个Box位置和类别的卷积神经网络，YOLO算法的网络设计延续了GoogleNet的核心思想，真正意思上实现了端到端的目标检测，并且发挥了速度快的优势，但其精度有所下滑。但在同年Redmon等人在YOLO的基础上提出了YOLO9000算法，保持了YOLO的速度，提高了准确度。主要有两方面的改进：1)在原先的YOLO检测框架上进行一系列的改进，弥补了检测精度的不足；2)提出了目标检测和目标训练和二为一的方法。YOLOv2算法的训练网络采用降采样的方法在特定的情况下可以进行动态调整，这种机制可以使网络预测不同大小的图片，让检测速度和精度之间达到平衡。</p>
+<h4 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h4><p>&emsp;&emsp;2016年Liu等人提出SSD算法，该算法结合YOLO的回归思想以及Faster R-CNN的anchor机制做到了速度和准确率并存。最初的YOLO算法是在7x77x7的框架下识别物体，用这种框架检测小物体时，准确率会下降。在SSD算法中去掉了YOLO算法的全连接层，所以对任意大小的物体都可以检测，性能基本不变。对SSD的测试集进行训练和训练使用候选区域及用来池化的标准测试器之间最大的不同之处在于，ground truth 需要被赋予一组固定集合检测输出中某一个特定输出。当这个赋值确定之后，损失函数和后向传播就能够实现端到端的应用。总之，SSD结合了YOLO中的回归思想和Faster R-CNN中的anchor机制，使用全图各个位置的多尺度区域特征进行回归，既保持了YOLO速度快的特性，也保证了窗口预测跟Faster R-CNN一样精准。</p>
+]]></content>
+      <categories>
+        <category>目标检测</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>目标检测</tag>
+        <tag>计算机视觉</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>深度学习笔记</title>
+    <url>/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    <content><![CDATA[<p>培养专注的习惯，学会独立思考</p>
+<h2 id="学习AI需要哪些技能"><a href="#学习AI需要哪些技能" class="headerlink" title="学习AI需要哪些技能"></a><a href="https://zhuanlan.zhihu.com/p/52814848">学习AI需要哪些技能</a></h2><ul>
+<li><p>1.编程基础  </p>
+<ul>
+<li>熟练使用linux，git，vim等环境和工具。  </li>
+<li>熟练掌握 C/C++、Python等编程语言。  </li>
+<li>熟练掌握cmake，g++等编译工具。  </li>
+</ul>
+</li>
+<li><p>2.算法基础  </p>
+<ul>
+<li>熟悉传统图像算法，机器学习算法。  </li>
+<li>熟练跟踪并阅读行业前沿研究，复现结果。</li>
+<li>系统性熟悉深度学习理论。</li>
+</ul>
+</li>
+<li><p>3.框架基础  </p>
+<ul>
+<li>熟练掌握 Caffe、TensorFlow、pytorch等以及不断新出的开源平台。  </li>
+</ul>
+</li>
+<li><p>4.其它基础</p>
+<ul>
+<li>掌握爬虫等前后端的基础知识。  </li>
+<li>了解并熟悉Cuda等GPU编程技术，了解一些移动端的硬件知识。  </li>
+<li>了解并熟悉 Android、iOS 等移动端的基础知识，在项目中可能会需要使用。  </li>
+</ul>
+</li>
+</ul>
+<h2 id="吴恩达深度学习课后作业"><a href="#吴恩达深度学习课后作业" class="headerlink" title="吴恩达深度学习课后作业"></a>吴恩达深度学习课后作业</h2><p><a href="https://mooc.study.163.com/learn/2001281002?tid=2001392029#/learn/content">吴恩达深度学习视频</a><br><a href="https://blog.csdn.net/u013733326/article/details/79827273">作业参考</a></p>
+<h3 id="神经网络和深度学习"><a href="#神经网络和深度学习" class="headerlink" title="神经网络和深度学习"></a>神经网络和深度学习</h3><h4 id="logistic回归"><a href="#logistic回归" class="headerlink" title="logistic回归"></a>logistic回归</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week2_Logistic">作业代码</a>  </p>
+<h4 id="浅层神经网络"><a href="#浅层神经网络" class="headerlink" title="浅层神经网络"></a>浅层神经网络</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week3_simple_net">作业代码</a>  </p>
+<h4 id="深层神经网络"><a href="#深层神经网络" class="headerlink" title="深层神经网络"></a>深层神经网络</h4><p><a href="https://github.com/JiangChenrui/DeeplingAI/tree/master/DeeplingAI_course1/week4_complex_net">作业代码</a></p>
+<h3 id="改善深层神经网络"><a href="#改善深层神经网络" class="headerlink" title="改善深层神经网络"></a>改善深层神经网络</h3><h4 id="深度学习的实用层面"><a href="#深度学习的实用层面" class="headerlink" title="深度学习的实用层面"></a>深度学习的实用层面</h4><h2 id="cs231n课程笔记"><a href="#cs231n课程笔记" class="headerlink" title="cs231n课程笔记"></a>cs231n课程笔记</h2><h3 id="图像处理的一些简单方法"><a href="#图像处理的一些简单方法" class="headerlink" title="图像处理的一些简单方法"></a><a href="https://github.com/JiangChenrui/matching_learning_note/blob/master/image_enhance.py">图像处理的一些简单方法</a></h3><figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> ImageEnhance</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line"><span class="comment"># 原始图像</span></span><br><span class="line">image = Image.<span class="built_in">open</span>(<span class="string">&#x27;match_learning/picture/1.jpg&#x27;</span>)  <span class="comment"># 打开图片</span></span><br><span class="line"><span class="comment"># image.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;origan_image&quot;</span>)</span><br><span class="line">plt.imshow(image)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/1.jpg" alt="picture1">  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 亮度增强</span></span><br><span class="line">enh_bri = ImageEnhance.Brightness(image)</span><br><span class="line">brightness = <span class="number">1.5</span></span><br><span class="line">image_brightened = enh_bri.enhance(brightness)</span><br><span class="line"><span class="comment"># image_brightened.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;brightened&quot;</span>)</span><br><span class="line">plt.imshow(image_brightened)</span><br><span class="line">plt.show()</span><br><span class="line">image_brightened.save(<span class="string">&#x27;match_learning/picture/image_brightened.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_brightened.jpg" alt="picture2">  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 色度增强</span></span><br><span class="line">enh_col = ImageEnhance.Color(image)</span><br><span class="line">color = <span class="number">1.5</span></span><br><span class="line">image_colored = enh_col.enhance(color)</span><br><span class="line"><span class="comment"># image_colored.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;colored&quot;</span>)</span><br><span class="line">plt.imshow(image_colored)</span><br><span class="line">plt.show()</span><br><span class="line">image_colored.save(<span class="string">&#x27;match_learning/picture/image_colored.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_colored.jpg" alt="picture3">  </p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 对比度增强</span></span><br><span class="line">enh_con = ImageEnhance.Contrast(image)</span><br><span class="line">contrast = <span class="number">1.5</span></span><br><span class="line">image_contrasted = enh_con.enhance(contrast)</span><br><span class="line"><span class="comment"># image_contrasted.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;contrast&quot;</span>)</span><br><span class="line">plt.imshow(image_contrasted)</span><br><span class="line">plt.show()</span><br><span class="line">image_contrasted.save(<span class="string">&#x27;match_learning/picture/image_contrasted.jpg&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_contrasted.jpg" alt="picture4"></p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 锐度增强</span></span><br><span class="line">enh_sha = ImageEnhance.Sharpness(image)</span><br><span class="line">sharpness = <span class="number">1.5</span></span><br><span class="line">image_sharped = enh_sha.enhance(sharpness)</span><br><span class="line"><span class="comment"># image_sharped.show()</span></span><br><span class="line">plt.figure(<span class="string">&quot;sharpness&quot;</span>)</span><br><span class="line">plt.imshow(image_sharped)</span><br><span class="line">plt.show()</span><br><span class="line">image_sharped.save(<span class="string">&#x27;match_learning/picture/image_sharped.jpg&#x27;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><img src="/2019/01/23/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/image_sharped.jpg" alt="picture5">  </p>
+<h3 id="python学习笔记"><a href="#python学习笔记" class="headerlink" title="python学习笔记"></a><a href="https://github.com/JiangChenrui/DeeplingAI/blob/master/cs231n/python_study.py">python学习笔记</a></h3>]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>深度学习</tag>
+        <tag>笔记</tag>
+        <tag>计算机视觉</tag>
+        <tag>编程</tag>
       </tags>
   </entry>
   <entry>
