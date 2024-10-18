@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<meta name="baidu-site-verification" content="pFajzJd0SZ" />
+<meta name="google-site-verification" content="nWFVcb4qcdyxOeW2mwDvLXa4UOsZdsGAH5uKR5PFG_o" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiangchenrui.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="MobileNetV3论文阅读记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MobileNetV3">
+<meta property="og:url" content="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/index.html">
+<meta property="og:site_name" content="姜晨瑞的博客">
+<meta property="og:description" content="MobileNetV3论文阅读记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/Figure1.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/Figure2.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/Figure3.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/Figure4.png">
+<meta property="article:published_time" content="2019-06-03T07:38:41.000Z">
+<meta property="article:modified_time" content="2024-10-17T07:56:22.963Z">
+<meta property="article:author" content="JiangChenrui">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="轻量级网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/Figure1.png">
+
+<link rel="canonical" href="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>MobileNetV3 | 姜晨瑞的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">姜晨瑞的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录与总结</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JiangChenrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="姜晨瑞的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MobileNetV3
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-03 15:38:41" itemprop="dateCreated datePublished" datetime="2019-06-03T15:38:41+08:00">2019-06-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-17 15:56:22" itemprop="dateModified" datetime="2024-10-17T15:56:22+08:00">2024-10-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/06/03/MobileNetV3/" class="post-meta-item leancloud_visitors" data-flag-title="MobileNetV3" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/06/03/MobileNetV3/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/06/03/MobileNetV3/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.8k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description"><center>MobileNetV3论文阅读记录</center></div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://arxiv.org/pdf/1905.02244.pdf">论文地址</a></p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;我们基于互补搜索技术的组合以及新颖的架构设计呈现下一代MobileNets。MobileNetV3通过硬件网络架构搜索（NAS）与NetAdapt算法相结合的方式调整到移动电话CPU，然后通过新颖的架构改进进行改进。本文开始探索自动搜索算法和网络设计如何协同工作，以利用互补的方法来改善整体的现状。通过这个过程，我们为发布创建了两个新的MobileNet模型：MobileNetV3-Large和MobileNetV3-Small，它们针对高资源和低资源使用情况。然后，这些模型被适应并应用于对象检测和语义分割的任务。对于语义分割（或任何密集像素预测）的任务，我们提出了一种新的有效分割解码器Lite Reduced Atrous Spatial Pyramid Pooling（LR-ASPP）。我们实现了移动分类，检测和分割的最新技术成果。MobileNetV3-Large在ImageNet分类上的准确度提高了3.2％，与MobileNetV2相比，延迟降低了15％。与MobileNetV2相比，MobileNetV3-Small的准确度提高了4.6％，同时将延迟降低了5％。MobileNetV3-大检测速度提高了25％，与COCO检测时的MobileNetV2大致相同。MobileNetV3-Large LR-ASPP比MobileNetV2 R-ASPP快30％，与Cityscapes细分的准确度相似。</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>&emsp;&emsp;高效的神经网络在移动应用程序中变得无处不在，从而实现全新的设备体验。它们也是个人隐私的关键推动因素，允许用户获得神经网络的好处，而无需将数据发送到服务器进行评估。神经网络效率的进步不仅可以通过更高的准确性和更低的延迟来改善用户体验，还可以通过降低功耗来帮助延长电池寿命。<br>&emsp;&emsp;本文描述了我们开发MobileNetV3大型和小型模型的方法，以便提供下一代高精度高效神经网络模型，为设备上的计算机视觉提供动力。新网络推动了最新技术的发展，并演示了如何将自动搜索与新颖的架构改进相结合，以构建有效的模型。<br>&emsp;&emsp;本文的目标是开发最佳的移动计算机视觉架构，优化移动设备上的准确度。为实现这一目标，我们引入了（1）互补搜索技术，（2）适用于移动设置的非线性高效新版本，（3）新的高效网络设计,（4）新的有效分段解码器。我们提供了彻底的实验，证明了在各种用例和手机上评估的每项技术的功效和价值。<br>&emsp;&emsp;本文的结构如下。我们首先讨论第2节中的相关工作。第3节回顾了用于移动模型的有效构建块。第4节回顾了体系结构搜索以及MnasNet和NetAdapt算法的互补性。第5节描述了新颖的架构设计，提高了通过联合搜索找到的模型的效率。第6节介绍了分类，检测和分割的广泛实验，以便证明有效性并理解不同元素的贡献。第7节包含结论和未来的工作。<br><img src="/2019/06/03/MobileNetV3/Figure1.png" alt="Figure1"><br><img src="/2019/06/03/MobileNetV3/Figure2.png" alt="Figure2"></p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>&emsp;&emsp;近年来，设计深度神经网络架构以实现精度和效率之间的最佳平衡是一个活跃的研究领域。新颖的手工结构和算法神经结构搜索都在推动这一领域发挥了重要作用。<br>&emsp;&emsp;SqueezeNet[22]广泛使用1x1卷积，挤压和扩展模块主要集中在减少参数数量上。最近的工作将重点从减少参数转移到减少操作数（MAdds）和实际测量的延迟。MobileNetV1[19]采用深度可分离卷积来大幅提高计算效率。MobileNetV2[39]通过引入具有反向残差和线性瓶颈的资源有效块来扩展这一点。ShuffleNet[49]利用组卷积和信道混洗操作来进一步减少MAdds。CondenseNet[21]在训练阶段学习群组卷积，以保持层之间有用的密集连接，以便重新使用特征。ShiftNet[46]提出了与逐点卷积交织的移位操作，以取代昂贵的空间卷积。<br>&emsp;&emsp;为了使架构设计过程自动化，首先引入强化学习（RL）来搜索具有竞争精度的高效架构[53,54,3,27,35]。完全可配置的搜索空间可以呈指数级增长并且难以处理。因此，架构搜索的早期工作集中在单元级结构搜索上，并且在所有层中重用相同的单元。最近，[43]探索了一种块级分层搜索空间，允许在网络的不同分辨率块处使用不同的层结构。为了降低搜索的计算成本，在[28,5,45]中使用可分的架构搜索框架，使用基于梯度的优化。着眼于将现有网络适应受约束的移动平台，[48,15,12]提出了更有效的自动网络简化算法。<br>&emsp;&emsp;量化[23,25,47,41,51,52,37]是通过降低精度算法来提高网络效率的另一个重要的补充努力。最后，知识蒸馏[4,17]提供了一种额外的补充方法，可以在大型“教师”网络的指导下生成小型精确的“学生”网络。  </p>
+<h2 id="高效的移动构建模块"><a href="#高效的移动构建模块" class="headerlink" title="高效的移动构建模块"></a>高效的移动构建模块</h2><p>&emsp;&emsp;移动模型建立在越来越高效的构建块上。MobileNetV1[19]引入了深度可分离卷积作为传统卷积层的有效替代。深度可分离卷积通过将空间滤波与特征生成机制分离来有效地分解传统卷积。深度可分离卷积由两个单独的层定义：用于空间滤波的轻重量深度卷积和用于特征生成的较重的1x1逐点卷积。<br>&emsp;&emsp;MobileNetV2[39]引入了线性瓶颈和倒置残差结构，以通过利用问题的低等级性质来制造更高效的层结构。该结构如图3所示，由1x1扩展卷积后跟深度卷积和1x1投影层定义。当且仅当它们具有相同数量的通道时，输入和输出才与剩余连接相连。这种结构在输入和输出处保持紧凑的表示，同时在内部扩展到更高维的特征空间，以增加非线性每通道变换的表现力。<br><img src="/2019/06/03/MobileNetV3/Figure3.png" alt="Figure3"><br>&emsp;&emsp;MnasNet[43]基于MobileNetV2结构，将基于压缩和激发的轻量级注意模块引入瓶颈结构。请注意，压缩和激励模块集成在与[20]中提出的基于ResNet的模块不同的位置。模块放置在扩展中的深度滤波器之后，以便将注意力应用于最大的表示，如图4所示。<br><img src="/2019/06/03/MobileNetV3/Figure4.png" alt="Figure4"><br>&emsp;&emsp;对于MobileNetV3，我们使用这些层的组合作为构建块，以便构建最有效的模型。层也升级了修改的swish非线性[36,13,16]。压缩和激励以及swish非线性都使用了sigmoid，这可能是低效的计算以及在定点算术中保持精度的挑战，所以我们用hard sigmoid[2,11]代替它，如5.2节所述。  </p>
+<h2 id="网络搜索"><a href="#网络搜索" class="headerlink" title="网络搜索"></a>网络搜索</h2><p>&emsp;&emsp;网络搜索已经证明它是发现和优化网络架构的一个非常强大的工具[53,53,5,48]。对于MobileNetV3，我们使用平台感知NAS通过优化每个网络块来搜索全局网络结构。然后，我们使用NetAdapt算法在每层中搜索过滤器的数量。这些技术是互补的，可以组合起来有效地找到给定硬件平台的优化模型。  </p>
+<h3 id="用于分块搜索的平台遥感NAS"><a href="#用于分块搜索的平台遥感NAS" class="headerlink" title="用于分块搜索的平台遥感NAS"></a>用于分块搜索的平台遥感NAS</h3><p>&emsp;&emsp;</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JiangChenrui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiangchenrui.github.io/2019/06/03/MobileNetV3/" title="MobileNetV3">https://jiangchenrui.github.io/2019/06/03/MobileNetV3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+              <a href="/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%BD%91%E7%BB%9C/" rel="tag"># 轻量级网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/29/%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/" rel="prev" title="服务器使用指南">
+      <i class="fa fa-chevron-left"></i> 服务器使用指南
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/" rel="next" title="深度学习目标检测方法汇总">
+      深度学习目标检测方法汇总 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">2.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%AB%98%E6%95%88%E7%9A%84%E7%A7%BB%E5%8A%A8%E6%9E%84%E5%BB%BA%E6%A8%A1%E5%9D%97"><span class="nav-number">4.</span> <span class="nav-text">高效的移动构建模块</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E6%90%9C%E7%B4%A2"><span class="nav-number">5.</span> <span class="nav-text">网络搜索</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E4%BA%8E%E5%88%86%E5%9D%97%E6%90%9C%E7%B4%A2%E7%9A%84%E5%B9%B3%E5%8F%B0%E9%81%A5%E6%84%9FNAS"><span class="nav-number">5.1.</span> <span class="nav-text">用于分块搜索的平台遥感NAS</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JiangChenrui"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JiangChenrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JiangChenrui" title="GitHub → https://github.com/JiangChenrui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://charlesliuyx.github.io/" title="https://charlesliuyx.github.io/" rel="noopener" target="_blank">遥行</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://redstonewill.com/" title="https://redstonewill.com/" rel="noopener" target="_blank">红色石头</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-mouse"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JiangChenrui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">123k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:52</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
+      appKey     : 'yrwQQpoA00WVm649FXM7AKqW',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

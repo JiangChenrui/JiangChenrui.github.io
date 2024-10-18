@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<meta name="baidu-site-verification" content="pFajzJd0SZ" />
+<meta name="google-site-verification" content="nWFVcb4qcdyxOeW2mwDvLXa4UOsZdsGAH5uKR5PFG_o" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiangchenrui.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="汇总深度学习目标监测">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习目标检测方法汇总">
+<meta property="og:url" content="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="姜晨瑞的博客">
+<meta property="og:description" content="汇总深度学习目标监测">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer1.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer2.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer3.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer4.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer5.png">
+<meta property="article:published_time" content="2019-06-26T07:25:53.000Z">
+<meta property="article:modified_time" content="2024-10-17T07:56:23.024Z">
+<meta property="article:author" content="JiangChenrui">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="目标检测">
+<meta property="article:tag" content="计算机视觉">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer1.png">
+
+<link rel="canonical" href="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>深度学习目标检测方法汇总 | 姜晨瑞的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">姜晨瑞的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录与总结</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JiangChenrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="姜晨瑞的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          深度学习目标检测方法汇总
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-26 15:25:53" itemprop="dateCreated datePublished" datetime="2019-06-26T15:25:53+08:00">2019-06-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-17 15:56:23" itemprop="dateModified" datetime="2024-10-17T15:56:23+08:00">2024-10-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" itemprop="url" rel="index"><span itemprop="name">目标检测</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/" class="post-meta-item leancloud_visitors" data-flag-title="深度学习目标检测方法汇总" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.1k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>5 分钟</span>
+            </span>
+            <div class="post-description"><center>汇总深度学习目标监测</center></div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="目标检测简介"><a href="#目标检测简介" class="headerlink" title="目标检测简介"></a>目标检测简介</h2><p>&emsp;&emsp;目标检测是计算机视觉的一个重要研究方向，是指从一个场景（或图片）中找到感兴趣的目标。任务大致分为三个流程：</p>
+<ul>
+<li>从场景中提取候选区</li>
+<li>从候选区提取特征</li>
+<li>识别候选区的类别并对有效的候选框进行位置精修</li>
+</ul>
+<p>&emsp;&emsp;目标检测在生活的各个领域都有了广泛的应用，它是将图像或视频中的目标与不感兴趣的部分区分开，判断是否存在目标，若存在目标则确定目标的位置。近年来，随着互联网技术、人工智能计算和智能硬件的迅猛发展，人类生活中存在着大量的图像和视频数据，这使得计算机视觉的研究也越来越火热。目标检测技术作为计算机视觉领域的一个重要组成部分，也受到了很大程度上的关注。目前在实际生活中的应用也十分广泛，包括目标跟踪，视频监控，信息安全，自动驾驶，图像检索，医学图像分析，网络数据挖掘，无人机导航，遥感信息分析，国防系统，以及机器人环境感知等。<br>&emsp;&emsp;目标检测方法主要分为两大类：</p>
+<ul>
+<li>基于传统图像处理和机器学习算法的目标检测方法</li>
+<li>基于深度学习的目标检测方法</li>
+</ul>
+<p>&emsp;&emsp;传统目标检测方法主要分为六个步骤，包括图像预处理，窗口滑动，特征提取，选择以及分类，和后处理这六个步骤。每个步骤所做的工作分别是：a)图像预处理是对检测图像进行图像的去噪声和增强，以及色彩转换等操作；b)窗口滑动是指在待测图像中滑动一个大小相同的窗口，将窗口中的子图像提取出来做候选区域；c)特征提取就是对候选区域使用特定的算法进行处理；d)特征选择即从上一步提取的特征向量中挑选出具有代表性的特征，降低特征的维数；e)特征分类就是利用特定的分类器对特征进行分类，判定候选区是否包含了目标及其类别；f)后处理是指合并判断为同一类别的相交候选区，计算出每个目标的边界框。<br>&emsp;&emsp;传统目标检测方法的检测重点是在特征提取（如何提高特征的表达能力和抗形变能力）和特征分类（如何提高分类器的准确度和速度上）。由此，研究人员提出了多种形式的特征和分类器，其中，代表性的特征有代表性的特征有SIFT(scale-invariant feature transform)、Hear、HOG(histogram of oriented gradient)、Strip等；代表性的分类器有AdaBoost、SVM(support vector machine)、DPM(deformable parts model)、RF(random forest)等。<br>&emsp;&emsp;但是，传统的目标检测方法的准确度并不能达到实际需求，其根本原因有两个，<font color="#ff000">一个是使用滑动窗口的策略进行区域选择时针对性不强，提高了时间复杂度和窗口冗余，另一个是使用设计的特征。</font>设计的特征存在以下三个缺点：a)设计的特征为低层特征，对目标的表达能力不足；b)设计的特征可分性差，导致分类的错误率较高；c)设计的特征具有针对性，很难选择单一特征应用于多目标检测，例如：Hear特征用于人脸检测，HOG特征用于行人检测，Stip特征用于车辆检测。<br>&emsp;&emsp;随着计算机性能的不断提高，曾经难以实现的深度学习算法变得切实可行，目标检测开始进入深度学习时代。深度学习提取的特征为高层特征，相比于传统的目标检测方法的设计特征，学习的特征更加丰富，表达能力更强。而且深度学习将特征提取，特征选择以及特征分类融合到一个模型中，通过端对端的训练，从整体上进行功能优化，增加了特征的可分性。基于深度学习的目标检测算法大致可以分为三类：a)基于区域建议的目标检测算法：如R-CNN，Fast-RCNN，Faster-RCNN；b)基于回归的目标检测算法：如YOLO，SSD；c)基于搜索的目标检测算法，如基于视觉注意的AttentionNet，基于强化学习的算法。  </p>
+<h3 id="基于区域提名的深度学习目标检测算法"><a href="#基于区域提名的深度学习目标检测算法" class="headerlink" title="基于区域提名的深度学习目标检测算法"></a>基于区域提名的深度学习目标检测算法</h3><p>&emsp;&emsp;卷积神经网络（CNN）是区域提议（Region Propoal）算法的核心组成部分，卷积神经网络最早是有Yann LeCun教授提出来的，早期的卷积神经网络是用作分类器使用的，主要用于图像识别。卷积神经网络有三个结构上的特性：局部连接、权重共享以及空间和时间上的采样。这些特性使得卷积神经网络具有一定程度上的平移、缩放和扭曲不变性。在2006年Hinton提出使用深度神经网络从大量的数据中自动学习高层特征。区域建议在此基础上解决了传统目标检测方法存在的两个问题。比较常用的区域建议方法有Selective search和Edge boxes。此后，CNN网络迅速发展，微软最新的ResNet和谷歌的Inception V4模型的Top-5 error降到了4%以内，所以目标检测得到候选区域后使用CNN对其进行图像分类的准确率和检测速度上都有提高。这类算法的主要步骤是：</p>
+<ul>
+<li>首先使用选择性搜索算法（Selective Serch）、Bing、EdgeBoxes这些目标候选区域生成算法生成一系列候选目标区域；</li>
+<li>然后通过深度神经网络提取目标候选区域的特征；</li>
+<li>最后用这些特征进行分类，以及目标真实边界的回归。</li>
+</ul>
+<h4 id="R-CNN"><a href="#R-CNN" class="headerlink" title="R-CNN"></a>R-CNN</h4><p>&emsp;&emsp;R-CNN算法可以说是利用深度学习进行目标检测的开山之作，将深度学习引入了目标检测领域，一举将PASCAL VOC上的检测率从35.1%提升到53.7%。针对传统目标检测方法存在的两个问题，R-CNN都有了很好的解决方法：<font color="#ff000">预先提前一系列可能是物体的候选区域，之后仅在这些候选区域上提取特征，进行判断，</font>从而解决了传统目标检测方法利用滑动窗口依次判断所有可能的区域造成时间复杂度太高和窗口冗余的问题；<font color="#ff000">训练深度网络来进行特征提取替代人工设定特征，</font>解决了人工设定特征的三个缺点。<br>&emsp;&emsp;R-CNN的实现步骤主要有4个：</p>
+<ul>
+<li>a)首先用选择性搜索算法（selective Search）提取1k-2k个候选区域；</li>
+<li>b)使用深度卷积神经网络提取每一个候选区的深度特征；</li>
+<li>c)训练SVM分类器来对这些特征进行分类；</li>
+<li>d)最后通过边界回归算法程序定位目标边界框。</li>
+</ul>
+<p><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer1.png" alt="Figure1"></p>
+<p>&emsp;&emsp;但是，由于在特征提取后进行分类的过程中有一个全连接层的操作，这一个操作要求提取特征的图片需要相同尺度的大小，提取的不合适的特征图片需要进行裁切（Crop）或者变形缩放（Warp），这在一定程度上造成图像畸形，影响最终结果。随后He等人提出SPP-NET缩放很好的解决了这一问题。</p>
+<h4 id="SPP-NET"><a href="#SPP-NET" class="headerlink" title="SPP-NET"></a>SPP-NET</h4><p>&emsp;&emsp;R-CNN存在的问题在SPP-NET解决主要在于SPP网络的提出，这一网络解决了R-CNN这一网络要求提取特征要求相同尺度的大小这一问题。下面是R-CNN和SPP-NET网络结构的对比。</p>
+<p><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer2.png" alt="Figure2"></p>
+<p>&emsp;&emsp;R-CNN现在提取图片特征后先进行卷积后再进行全连接层的训练，而SPP-NET的网络在进行卷积之后再进行SPP操作，这一操作可以让网络输入任何大小的图片，都会生成固定大小的输出，整体的结构除了这一点以外和之前的R-CNN没有什么不同，因此在其它方面，SPP-NET存在和R-CNN一样的问题。</p>
+<h4 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h4><p>&emsp;&emsp;在2015年，继提出R-CNN算法后，Ross Girshick提出了Faster RCNN，流程更为紧凑，大幅提升了目标检测的速度，同样使用最大规模的网络，Fast R-CNN和R-CNN相比，训练时间从84小时减少为9.5小时，测试时间从47秒减少为0.32秒。在PASCAL VOC 2007上的准确率相差无几，约在66%~67%之间。<br>&emsp;&emsp;Fast RCNN主要解决了R-CNN的三个问题：</p>
+<ul>
+<li><p><strong>测试速度慢</strong><br>RCNN一张图片内候选框之间大量重叠，提取特征操作冗余。<br>Fast RCNN将整张图像归一化后直接送入深度网络，在邻接时，才加入候选框信息，在末尾的少数几层处理每个候选框。</p>
+</li>
+<li><p><strong>训练速度慢</strong><br>原因同上<br>在训练时，Fast RCNN先将一张图像送入网络，紧接着送入从这幅图像上提取出的候选区域。这些候选区域的前几层特征不需要再重复计算。</p>
+</li>
+<li><p><strong>训练所需空间大</strong><br>RCNN中独立的分类器和回归器需要大量特征作为训练样本。</p>
+<font color="#ff000">Fast RCNN把类别判断和位置精确统一用深度网络实现，不再需要额外存储。</font>
+
+</li>
+</ul>
+<p>&emsp;&emsp;其中，Fast RCNN最大的贡献是全连接层的提速。<br>&emsp;&emsp;分类和位置调整都是通过全连接层（fc）实现的，设前一级数据为x后一级数据为y，全连接层参数为w，尺寸为$u<em>v$。一次前向传播（forward）即为：<script type="math/tex">y = Wx</script><br>    计算复杂度为$u</em>v$。<br>    将W进行SVD分解，并用前t个特征值近似<script type="math/tex">W=U\Sigma   V^T\approx U(:,1:t)\cdot \Sigma  (1:t,1:t)\cdot V(:,1:t)^T</script><br>    原来的前向传播分解为两步：<script type="math/tex">y = Wx = U\cdot (\Sigma   \cdot V^T)\cdot x = U\cdot z</script><br>    计算复杂度变为$u\times t+v\times t$。<br>    在实现时，相当于把一个全连接层拆分为两个，中间以一个低维数据相连。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer3.png" alt="Figure3"><br>    其实验结果为：</p>
+<pre><code>* 网络末端同步训练的分类和位置调整，提升准确度；
+* 使用多尺度的图像金字塔，性能几乎没有提高；
+* 倍增训练数据，能够有2%~3%的准确度提升；
+* 网络直接输出各类概率（softmax），比SVM分类器性能略好；
+* 更多候选窗不能提升性能。
+</code></pre><h4 id="Faster-R-CNN"><a href="#Faster-R-CNN" class="headerlink" title="Faster R-CNN"></a>Faster R-CNN</h4><p>&emsp;&emsp;同在2015年，Ross Girshick团队提出了Faster R-CNN，简单网络的目标检测速度达到17fps，在PASCAL VOC上准确率为59.9%；复杂网络达到5fps，准确率78.8%。<br>&emsp;&emsp;从RCNN到Fast RCNN，再到Faster R-CNN，目标检测的四个基本步骤（候选区域生成，特征提取，分类，位置精修）终于被统一到一个深度网络框架之内。所有计算没有重复，完全在GPU中完成，大大提高了运行速度。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer4.png" alt="Figure4"><br>&emsp;&emsp;Faster RCNN可以简单地看做”区域生成网络+Fast R-CNN“的系统，用区域生成网络代替Fast R-CNN中的Selective Search方法。Faster R-CNN着重解决了这个系统中的三个问题：</p>
+<pre><code>1.如何设计区域生成网络
+2.如何训练区域生成网络
+3.如何让区域生成网络和Fast RCNN网络共享特征提取网络
+</code></pre><p>&emsp;&emsp;Faster R-CNN提出了区域生成网络RPN，快速生成候选区域；通过交替训练，使RPN和Fast RCNN网络共享参数。<br><img src="/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/Figuer5.png" alt="Figure5"></p>
+<h3 id="基于回归的目标检测算法"><a href="#基于回归的目标检测算法" class="headerlink" title="基于回归的目标检测算法"></a>基于回归的目标检测算法</h3><p>&emsp;&emsp;虽然Faster R-CNN是目前主流的目标检测算法之一，但是速度上并不能满足实时的要求，随后出现YOLO，SSD这一类的算法逐渐凸显出其优略性，这类方法充分地利用了回归的思想，直接在原始图像的多个位置回归，判别出目标边框以及目标类别。</p>
+<h4 id="YOLO"><a href="#YOLO" class="headerlink" title="YOLO"></a>YOLO</h4><p>&emsp;&emsp;2016年Redmon等人提出的YOLO算法是一个可以一次性预测多个Box位置和类别的卷积神经网络，YOLO算法的网络设计延续了GoogleNet的核心思想，真正意思上实现了端到端的目标检测，并且发挥了速度快的优势，但其精度有所下滑。但在同年Redmon等人在YOLO的基础上提出了YOLO9000算法，保持了YOLO的速度，提高了准确度。主要有两方面的改进：1)在原先的YOLO检测框架上进行一系列的改进，弥补了检测精度的不足；2)提出了目标检测和目标训练和二为一的方法。YOLOv2算法的训练网络采用降采样的方法在特定的情况下可以进行动态调整，这种机制可以使网络预测不同大小的图片，让检测速度和精度之间达到平衡。</p>
+<h4 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h4><p>&emsp;&emsp;2016年Liu等人提出SSD算法，该算法结合YOLO的回归思想以及Faster R-CNN的anchor机制做到了速度和准确率并存。最初的YOLO算法是在7x77x7的框架下识别物体，用这种框架检测小物体时，准确率会下降。在SSD算法中去掉了YOLO算法的全连接层，所以对任意大小的物体都可以检测，性能基本不变。对SSD的测试集进行训练和训练使用候选区域及用来池化的标准测试器之间最大的不同之处在于，ground truth 需要被赋予一组固定集合检测输出中某一个特定输出。当这个赋值确定之后，损失函数和后向传播就能够实现端到端的应用。总之，SSD结合了YOLO中的回归思想和Faster R-CNN中的anchor机制，使用全图各个位置的多尺度区域特征进行回归，既保持了YOLO速度快的特性，也保证了窗口预测跟Faster R-CNN一样精准。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JiangChenrui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiangchenrui.github.io/2019/06/26/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E6%96%B9%E6%B3%95%E6%B1%87%E6%80%BB/" title="深度学习目标检测方法汇总">https://jiangchenrui.github.io/2019/06/26/深度学习目标检测方法汇总/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+              <a href="/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/" rel="tag"># 目标检测</a>
+              <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/" rel="tag"># 计算机视觉</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/06/03/MobileNetV3/" rel="prev" title="MobileNetV3">
+      <i class="fa fa-chevron-left"></i> MobileNetV3
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/15/hexo%E5%8D%9A%E5%AE%A2%E8%AE%B0%E5%BD%95/" rel="next" title="hexo博客记录">
+      hexo博客记录 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">目标检测简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E6%8F%90%E5%90%8D%E7%9A%84%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95"><span class="nav-number">1.1.</span> <span class="nav-text">基于区域提名的深度学习目标检测算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#R-CNN"><span class="nav-number">1.1.1.</span> <span class="nav-text">R-CNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SPP-NET"><span class="nav-number">1.1.2.</span> <span class="nav-text">SPP-NET</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Fast-RCNN"><span class="nav-number">1.1.3.</span> <span class="nav-text">Fast RCNN</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Faster-R-CNN"><span class="nav-number">1.1.4.</span> <span class="nav-text">Faster R-CNN</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E5%9B%9E%E5%BD%92%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">基于回归的目标检测算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#YOLO"><span class="nav-number">1.2.1.</span> <span class="nav-text">YOLO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#SSD"><span class="nav-number">1.2.2.</span> <span class="nav-text">SSD</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JiangChenrui"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JiangChenrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JiangChenrui" title="GitHub → https://github.com/JiangChenrui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://charlesliuyx.github.io/" title="https://charlesliuyx.github.io/" rel="noopener" target="_blank">遥行</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://redstonewill.com/" title="https://redstonewill.com/" rel="noopener" target="_blank">红色石头</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-mouse"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JiangChenrui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">123k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:52</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
+      appKey     : 'yrwQQpoA00WVm649FXM7AKqW',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

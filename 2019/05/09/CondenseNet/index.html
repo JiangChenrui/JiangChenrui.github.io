@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<meta name="baidu-site-verification" content="pFajzJd0SZ" />
+<meta name="google-site-verification" content="nWFVcb4qcdyxOeW2mwDvLXa4UOsZdsGAH5uKR5PFG_o" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiangchenrui.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="阅读CondeseNet论文后的记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CondenseNet">
+<meta property="og:url" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/index.html">
+<meta property="og:site_name" content="姜晨瑞的博客">
+<meta property="og:description" content="阅读CondeseNet论文后的记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure1.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure2.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure3.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure4.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure5.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure6.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure7.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure8.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Table1.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Table2.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Table3.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Table4.png">
+<meta property="article:published_time" content="2019-05-09T02:35:26.000Z">
+<meta property="article:modified_time" content="2024-10-17T07:56:22.941Z">
+<meta property="article:author" content="JiangChenrui">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="轻量级网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/05/09/CondenseNet/Figure1.png">
+
+<link rel="canonical" href="https://jiangchenrui.github.io/2019/05/09/CondenseNet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>CondenseNet | 姜晨瑞的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">姜晨瑞的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录与总结</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiangchenrui.github.io/2019/05/09/CondenseNet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JiangChenrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="姜晨瑞的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          CondenseNet
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-09 10:35:26" itemprop="dateCreated datePublished" datetime="2019-05-09T10:35:26+08:00">2019-05-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-17 15:56:22" itemprop="dateModified" datetime="2024-10-17T15:56:22+08:00">2024-10-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/05/09/CondenseNet/" class="post-meta-item leancloud_visitors" data-flag-title="CondenseNet" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/05/09/CondenseNet/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/05/09/CondenseNet/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.5k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>2 分钟</span>
+            </span>
+            <div class="post-description"><center>阅读CondeseNet论文后的记录</center></div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p><a href="https://arxiv.org/abs/1711.09224">论文地址</a><br><a href="https://github.com/ShichenLiu/CondenseNet">代码地址</a></p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>&emsp;&emsp;</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p><img src="/2019/05/09/CondenseNet/Figure1.png" alt="figure1"><br><img src="/2019/05/09/CondenseNet/Figure2.png" alt="figure2"></p>
+<p>&emsp;&emsp;</p>
+<h2 id="CondenseNets"><a href="#CondenseNets" class="headerlink" title="CondenseNets"></a>CondenseNets</h2><p>&emsp;&emsp;在DenseNet的基础上使用1x1的分组卷积效果不好，作者认为这是由使用前面的特征图与当前特征图合并做输入引起的。这与典型的卷积输入有两点不同：1.它们有固定的秩序，2.它们更加多样化。不相关组的特征分配会妨碍特征在网络的再利用。作者对输入的特征图进行随机置换减小了对准确性的负面影响，但在相同的计算成本下比smaller DenseNets准确率低。<br>&emsp;&emsp;在DenseNet中已经证明：将早期的特征作为后期层的输入对特征重用是十分有效的。但是并不是所有的早期特征对随后的层有影响，很难预测哪些特征应该被使用。为了解决这个问题，我们提出了一种在训练中自动学习输入特征分组的方法。学习组结构允许每个滤波器选择它自己最相关的一组输入。<br><img src="/2019/05/09/CondenseNet/Figure3.png" alt="figure3">  </p>
+<h2 id="学习组卷积"><a href="#学习组卷积" class="headerlink" title="学习组卷积"></a>学习组卷积</h2><p>&emsp;&emsp;我们通过多阶段过程学习组卷积，如图3和图4所示。训练迭代的前半部分包括压缩阶段。在这里，我们重复训练网络，稀疏诱导正则化，进行固定次数的迭代，然后修剪掉具有权重比较低的不重要滤波器。培训的后半部分包括优化阶段，我们在分组修复后学习过滤器。执行修剪时，我们确保来自同一组的过滤器共享相同的稀疏模式。结果，一旦训练完成（测试阶段），可以使用标准组卷积来实现稀疏化层。由于组卷积由许多深度学习库有效实现，因此在理论上和实践中都可以节省大量计算量。我们将在下面介绍我们的方法。  </p>
+<h3 id="滤波器分组"><a href="#滤波器分组" class="headerlink" title="滤波器分组"></a>滤波器分组</h3><p>&emsp;&emsp;卷积过程用4D张量$O\times R\times W\times H$表示，其中O表示输出通道数，R表示输入通道数，W和H表示滤波器的长宽。训练前将滤波器分为相同大小的G组，$F_{ij}^{g}$表示组g内第i个输出的第j个输入的权重。  </p>
+<h3 id="压缩标准"><a href="#压缩标准" class="headerlink" title="压缩标准"></a>压缩标准</h3><p>&emsp;&emsp;在训练过程中，筛选出没组中不重要的输入特征的子集。第j个输入特征的对于滤波器组g的重要性通过它在组内所有输出之间的权重的平均值来评估，即$\sum<em>{i=1}^{O/G}{|F</em>{ij}^{g}|}$，换句话说，如果它们的L1范数比其他列的L1范数小，则我们删除$F^{g}$中的列（通过将它们归零）。这使卷积层在结构上稀疏：来自同一组的滤波器总是接收与相同的特征输入。  </p>
+<h3 id="Group-Lasso"><a href="#Group-Lasso" class="headerlink" title="Group Lasso"></a>Group Lasso</h3><p>&emsp;&emsp;为减少权重修剪带来的负面影响，L1正则化通常用来诱导稀疏性。为了是同一组滤波器有相同的稀疏输入，我们使用以下的组稀疏性计算方法：</p>
+<script type="math/tex; mode=display">\sum_{g=1}^{G}\sum_{j=1}^{R}\sqrt{\sum_{i=1}^{O/G}{F_{ij}^{g}}^2}</script><p>&emsp;&emsp;组正则化将$F_{g}$中所有的元素置为0，因为平方根中的项由该列中的最大元素控制。这会使模型向组水平的稀疏方面发展。  </p>
+<h3 id="压缩因子"><a href="#压缩因子" class="headerlink" title="压缩因子"></a>压缩因子</h3><p>&emsp;&emsp;除了学习组卷积能够自动发现良好的连接模式之外，它们还比标准组卷积更灵活。 特别是，组使用的特征图的比例不一定需要是1/G。 我们定义了一个可能与G不同的凝聚因子C，并允许每个组选择输入的R/C。  </p>
+<h3 id="压缩步骤"><a href="#压缩步骤" class="headerlink" title="压缩步骤"></a>压缩步骤</h3><p>&emsp;&emsp;与在预训练网络中修剪权重的方法相比，我们的权重修剪过程被整合到训练过程中。 如图3所示（使用C = 3），在每个C-1压缩阶段结束时，我们修剪滤波器权重的1/C。 在训练结束时，每个滤波器组中仅保留1/C的权重。 在我们的所有实验中，我们将凝聚阶段的训练时期的数量设置为$M/2(c-1)$，其中M表示训练时期的总数 ，使得训练时期的前半部分用于压缩。 在训练过程的后半部分，优化阶段，我们训练了稀疏模型。（实际操作中将剪掉的分支置为0）。</p>
+<h3 id="学习率"><a href="#学习率" class="headerlink" title="学习率"></a>学习率</h3><p>&emsp;&emsp;<br>我们采用Loshchilov等人的余弦形状学习率表。它可以平滑地退化学习率，并且通常可以提高准确度。 图4将学习率显示为训练时期（品红色）的函数，以及在CIFAR-10数据集上训练的CondenseNet的相应训练损失（蓝色曲线）。在时期150处的损失的突然增加是由最终的冷凝操作引起的，其消除了剩余重量的一半。 然而，该图显示该模型在优化阶段从该修剪步骤逐渐恢复。<br><img src="/2019/05/09/CondenseNet/Figure4.png" alt="figure4">  </p>
+<h3 id="索引层"><a href="#索引层" class="headerlink" title="索引层"></a>索引层</h3><p>&emsp;&emsp;在训练完成后，我们移除修剪的权重并将稀疏模型转化为具有常规模式的网络，在图三的测试步骤中可以看到索引层。索引层在输入滤波器重新排列进行输出，以便于现有的常规组卷积的实现。图1显示了训练期间（中间）和测试期间（右侧）CondenseNet层的转换。 在训练期间，1×1卷积是学习组卷积（L-Conv），但在测试期间，在索引层的帮助下，它变为标准组卷积（G-Conv）。</p>
+<h2 id="网络设计"><a href="#网络设计" class="headerlink" title="网络设计"></a>网络设计</h2><p>&emsp;&emsp;除了使用上面介绍的学习组卷积之外，我们还对常规DenseNet架构进行了两处更改。这些更改旨在进一步简化体系结构并提高其计算效率。图5说明了我们对DenseNet架构所做的两项更改。<br><img src="/2019/05/09/CondenseNet/Figure5.png" alt="figure5">  </p>
+<h3 id="增长增长率"><a href="#增长增长率" class="headerlink" title="增长增长率"></a>增长增长率</h3><p>&emsp;&emsp;原始的DenseNet设计每层增加$k$个特征图，表示增长率。在DenseNet中，较深的层更依赖于高水平的特征而不是低水平的特征，这激励我们提高网络的捷径连接。我们发现可以通过随深度增长而提高增长率来实现。这增加了后期层相对于前面层的比率。将增长率变化设置为$k=2^{m-1}k_{0}$，其中m是密集块的索引，k0是常量。 这种设定增长率的方式不会引入任何额外的超参数。 “增长增长率”（IGR）策略在模型的后续层中放置了更大比例的参数。 这大大提高了计算效率，但在某些情况下可能会降低参数效率。根据具体的硬件限制而定。</p>
+<h3 id="完全密集连接"><a href="#完全密集连接" class="headerlink" title="完全密集连接"></a>完全密集连接</h3><p>&emsp;&emsp;为了鼓励功能重用，甚至比原来的DenseNet架构更多，我们将输入层连接到网络中的所有后续层，即使这些层位于不同的密集块中（参见图5）。由于密集块具有不同的特征分辨率，因此当我们使用平均池作为低分辨率层的输入时，我们对具有更高分辨率的特征映射进行下采样。<br><img src="/2019/05/09/CondenseNet/Figure6.png" alt="Figure6"><br><img src="/2019/05/09/CondenseNet/Figure7.png" alt="Figure7"><br><img src="/2019/05/09/CondenseNet/Figure8.png" alt="Figure8"></p>
+<h3 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h3><p><img src="/2019/05/09/CondenseNet/Table1.png" alt="Table1"><br><img src="/2019/05/09/CondenseNet/Table2.png" alt="Table2"><br><img src="/2019/05/09/CondenseNet/Table3.png" alt="Table3"><br><img src="/2019/05/09/CondenseNet/Table4.png" alt="Table4"><br>&emsp;&emsp;</p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JiangChenrui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiangchenrui.github.io/2019/05/09/CondenseNet/" title="CondenseNet">https://jiangchenrui.github.io/2019/05/09/CondenseNet/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+              <a href="/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%BD%91%E7%BB%9C/" rel="tag"># 轻量级网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/21/vnc%E6%93%8D%E4%BD%9C/" rel="prev" title="vnc操作">
+      <i class="fa fa-chevron-left"></i> vnc操作
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/15/jupyter%E6%B7%BB%E5%8A%A0%E8%99%9A%E6%8B%9F%E7%8E%AF%E5%A2%83/" rel="next" title="jupyter添加虚拟环境">
+      jupyter添加虚拟环境 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">相关工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CondenseNets"><span class="nav-number">3.</span> <span class="nav-text">CondenseNets</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%BB%84%E5%8D%B7%E7%A7%AF"><span class="nav-number">4.</span> <span class="nav-text">学习组卷积</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%A4%E6%B3%A2%E5%99%A8%E5%88%86%E7%BB%84"><span class="nav-number">4.1.</span> <span class="nav-text">滤波器分组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%A0%87%E5%87%86"><span class="nav-number">4.2.</span> <span class="nav-text">压缩标准</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Group-Lasso"><span class="nav-number">4.3.</span> <span class="nav-text">Group Lasso</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E5%9B%A0%E5%AD%90"><span class="nav-number">4.4.</span> <span class="nav-text">压缩因子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%8B%E7%BC%A9%E6%AD%A5%E9%AA%A4"><span class="nav-number">4.5.</span> <span class="nav-text">压缩步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E7%8E%87"><span class="nav-number">4.6.</span> <span class="nav-text">学习率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B4%A2%E5%BC%95%E5%B1%82"><span class="nav-number">4.7.</span> <span class="nav-text">索引层</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E8%AE%BE%E8%AE%A1"><span class="nav-number">5.</span> <span class="nav-text">网络设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A2%9E%E9%95%BF%E5%A2%9E%E9%95%BF%E7%8E%87"><span class="nav-number">5.1.</span> <span class="nav-text">增长增长率</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%8C%E5%85%A8%E5%AF%86%E9%9B%86%E8%BF%9E%E6%8E%A5"><span class="nav-number">5.2.</span> <span class="nav-text">完全密集连接</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">5.3.</span> <span class="nav-text">实验</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JiangChenrui"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JiangChenrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JiangChenrui" title="GitHub → https://github.com/JiangChenrui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://charlesliuyx.github.io/" title="https://charlesliuyx.github.io/" rel="noopener" target="_blank">遥行</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://redstonewill.com/" title="https://redstonewill.com/" rel="noopener" target="_blank">红色石头</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-mouse"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JiangChenrui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">123k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:52</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
+      appKey     : 'yrwQQpoA00WVm649FXM7AKqW',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

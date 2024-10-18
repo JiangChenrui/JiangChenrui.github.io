@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<meta name="baidu-site-verification" content="pFajzJd0SZ" />
+<meta name="google-site-verification" content="nWFVcb4qcdyxOeW2mwDvLXa4UOsZdsGAH5uKR5PFG_o" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiangchenrui.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文主要记录c++学习过程中遇到的一些问题和一些不清楚的点进行了归纳和总结，包括数组的操作、类、文件的读写等">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c++学习记录">
+<meta property="og:url" content="https://jiangchenrui.github.io/2020/08/05/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="姜晨瑞的博客">
+<meta property="og:description" content="本文主要记录c++学习过程中遇到的一些问题和一些不清楚的点进行了归纳和总结，包括数组的操作、类、文件的读写等">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-08-05T14:51:30.000Z">
+<meta property="article:modified_time" content="2024-10-17T07:56:23.007Z">
+<meta property="article:author" content="JiangChenrui">
+<meta property="article:tag" content="c++">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://jiangchenrui.github.io/2020/08/05/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>c++学习记录 | 姜晨瑞的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">姜晨瑞的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录与总结</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiangchenrui.github.io/2020/08/05/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JiangChenrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="姜晨瑞的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          c++学习记录
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-08-05 22:51:30" itemprop="dateCreated datePublished" datetime="2020-08-05T22:51:30+08:00">2020-08-05</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-17 15:56:23" itemprop="dateModified" datetime="2024-10-17T15:56:23+08:00">2024-10-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index"><span itemprop="name">c++</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/08/05/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" class="post-meta-item leancloud_visitors" data-flag-title="c++学习记录" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2020/08/05/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/08/05/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>4 分钟</span>
+            </span>
+            <div class="post-description"><center>本文主要记录c++学习过程中遇到的一些问题和一些不清楚的点进行了归纳和总结，包括数组的操作、类、文件的读写等</center></div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><p><a href="https://blog.csdn.net/hailong0715/article/details/54172848">使用:进行迭代</a></p>
+<h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p><a href="https://blog.csdn.net/weixin_36888577/article/details/79937886">c++优先队列<code>priority_queue</code></a></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//升序队列</span></span><br><span class="line">priority_queue &lt;<span class="type">int</span>,vector&lt;<span class="type">int</span>&gt;,greater&lt;<span class="type">int</span>&gt; &gt; q;</span><br><span class="line"><span class="comment">//降序队列</span></span><br><span class="line">priority_queue &lt;<span class="type">int</span>,vector&lt;<span class="type">int</span>&gt;,less&lt;<span class="type">int</span>&gt; &gt;q;</span><br></pre></td></tr></table></figure>
+<h2 id="指针常量和常量指针"><a href="#指针常量和常量指针" class="headerlink" title="指针常量和常量指针"></a>指针常量和常量指针</h2><p>常量指针指向的内容不可以修改，指针的指向可以修改；指针常量的指向不可以修改，指针指向的值可以修改。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">const_pointer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="type">int</span> b = <span class="number">20</span>;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    常量指针：</span></span><br><span class="line"><span class="comment">    指针指向的内容不可以修改，指针的指向可以修改</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="type">const</span> <span class="type">int</span>* p = &amp;a;</span><br><span class="line">    <span class="comment">// *p = 20 error</span></span><br><span class="line">    p = &amp;b;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;p is &quot;</span> &lt;&lt; *p &lt;&lt; endl;</span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">    指针常量</span></span><br><span class="line"><span class="comment">    指针的指向不可以修改，指针指向的值可以修改</span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    <span class="type">int</span>* <span class="type">const</span> p2 = &amp;a;</span><br><span class="line">    *p2 = <span class="number">20</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;p2 is &quot;</span> &lt;&lt; *p2 &lt;&lt; endl;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><h3 id="二维数组定义和分配内存"><a href="#二维数组定义和分配内存" class="headerlink" title="二维数组定义和分配内存"></a>二维数组定义和分配内存</h3><p>c++中有三种方法来动态申请多维数组</p>
+<p>1)  c中的malloc/free<br>2)  c++中的new/delete<br>3)  STL容器中的vector</p>
+<h4 id="第一种：-malloc-free"><a href="#第一种：-malloc-free" class="headerlink" title="第一种： malloc/free"></a>第一种： malloc/free</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * c++动态申请多维数组</span></span><br><span class="line"><span class="comment"> * 第一种 malloc/free</span></span><br><span class="line"><span class="comment"> * @param len 一维数组大小</span></span><br><span class="line"><span class="comment"> * @param m 二维数组行数</span></span><br><span class="line"><span class="comment"> * @param n 二维数组列数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dynamicCreate1Array</span><span class="params">(<span class="type">int</span> len, <span class="type">int</span> m, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 一维数组</span></span><br><span class="line">    <span class="type">int</span> *p;</span><br><span class="line">    p = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(<span class="type">int</span>)*len);    <span class="comment">// 动态开辟m大小的数组</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;malloc/free&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">PrintArray</span>(p, len);</span><br><span class="line">    <span class="comment">// 释放空间</span></span><br><span class="line">    <span class="built_in">free</span>(p);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 二维数组</span></span><br><span class="line">    <span class="type">int</span> **p2;</span><br><span class="line">    p2 = (<span class="type">int</span>**)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(<span class="type">int</span>*)*m);         <span class="comment">//开辟行</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        p2[i] = (<span class="type">int</span>*)<span class="built_in">malloc</span>(<span class="built_in">sizeof</span>(<span class="type">int</span>*)*n);   <span class="comment">//开辟列</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">PrintArray</span>(p2, m, n);</span><br><span class="line">    <span class="comment">// 释放空间</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i)</span><br><span class="line">        <span class="built_in">free</span>(*(p2+i));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第二种：new-delete"><a href="#第二种：new-delete" class="headerlink" title="第二种：new/delete"></a>第二种：new/delete</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * c++动态申请多维数组</span></span><br><span class="line"><span class="comment"> * 第二种 new/delete</span></span><br><span class="line"><span class="comment"> * @param len 一维数组大小</span></span><br><span class="line"><span class="comment"> * @param m 二维数组行数</span></span><br><span class="line"><span class="comment"> * @param n 二维数组列数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dynamicCreate2Array</span><span class="params">(<span class="type">int</span> len, <span class="type">int</span> m, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 开辟空间</span></span><br><span class="line">    <span class="type">int</span> *p = <span class="keyword">new</span> <span class="type">int</span>[len];      <span class="comment">// 只分配空间未进行初始话</span></span><br><span class="line">    <span class="type">int</span> *p1 = <span class="keyword">new</span> <span class="type">int</span>[len]();    <span class="comment">// 分配空间并进行初始化</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;new/delete&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="built_in">PrintArray</span>(p, len);</span><br><span class="line">    <span class="built_in">PrintArray</span>(p1, len);</span><br><span class="line">    <span class="comment">// 释放空间</span></span><br><span class="line">    <span class="keyword">delete</span>[] p;</span><br><span class="line">    <span class="keyword">delete</span>[] p1;</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> **p2 = <span class="keyword">new</span> <span class="type">int</span>*[m];     <span class="comment">// 开辟行</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i)</span><br><span class="line">        p2[i] = <span class="keyword">new</span> <span class="type">int</span>[n]();     <span class="comment">// 开辟列</span></span><br><span class="line">    <span class="built_in">PrintArray</span>(p2, m, n);</span><br><span class="line">    <span class="comment">// 释放空间</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i)</span><br><span class="line">        <span class="keyword">delete</span>[] p2[i];</span><br><span class="line">    <span class="keyword">delete</span>[] p2;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="第三种：STL容器中的vector"><a href="#第三种：STL容器中的vector" class="headerlink" title="第三种：STL容器中的vector"></a>第三种：STL容器中的vector</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * c++动态申请多维数组</span></span><br><span class="line"><span class="comment"> * 第三种 </span></span><br><span class="line"><span class="comment"> * @param len 一维数组大小</span></span><br><span class="line"><span class="comment"> * @param m 二维数组行数</span></span><br><span class="line"><span class="comment"> * @param n 二维数组列数</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">dynamicCreate3Array</span><span class="params">(<span class="type">int</span> len, <span class="type">int</span> m, <span class="type">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="function">vector&lt;<span class="type">int</span>&gt; <span class="title">p</span><span class="params">(len)</span></span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;vector&quot;</span> &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;输出一维数组&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; p.<span class="built_in">size</span>(); ++i)</span><br><span class="line">        cout &lt;&lt; p[i] &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">    cout &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    vector&lt;vector&lt;<span class="type">int</span>&gt; &gt; <span class="built_in">p2</span>(m, <span class="built_in">vector</span>&lt;<span class="type">int</span>&gt;(n));</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;输出二维数组&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; m; ++i) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> j = <span class="number">0</span>; j &lt; n; ++j)</span><br><span class="line">            cout &lt;&lt; p2[i][j] &lt;&lt; <span class="string">&#x27; &#x27;</span>;</span><br><span class="line">        cout &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用的本质是指针常量</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><h3 id="类的权限"><a href="#类的权限" class="headerlink" title="类的权限"></a>类的权限</h3><p>类的权限有3种</p>
+<ol>
+<li>public 类内类外都可以访问</li>
+<li>protected 类内可以访问，类外不可以访问，可以继承</li>
+<li>private 类内可以访问，类外不可以访问，不可以继承</li>
+</ol>
+<h3 id="struct和class的区别"><a href="#struct和class的区别" class="headerlink" title="struct和class的区别"></a>struct和class的区别</h3><p>struct默认权限为公共，class默认权限为私有。</p>
+<h3 id="构造函数和析构函数"><a href="#构造函数和析构函数" class="headerlink" title="构造函数和析构函数"></a>构造函数和析构函数</h3><ul>
+<li>构造函数<ul>
+<li>函数名与类名相同</li>
+<li>构造函数可以有参数，可以发生重载</li>
+<li>创建对象时，构造函数会自动调用，而且只调用一次</li>
+</ul>
+</li>
+<li>析构函数<ul>
+<li>没有返回值，不写void</li>
+<li>函数名与类名相同，在名称前加~</li>
+<li>析构函数不可以有参数，不可以发生重载</li>
+<li>对象在销毁前会自动调用析构函数，而且只会调用一次</li>
+</ul>
+</li>
+</ul>
+<h3 id="深拷贝与浅拷贝"><a href="#深拷贝与浅拷贝" class="headerlink" title="深拷贝与浅拷贝"></a>深拷贝与浅拷贝</h3><ul>
+<li>浅拷贝：简单的赋值拷贝操作（系统默认拷贝构造方式为浅拷贝）</li>
+<li>深拷贝：在堆区重新申请空间，进行拷贝操作</li>
+</ul>
+<h2 id="文件读写"><a href="#文件读写" class="headerlink" title="文件读写"></a>文件读写</h2><h3 id="c-文件操作有三类"><a href="#c-文件操作有三类" class="headerlink" title="c++文件操作有三类"></a>c++文件操作有三类</h3><ol>
+<li>ofstream:写操作</li>
+<li>ifstream:读操作</li>
+<li>fstream: 读写操作</li>
+</ol>
+<h3 id="读-写文件的步骤"><a href="#读-写文件的步骤" class="headerlink" title="读/写文件的步骤"></a>读/写文件的步骤</h3><p>打开头文件-&gt;创建流对象-&gt;打开文件-&gt;写/读数据-&gt;关闭文件</p>
+<h3 id="打开文件的方式"><a href="#打开文件的方式" class="headerlink" title="打开文件的方式"></a>打开文件的方式</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>in</td>
+<td>打开文件用于读取</td>
+</tr>
+<tr>
+<td>out</td>
+<td>打开文件用于写入</td>
+</tr>
+<tr>
+<td>ate</td>
+<td>打开文件并移到末尾</td>
+</tr>
+<tr>
+<td>app</td>
+<td>打开文件用于追加</td>
+</tr>
+<tr>
+<td>trunc</td>
+<td>若文件已存在，打开文件并截  取流（清除原有数据)</td>
+</tr>
+<tr>
+<td>binary</td>
+<td>以二进制流方式打开文件</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="读取文本文件的四种方法"><a href="#读取文本文件的四种方法" class="headerlink" title="读取文本文件的四种方法"></a>读取文本文件的四种方法</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">test02</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ifstream ifs;</span><br><span class="line"></span><br><span class="line">    ifs.<span class="built_in">open</span>(<span class="string">&quot;test.txt&quot;</span>, ios::in);</span><br><span class="line">    <span class="keyword">if</span> (!ifs.<span class="built_in">is_open</span>()) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;文件打开失败&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 读数据</span></span><br><span class="line">    <span class="comment">// 第一种</span></span><br><span class="line">    <span class="type">char</span> buf[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">while</span> (ifs &gt;&gt; buf) &#123;</span><br><span class="line">        cout &lt;&lt; buf &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二种</span></span><br><span class="line">    <span class="type">char</span> buf[<span class="number">1024</span>] = &#123;<span class="number">0</span>&#125;;</span><br><span class="line">    <span class="keyword">while</span> (ifs.<span class="built_in">getline</span>(buf, <span class="built_in">sizeof</span>(buf))) &#123;</span><br><span class="line">        cout &lt;&lt; buf &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第三种</span></span><br><span class="line">    string buf;</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">getline</span>(ifs, buf)) &#123;</span><br><span class="line">        cout &lt;&lt; buf &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第四种</span></span><br><span class="line">    <span class="type">char</span> c;</span><br><span class="line">    <span class="keyword">while</span> ((c = ifs.<span class="built_in">get</span>()) != EOF) &#123; <span class="comment">// EOF end of file</span></span><br><span class="line">        cout &lt;&lt; c;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ifs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="二进制文件的读写"><a href="#二进制文件的读写" class="headerlink" title="二进制文件的读写"></a>二进制文件的读写</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">    <span class="type">char</span> m_name[<span class="number">64</span>];</span><br><span class="line">    <span class="type">int</span> m_age;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写文件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test03</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ofstream ofs;</span><br><span class="line"></span><br><span class="line">    ofs.<span class="built_in">open</span>(<span class="string">&quot;person.txt&quot;</span>, ios::out | ios::binary);</span><br><span class="line">    Person p = &#123;<span class="string">&quot;张三&quot;</span>, <span class="number">18</span>&#125;;</span><br><span class="line">    ofs.<span class="built_in">write</span>((<span class="type">const</span> <span class="type">char</span> *)&amp;p, <span class="built_in">sizeof</span>(Person));</span><br><span class="line"></span><br><span class="line">    ofs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读文件</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">test04</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ifstream ifs;</span><br><span class="line"></span><br><span class="line">    ifs.<span class="built_in">open</span>(<span class="string">&quot;person.txt&quot;</span>, ios::in | ios::binary);</span><br><span class="line">    <span class="keyword">if</span> (!ifs.<span class="built_in">is_open</span>()) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;文件打开失败&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    Person p;</span><br><span class="line">    ifs.<span class="built_in">read</span>((<span class="type">char</span> *)&amp;p, <span class="built_in">sizeof</span>(Person));</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;姓名：&quot;</span> &lt;&lt; p.m_name &lt;&lt; endl;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;年龄：&quot;</span> &lt;&lt; p.m_age &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    ifs.<span class="built_in">close</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JiangChenrui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiangchenrui.github.io/2020/08/05/c-%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="c++学习记录">https://jiangchenrui.github.io/2020/08/05/c-学习记录/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/c/" rel="tag"># c++</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/08/04/deepin%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95/" rel="prev" title="deepin使用记录">
+      <i class="fa fa-chevron-left"></i> deepin使用记录
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/11/string%E5%AD%A6%E4%B9%A0/" rel="next" title="string学习">
+      string学习 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-11"><span class="nav-number">1.</span> <span class="nav-text">c++11</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8"><span class="nav-number">2.</span> <span class="nav-text">容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E9%92%88%E5%B8%B8%E9%87%8F%E5%92%8C%E5%B8%B8%E9%87%8F%E6%8C%87%E9%92%88"><span class="nav-number">3.</span> <span class="nav-text">指针常量和常量指针</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">4.</span> <span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E7%BB%B4%E6%95%B0%E7%BB%84%E5%AE%9A%E4%B9%89%E5%92%8C%E5%88%86%E9%85%8D%E5%86%85%E5%AD%98"><span class="nav-number">4.1.</span> <span class="nav-text">二维数组定义和分配内存</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E7%A7%8D%EF%BC%9A-malloc-free"><span class="nav-number">4.1.1.</span> <span class="nav-text">第一种： malloc&#x2F;free</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E7%A7%8D%EF%BC%9Anew-delete"><span class="nav-number">4.1.2.</span> <span class="nav-text">第二种：new&#x2F;delete</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E7%A7%8D%EF%BC%9ASTL%E5%AE%B9%E5%99%A8%E4%B8%AD%E7%9A%84vector"><span class="nav-number">4.1.3.</span> <span class="nav-text">第三种：STL容器中的vector</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB"><span class="nav-number">6.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E7%9A%84%E6%9D%83%E9%99%90"><span class="nav-number">6.1.</span> <span class="nav-text">类的权限</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#struct%E5%92%8Cclass%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">6.2.</span> <span class="nav-text">struct和class的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E6%9E%90%E6%9E%84%E5%87%BD%E6%95%B0"><span class="nav-number">6.3.</span> <span class="nav-text">构造函数和析构函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B5%85%E6%8B%B7%E8%B4%9D"><span class="nav-number">6.4.</span> <span class="nav-text">深拷贝与浅拷贝</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E8%AF%BB%E5%86%99"><span class="nav-number">7.</span> <span class="nav-text">文件读写</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#c-%E6%96%87%E4%BB%B6%E6%93%8D%E4%BD%9C%E6%9C%89%E4%B8%89%E7%B1%BB"><span class="nav-number">7.1.</span> <span class="nav-text">c++文件操作有三类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB-%E5%86%99%E6%96%87%E4%BB%B6%E7%9A%84%E6%AD%A5%E9%AA%A4"><span class="nav-number">7.2.</span> <span class="nav-text">读&#x2F;写文件的步骤</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">7.3.</span> <span class="nav-text">打开文件的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%BB%E5%8F%96%E6%96%87%E6%9C%AC%E6%96%87%E4%BB%B6%E7%9A%84%E5%9B%9B%E7%A7%8D%E6%96%B9%E6%B3%95"><span class="nav-number">7.4.</span> <span class="nav-text">读取文本文件的四种方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E8%BF%9B%E5%88%B6%E6%96%87%E4%BB%B6%E7%9A%84%E8%AF%BB%E5%86%99"><span class="nav-number">7.5.</span> <span class="nav-text">二进制文件的读写</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JiangChenrui"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JiangChenrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JiangChenrui" title="GitHub → https://github.com/JiangChenrui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://charlesliuyx.github.io/" title="https://charlesliuyx.github.io/" rel="noopener" target="_blank">遥行</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://redstonewill.com/" title="https://redstonewill.com/" rel="noopener" target="_blank">红色石头</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-mouse"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JiangChenrui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">123k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:52</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
+      appKey     : 'yrwQQpoA00WVm649FXM7AKqW',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

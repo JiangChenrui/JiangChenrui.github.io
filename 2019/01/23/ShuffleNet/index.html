@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<meta name="baidu-site-verification" content="pFajzJd0SZ" />
+<meta name="google-site-verification" content="nWFVcb4qcdyxOeW2mwDvLXa4UOsZdsGAH5uKR5PFG_o" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiangchenrui.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="ShuffleNet论文阅读记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ShuffleNet">
+<meta property="og:url" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/index.html">
+<meta property="og:site_name" content="姜晨瑞的博客">
+<meta property="og:description" content="ShuffleNet论文阅读记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/ShuffleNet_figure_1.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/ShuffleNet_figure_2.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/ShuffleNet_table_1.png">
+<meta property="article:published_time" content="2019-01-23T08:21:04.000Z">
+<meta property="article:modified_time" content="2024-10-17T07:56:22.998Z">
+<meta property="article:author" content="JiangChenrui">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="轻量级网络">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/ShuffleNet_figure_1.png">
+
+<link rel="canonical" href="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>ShuffleNet | 姜晨瑞的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">姜晨瑞的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录与总结</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JiangChenrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="姜晨瑞的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ShuffleNet
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-23 16:21:04" itemprop="dateCreated datePublished" datetime="2019-01-23T16:21:04+08:00">2019-01-23</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-17 15:56:22" itemprop="dateModified" datetime="2024-10-17T15:56:22+08:00">2024-10-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/01/23/ShuffleNet/" class="post-meta-item leancloud_visitors" data-flag-title="ShuffleNet" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/01/23/ShuffleNet/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/01/23/ShuffleNet/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.2k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description"><center>ShuffleNet论文阅读记录</center></div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>[论文地址]</p>
+<h2 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h2><p>&emsp;&emsp;我们介绍一种被设计用于计算能力有限的移动装置的卷积网络ShuffleNet，新的结构使用逐点群卷积和通道混洗方式，在保持准确率的情况下极大地减少运算量。在一个基于ARM的移动装置中，ShuffleNet在和AlexNet保持相同的准确率的情况下速度提升了13倍。</p>
+<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>&emsp;&emsp;目前更大更深的网络是主流趋势，主要是为了解决主流视觉识别任务。准确率最高的网络有上百层网络和上千层通道，需要的上百亿的FLOPs(每秒浮点数运算）。这篇报告与之完全对立，在保持最高的准确率的同时把计算量控制在10~100个百万FLOPs内，专注于公共移动平台，如无人机，机器人和智能手机。之前的工作主要致力于剪枝、压缩和使用小存储量代替基础网络结构。我们致力于提出一种新的适用于计算量有限制的基础网络结构。<br>&emsp;&emsp;我们注意到现在最先进的网络如Xception和ResNeXt在小网络的作用及其有限，因为密集的1X1卷积.因此我们提出<font color="#ff000" size="3">逐点群卷积</font>来降低1x1卷积的计算复杂度，群卷积会带来一些负面作用，我们使用<font color="#ff000" size="3">通道混洗</font>来解决这个问题。基于这两种方法，我们建立了一种高效结构，命名为ShuffleNet。与流行的结构相比，我们的结构可以允许更多的特征图通道在给定计算量的前提下，能够编码更多的信息，这对小网络的表现十分重要。</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><h3 id="高效模型的设计"><a href="#高效模型的设计" class="headerlink" title="高效模型的设计"></a>高效模型的设计</h3><p>&emsp;&emsp;过去几年深度神经网络在计算机视觉任务上取得了成功，其中模型设计起了很大的作用。在可嵌入设备中运行更大更深的网络的需求不断增加，这激励了高效模型设计的研究。例如，GoogleNet与简单地堆叠卷积层的网络相比，增加了网络的深度并且复杂度更低。SqueezeNet在控制准确率的情况下显著地减少了计算量和参数。ResNet使用有效的bottleneck结构来提升性能。SENet介绍了一种能够花费较小计算量来提升性能的结构单元。</p>
+<h3 id="组卷积"><a href="#组卷积" class="headerlink" title="组卷积"></a>组卷积</h3><p>&emsp;&emsp;组卷积的概念是AlexNet中提出来的，当时是为了两块GPU进行运算，并且在ResNeXt中证明了其有效性。深度分离卷积在Xception中提出并且分离卷积在Inception系列中得到推广。MobileNet使用深度分离卷积并且在轻量级网络中获得了最先进的结果。我们的工作是推广群卷积和一种新形式的深度分离卷积。</p>
+<h3 id="通道混洗"><a href="#通道混洗" class="headerlink" title="通道混洗"></a>通道混洗</h3><p>&emsp;&emsp;在我们的认知中，通道混洗在高效网络模型设计中很少被提及。虽然CNNC库cuda-convnet支持随机通道卷积，这个操作相当于在组卷积后进行随机通道交换。这种“随机混洗”有不同的用途但是之后很少有人探索。最近有个two-stage卷积的工作采用了这个方法但是并没有深入研究通道混洗本身以及它在小模型设计上的作用.</p>
+<h3 id="模型加速"><a href="#模型加速" class="headerlink" title="模型加速"></a>模型加速</h3><p>&emsp;&emsp;这个部分致力于加速推理同时保持预训练模型的准确率。对网络的连接和通道进行剪枝来减少网络在预训练模型的冗余连接以保模型性能。在文献中，量化和因式分解备用来减少冗余计算来加速推理。不修改参数，FFT和其它方法使用卷积方法工具来减少训练的时间消耗。把大网络的知识提炼到小网络，使训练小网络更加简单。</p>
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><h3 id="对分组卷积的通道混洗"><a href="#对分组卷积的通道混洗" class="headerlink" title="对分组卷积的通道混洗"></a>对分组卷积的通道混洗</h3><p><img src="/2019/01/23/ShuffleNet/ShuffleNet_figure_1.png" alt="Figure1"><br>&emsp;&emsp;现在的卷积神经网络通常由相同结构组成的重复模块构成。1x1的卷积没有全部采用的原因是1x1卷积需要相当大的复杂度.在小网络中，昂贵的逐点卷积会因复杂度限制而控制通道数量，这可能显著地减少准确率.<br>&emsp;&emsp;解决这个问题的直接方案是<font color="#ff000" size="3">通道稀疏连接</font>，比如包括1x1卷积的分组卷积。确保每个输入通道组上进行相应的卷积，组卷积就会显著地降低计算成本。但是这会带来新的问题：一些通道的输出仅仅来源于输入通道的一小部分。图1（a）说明了这种情况。很明显地看出，每个输出组只与它的输入组之间有联系。这个特性阻隔了通道组和弱表示的信息流动。<br>&emsp;&emsp;如果我们允许分组卷积可以从不同的组中获得输入数据，(如Figure1(b)),输入通道和输出通道就会全部建立联系。对于上一层分组卷积产生的特征图，我们可以把每个组的通道分离成更小的组，然后将这些组随机排序作为下一层网络每个组的输入。这个操作可以使用通道卷积方便快捷地实现（如Figure1（c））：计算拥有$g*n$个通道数g个组的卷积层；我们需要先将数据改变形状变为$(g,n)$,然后转换和扁平化作为下一层的输入。在其中我们注意到这个操作在经过两层不同分组的卷积后依然有效。更重要的是，通道混洗过程是十分微小的，这意味着它能够嵌入到端对端的网络训练中。<br>&emsp;&emsp;通道混洗操作使得使用大量分组卷积层的有效网络变得可能.在下一个部分我们将介绍一个使用分组卷积和通道混洗结构的有效的网络单元。</p>
+<h3 id="ShuffleNet单元"><a href="#ShuffleNet单元" class="headerlink" title="ShuffleNet单元"></a>ShuffleNet单元</h3><p><img src="/2019/01/23/ShuffleNet/ShuffleNet_figure_2.png" alt="Figure2"><br>&emsp;&emsp;基于通道混洗操作的优点，我们提出了专门为小网络设计的新结构ShuffleNet单元。我们的设计基于ResNet的bottleneck模块（如Figure2（a））。这是一个残差模块。在他的残差分支中，我们在bottleneck模块的特征图提取模块采用了适合运算的3x3的深度卷积。之后，我们将第一个1x1卷积替代为逐点群卷积，之后进行通道混洗，这样来组成ShuffleNet单元，如Figure2（b）。第二个逐点群卷积的作用是将通道恢复到与捷径路线相同的尺寸。简单来说，我们在第二个逐点群卷积后并没有采用通道混洗，因为采用与否对结果没有影响。在ShuffleNet单元哪个位置设置步长的问题上，我们简单地进行了两个修改（如Figure2（c））：在捷径路线上添加3x3的平均值池化层；使用<font color="#ff000" size="3">通道级联（channel concatenation)</font>代替元素相加，这样可以在很少的额外计算下扩大通道尺寸。<br>&emsp;&emsp;与ResNet和RexNeXt相比较，我们的模型有更少的计算量。输入为<script type="math/tex">c*h*w</script>bottleneck通道数为m,ResNet单元要求<script type="math/tex">hw(2cm+9m^2)</script>FLOPs，ResNeXt单元要求<script type="math/tex">hw(2cm+9m^2/g)</script>FLOPs。ShuffleNet单元需要<script type="math/tex">hw(2cm/g+9m)</script>FLOPs，g是卷积的分组数。换句话说，在相同的计算量预算下，ShuffleNet可以使用更广泛的特征图。我们发现这对小网络是十分重要的，因为小网络在获取信息的过程中通道数量是不足的。<br>&emsp;&emsp;另外，ShuffleNet深度卷积仅应用于bottleneck特征图。虽然深度卷积在理论上有很少的计算量，但我们发现将它移植到低功耗的移动设备上是十分困难的，与其他密集网络相比，ShuffleNet网络可能会在计算与内存存取上存在不平衡。</p>
+<h3 id="网络结构"><a href="#网络结构" class="headerlink" title="网络结构"></a>网络结构</h3><p><img src="/2019/01/23/ShuffleNet/ShuffleNet_table_1.png" alt="Table 1"><br>&emsp;&emsp;基于ShuffleNet单元，我们建立了如Table 1的ShuffleNet网络结构。提出的网络主要是由三个阶段聚集组成的ShuffleNet单元组成的。每个阶段首先建立的模块采用的步长为2.其它的超参数设置相同，并且下一个阶段的输出通道数翻倍。我们将bottleneck的通道数设置为输出通道的1/4.我们打算提供一种尽可能简单的基本设计，尽管我们发现进一步的超参数设置可能会带来更好的结果。<br>&emsp;&emsp;在ShuffleNet单元中，分组数g控制着逐点卷积的稀疏性。Table 1展示了不同组数的效果，我们采用的输出通道数尽可能使复杂度不变。效果十分明显，在相同的复杂度下大的分组导致更多的输出通道（这也意味着更多的卷积核），这意味着在输入通道有限的情况下大分组可以编码更多的信息。<br>&emsp;&emsp;Table 1是网络的完全体，之后的ShuffleNet<script type="math/tex">s*</script>意味着网络的复杂度大致是原网络的$s^2$.</p>
+<h2 id="实验"><a href="#实验" class="headerlink" title="实验"></a>实验</h2>
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JiangChenrui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiangchenrui.github.io/2019/01/23/ShuffleNet/" title="ShuffleNet">https://jiangchenrui.github.io/2019/01/23/ShuffleNet/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag"># 深度学习</a>
+              <a href="/tags/%E8%BD%BB%E9%87%8F%E7%BA%A7%E7%BD%91%E7%BB%9C/" rel="tag"># 轻量级网络</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/23/MoblieNetV2/" rel="prev" title="MobileNetV2 倒置残差和线性瓶颈">
+      <i class="fa fa-chevron-left"></i> MobileNetV2 倒置残差和线性瓶颈
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/01/23/ShuffleNetV2/" rel="next" title="ShuffleNetV2">
+      ShuffleNetV2 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%91%98%E8%A6%81"><span class="nav-number">1.</span> <span class="nav-text">摘要</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C"><span class="nav-number">3.</span> <span class="nav-text">相关工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%AB%98%E6%95%88%E6%A8%A1%E5%9E%8B%E7%9A%84%E8%AE%BE%E8%AE%A1"><span class="nav-number">3.1.</span> <span class="nav-text">高效模型的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E5%8D%B7%E7%A7%AF"><span class="nav-number">3.2.</span> <span class="nav-text">组卷积</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E9%81%93%E6%B7%B7%E6%B4%97"><span class="nav-number">3.3.</span> <span class="nav-text">通道混洗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%8A%A0%E9%80%9F"><span class="nav-number">3.4.</span> <span class="nav-text">模型加速</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AF%B9%E5%88%86%E7%BB%84%E5%8D%B7%E7%A7%AF%E7%9A%84%E9%80%9A%E9%81%93%E6%B7%B7%E6%B4%97"><span class="nav-number">4.1.</span> <span class="nav-text">对分组卷积的通道混洗</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ShuffleNet%E5%8D%95%E5%85%83"><span class="nav-number">4.2.</span> <span class="nav-text">ShuffleNet单元</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84"><span class="nav-number">4.3.</span> <span class="nav-text">网络结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%AA%8C"><span class="nav-number">5.</span> <span class="nav-text">实验</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JiangChenrui"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JiangChenrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JiangChenrui" title="GitHub → https://github.com/JiangChenrui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://charlesliuyx.github.io/" title="https://charlesliuyx.github.io/" rel="noopener" target="_blank">遥行</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://redstonewill.com/" title="https://redstonewill.com/" rel="noopener" target="_blank">红色石头</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-mouse"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JiangChenrui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">123k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:52</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+      
+
+<script>
+  if (typeof MathJax === 'undefined') {
+    window.MathJax = {
+      loader: {
+        source: {
+          '[tex]/amsCd': '[tex]/amscd',
+          '[tex]/AMScd': '[tex]/amscd'
+        }
+      },
+      tex: {
+        inlineMath: {'[+]': [['$', '$']]},
+        tags: 'ams'
+      },
+      options: {
+        renderActions: {
+          findScript: [10, doc => {
+            document.querySelectorAll('script[type^="math/tex"]').forEach(node => {
+              const display = !!node.type.match(/; *mode=display/);
+              const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display);
+              const text = document.createTextNode('');
+              node.parentNode.replaceChild(text, node);
+              math.start = {node: text, delim: '', n: 0};
+              math.end = {node: text, delim: '', n: 0};
+              doc.math.push(math);
+            });
+          }, '', false],
+          insertedScript: [200, () => {
+            document.querySelectorAll('mjx-container').forEach(node => {
+              let target = node.parentNode;
+              if (target.nodeName.toLowerCase() === 'li') {
+                target.parentNode.classList.add('has-jax');
+              }
+            });
+          }, '', false]
+        }
+      }
+    };
+    (function () {
+      var script = document.createElement('script');
+      script.src = '//cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js';
+      script.defer = true;
+      document.head.appendChild(script);
+    })();
+  } else {
+    MathJax.startup.document.state(0);
+    MathJax.texReset();
+    MathJax.typeset();
+  }
+</script>
+
+    
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
+      appKey     : 'yrwQQpoA00WVm649FXM7AKqW',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>

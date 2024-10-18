@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+<meta name="baidu-site-verification" content="pFajzJd0SZ" />
+<meta name="google-site-verification" content="nWFVcb4qcdyxOeW2mwDvLXa4UOsZdsGAH5uKR5PFG_o" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Fira Code:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"jiangchenrui.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":"mac"},"back2top":{"enable":true,"sidebar":true,"scrollpercent":false},"bookmark":{"enable":true,"color":"#222","save":"manual"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文收集了一些神经网络的架构，包含常用的一些模型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="神经网络结构汇总">
+<meta property="og:url" content="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/index.html">
+<meta property="og:site_name" content="姜晨瑞的博客">
+<meta property="og:description" content="本文收集了一些神经网络的架构，包含常用的一些模型">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/LeNet5.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/AlexNet.png">
+<meta property="og:image" content="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/Vgg.png">
+<meta property="article:published_time" content="2019-02-27T11:59:09.000Z">
+<meta property="article:modified_time" content="2024-10-17T07:56:23.032Z">
+<meta property="article:author" content="JiangChenrui">
+<meta property="article:tag" content="深度学习，计算机视觉，CNN">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/LeNet5.png">
+
+<link rel="canonical" href="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>神经网络结构汇总 | 姜晨瑞的博客</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">姜晨瑞的博客</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">记录与总结</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <a role="button" class="book-mark-link book-mark-link-fixed"></a>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="JiangChenrui">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="姜晨瑞的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          神经网络结构汇总
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-02-27 19:59:09" itemprop="dateCreated datePublished" datetime="2019-02-27T19:59:09+08:00">2019-02-27</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-10-17 15:56:23" itemprop="dateModified" datetime="2024-10-17T15:56:23+08:00">2024-10-17</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" itemprop="url" rel="index"><span itemprop="name">论文阅读</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/" class="post-meta-item leancloud_visitors" data-flag-title="神经网络结构汇总" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="far fa-comment"></i>
+      </span>
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>3.4k</span>
+            </span>
+            <span class="post-meta-item" title="阅读时长">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">阅读时长 &asymp;</span>
+              <span>3 分钟</span>
+            </span>
+            <div class="post-description"><center>本文收集了一些神经网络的架构，包含常用的一些模型</center></div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>本文收集了一些神经网络的架构，包含常用的一些模型。  </p>
+<h2 id="LeNet5"><a href="#LeNet5" class="headerlink" title="LeNet5"></a>LeNet5</h2><p><img src="/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/LeNet5.png" alt="LeNet5"><br>1.Input<br>&emsp;&emsp;输入图像统一归一化为32*32。<br>2.C1卷积层<br>&emsp;&emsp;经过(5*5*1)*6卷积核，stride=1, 生成featuremap为28*28*6。<br>3.S2池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为14*14*6。<br>4.C3卷积层<br>&emsp;&emsp;经过(5*5*6)*16卷积核，stride=1，生成featuremap为10*10*16。<br>5.S4池化层<br>&emsp;&emsp;经过(2*2)采样核，stride=2，生成featuremap为5*5*16。<br>6.C5卷积层<br>&emsp;&emsp;经过(5*5*16)*120卷积核，stride=1， 生成featuremap为1*1*120。<br>7.F6全连接层<br>&emsp;&emsp;输入为1*1*120，输出为1*1*84，总参数量为120*84。<br>8.Output全连接层。<br>&emsp;&emsp;输入为1*1*84，输出为1*1*10，总参数量为84*10。10就是分类的类别数。  </p>
+<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p><img src="/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/AlexNet.png" alt="AlexNet"><br>1.Input<br>&emsp;&emsp;输入图像为227*227*3。<br>2.Conv1<br>&emsp;&emsp;经过(11*11*3)*96卷积核，stride=4， (227-11)/4+1=55，生成featuremap为55*55*96。<br>3.Pool1<br>&emsp;&emsp;经过3*3的池化核，stride=2，(55-3)/2+1=27，生成featuremap为27*27*96。<br>4.Norm1<br>&emsp;&emsp;local_size=5，生成featuremap为27*27*96。<br>5.Conv2<br>&emsp;&emsp;经过(5*5*96)*256的卷积核，pad=2，group=2，(27+2*2-5)/1+1=27，生成featuremap为27*27*256。<br>6.Pool2<br>&emsp;&emsp;经过3*3的池化核，stride=2，(27-3)/2+1=13，生成featuremap为13*13*256。<br>7.Norm2<br>&emsp;&emsp;local_size=5, 生成featuremap为13*13*256。<br>8.Conv3<br>&emsp;&emsp;经过(3*3*256)*384卷积核，pad=1， (13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>9.Conv4<br>&emsp;&emsp;经过(3*3*384)*384卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*384。<br>10.Conv5<br>&emsp;&emsp;经过(3*3*384)*256卷积核，pad=1，(13+1*2-3)/1+1=13，生成featuremap为13*13*256。<br>11.Pool5<br>&emsp;&emsp;经过(3*3)的池化核，stride=2，(13-3)/2+1=6，生成featuremap为6*6*256。<br>12.Fc6<br>&emsp;&emsp;输入为(6*6*256)*4096全连接，生成featuremap为1*1*4096。<br>13.Dropout6<br>&emsp;&emsp;在训练的时候以1/2概率使得隐藏层的某些神经元的输出为0，这样就丢掉了一半节点的输出，BP的时候也不更新这些节点，以下Droupout同理。<br>14.Fc7<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>15.Dropout7<br>&emsp;&emsp;生成featuremap为1*1*4096。<br>16.Fc8<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
+<p><strong>总结:</strong></p>
+<p><strong>1.网络比LeNet更深，包括5个卷积层和3个全连接层。</strong><br><strong>2.使用relu激活函数，收敛很快，解决了Sigmoid在网络较深时出现的梯度弥散问题。</strong><br><strong>3.加入了dropout层，防止过拟合。</strong><br><strong>4.使用了LRN归一化层，对局部神经元的活动创建竞争机制，抑制反馈较小的神经元放大反应大的神经元，增强了模型的泛化能力。</strong><br><strong>5.使用裁剪翻转等操作做数据增强，增强了模型的泛化能力。预测时使用提取图片四个角加中间五个位置并进行左右翻转一共十幅图片的方法求取平均值，这也是后面刷比赛的基本使用技巧。</strong><br><strong>6.分块训练，当年的GPU没有这么强大，Alexnet创新地将图像分为上下两块分别训练，然后在全连接层合并在一起。</strong><br><strong>7.总体的数据参数大概为240M。</strong>  </p>
+<h2 id="VGG"><a href="#VGG" class="headerlink" title="VGG"></a>VGG</h2><p><img src="/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/Vgg.png" alt="Vgg">  </p>
+<p>1.Input层<br>&emsp;&emsp;输入图片为224*224*3。<br>2.CONV3-64<br>&emsp;&emsp;经过（3*3*3）*64卷积核，生成featuremap为224*224*64。<br>3.CONV3-64<br>&emsp;&emsp;经过（3*3*64）*64卷积核，生成featuremap为224*224*64。<br>4.Max pool<br>&emsp;&emsp;经过（2*2）max pool核，生成featuremap为112*112*64。<br>5.CONV3-128。<br>&emsp;&emsp;经过（3*3*64）*128卷积核，生成featuremap为112*112*128。<br>6.CONV3-128<br>&emsp;&emsp; 经过（3*3*128）*128卷积，生成featuremap为112*112*128。<br>7.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为56*56*128。<br>8.CONV3-256<br>&emsp;&emsp;经过（3*3*128）*256卷积核，生成featuremap为56*56*256。<br>9.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>10.CONV3-256<br>&emsp;&emsp;经过（3*3*256）*256卷积核，生成featuremap为56*56*256。<br>11.Max pool<br>&emsp;&emsp;经过（2*2）maxpool，生成featuremap为28*28*256。<br>12.CONV3-512<br>&emsp;&emsp;经过（3*3*256）*512卷积核，生成featuremap为28*28*512。<br>13.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>14.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为28*28*512。<br>15.Max pool<br>&emsp;&emsp;经过（2*2）maxpool,生成featuremap为14*14*512。<br>16.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>17.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>18.CONV3-512<br>&emsp;&emsp;经过（3*3*512）*512卷积核，生成featuremap为14*14*512。<br>19.Max pool<br>&emsp;&emsp;经过2*2卷积，生成featuremap为7*7*512。<br>20.FC-4096<br>&emsp;&emsp;输入为7*7*512，输出为1*1*4096，总参数量为7*7*512*4096。<br>21.FC-4096<br>&emsp;&emsp;输入为1*1*4096，输出为1*1*4096，总参数量为4096*4096。<br>22.FC-1000<br>&emsp;&emsp;输入为1*1*4096，输出为1000，总参数量为4096*1000。  </p>
+<p><strong>总结:</strong>  </p>
+<p><strong>1. 共包含参数约为550M。</strong><br><strong>2. 全部使用3*3的卷积核和2*2的最大池化核。</strong><br><strong>3. 简化了卷积神经网络的结构。</strong>  </p>
+<p><a href="https://blog.csdn.net/u011974639/article/details/79199306">MobileNet</a>  </p>
+
+    </div>
+
+    
+    
+    
+        
+
+<div>
+<ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>JiangChenrui
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://jiangchenrui.github.io/2019/02/27/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%BB%93%E6%9E%84%E6%B1%87%E6%80%BB/" title="神经网络结构汇总">https://jiangchenrui.github.io/2019/02/27/神经网络结构汇总/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%8C%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89%EF%BC%8CCNN/" rel="tag"># 深度学习，计算机视觉，CNN</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/23/%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%94%B6%E9%9B%86/" rel="prev" title="面试问题收集">
+      <i class="fa fa-chevron-left"></i> 面试问题收集
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/18/Residual-Attention-Network/" rel="next" title="Residual Attention Network">
+      Residual Attention Network <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+    <div class="comments" id="valine-comments"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#LeNet5"><span class="nav-number">1.</span> <span class="nav-text">LeNet5</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AlexNet"><span class="nav-number">2.</span> <span class="nav-text">AlexNet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VGG"><span class="nav-number">3.</span> <span class="nav-text">VGG</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="JiangChenrui"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">JiangChenrui</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">28</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/JiangChenrui" title="GitHub → https://github.com/JiangChenrui" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+  <div class="links-of-blogroll motion-element">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.liaoxuefeng.com/" title="https://www.liaoxuefeng.com/" rel="noopener" target="_blank">廖雪峰</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://charlesliuyx.github.io/" title="https://charlesliuyx.github.io/" rel="noopener" target="_blank">遥行</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://redstonewill.com/" title="https://redstonewill.com/" rel="noopener" target="_blank">红色石头</a>
+        </li>
+    </ul>
+  </div>
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-mouse"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">JiangChenrui</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-area"></i>
+    </span>
+      <span class="post-meta-item-text">站点总字数：</span>
+    <span title="站点总字数">123k</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span class="post-meta-item-text">站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">1:52</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+<script src="/js/bookmark.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+<script>
+NexT.utils.loadComments(document.querySelector('#valine-comments'), () => {
+  NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+    var GUEST = ['nick', 'mail', 'link'];
+    var guest = 'nick,mail,link';
+    guest = guest.split(',').filter(item => {
+      return GUEST.includes(item);
+    });
+    new Valine({
+      el         : '#valine-comments',
+      verify     : false,
+      notify     : false,
+      appId      : 'cUdEljn6k666MrHJYr6FhqSe-gzGzoHsz',
+      appKey     : 'yrwQQpoA00WVm649FXM7AKqW',
+      placeholder: "Just go go",
+      avatar     : 'mm',
+      meta       : guest,
+      pageSize   : '10' || 10,
+      visitor    : true,
+      lang       : 'zh-cn' || 'zh-cn',
+      path       : location.pathname,
+      recordIP   : false,
+      serverURLs : ''
+    });
+  }, window.Valine);
+});
+</script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</body>
+</html>
