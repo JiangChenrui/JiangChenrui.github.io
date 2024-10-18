@@ -13,7 +13,7 @@ language: zh-CN # 语言
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://JiangChenrui.github.io
+url: https://jiangchenrui.github.io/JiangChenrui.io/
 root: / # 根目录
 permalink: :year/:month/:day/:title/ # 文章的链接方式
 permalink_defaults:
